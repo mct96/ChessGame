@@ -18,27 +18,29 @@ CPuzzle::~CPuzzle()
 
 bool CPuzzle::isCheck() const
 {
-
+    return false;
 }
 
 bool CPuzzle::isCheckMate() const
 {
-
+    return false;
 }
 
-void CPuzzle::castling()
+void CPuzzle::
+    castling(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
-
 }
 
-void CPuzzle::enPassant()
+void CPuzzle::
+    enPassant(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
-
+    // TODO implementar o histórico de jogadas para detectar se o enPassant é
+    // válido.
 }
 
-void CPuzzle::promotion()
+void CPuzzle::
+    promotion(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
-
 }
 
 EColor CPuzzle::getPlayerTurn() const
@@ -50,34 +52,105 @@ void CPuzzle::move(CPosition from, CPosition to)
 {
     auto piece = getPieceAt(from);
 
-    if (piece.get() == nullptr)
+    if (piece == nullptr || piece->getColor() != _playerTurn)
         throw new std::logic_error{"Invalid move."};
 
+    auto moves = piece->getAllMoves();
+    moves = movesPruning(moves);
 
+    exceptionalMoves(piece, moves);
+
+    // Verifica se a posição de destino é válida.
+    if (inPath(moves, to)) {
+        auto target = getPieceAt(to);
+
+        // Remove a peça que estava na posição que ele ocupou agora.
+        if (!isFreePosition(to)) removePieceAt(to);
+    } else {
+        throw new std::logic_error{"Invalid move."};
+    }
 
     swapPlayerTurn();
 }
 
 std::shared_ptr<CPiece> CPuzzle::getPieceAt(CPosition pos) const
 {
-    auto verify =
+    auto searchOn =
         [&](std::vector<std::shared_ptr<CPiece>> pieces) ->
             std::shared_ptr<CPiece> {
-            for (auto& piece: _whitePieces) {
+
+            for (auto& piece: pieces) {
                 auto position = piece->getPosition();
-                if (pos.i == position.j && pos.j == position.j)
+
+                if (pos == position)
                     return std::shared_ptr<CPiece>{piece};
             }
-            return std::shared_ptr<CPiece>{};
+
+            return std::shared_ptr<CPiece>{nullptr};
         };
 
-    auto piece = verify(_whitePieces);
+    auto piece = searchOn(_whitePieces);
 
-    if (piece.use_count() == 0)
-        piece = verify(_blackPieces);
+    if (piece == nullptr)
+        piece = searchOn(_blackPieces);
 
     return piece;
 
+}
+
+bool CPuzzle::isFreePosition(CPosition pos) const
+{
+    auto piece = getPieceAt(pos);
+
+    return piece == nullptr;
+}
+
+std::vector<CPiece::CPath> CPuzzle::
+    movesPruning(std::vector<CPiece::CPath> moves) const
+{
+    for (auto& move: moves) {
+        for (int i=0;i<move.size(); ++i) {
+            auto& pos = move[i];
+
+            if (!isFreePosition(pos)) {
+                auto piece = getPieceAt(pos);
+
+                // Se a posição estiver ocupada tem de haver a poda, porém se a
+                // posição for ocupada pelo adversário ela é incluida, caso
+                // contrário ela deve ser eliminada.
+                int extendPosition = piece->getColor() == _playerTurn ? 0 : 1;
+                move.erase(move.begin() + i + extendPosition, move.end());
+                break;
+            }
+        }
+    }
+
+    return moves;
+}
+
+
+void CPuzzle::removePieceAt(CPosition pos)
+{
+    auto findAndRemovePiece =
+        [&](std::vector<std::shared_ptr<CPiece>>& pieces) -> void {
+
+        for (int i = 0; i < pieces.size(); ++i) {
+            if (pieces[i]->getPosition() == pos) {
+                auto bg = pieces.begin();
+                pieces.erase(bg + i, bg + i + 1);
+                break;
+            }
+        }
+    };
+
+    findAndRemovePiece(_blackPieces);
+    findAndRemovePiece(_whitePieces);
+}
+
+void CPuzzle::exceptionalMoves(
+            std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
+{
+    // TODO Tratar todos os casos especiais aqui.
 }
 
 void CPuzzle::initializeGame()
