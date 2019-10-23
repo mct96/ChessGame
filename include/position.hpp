@@ -14,7 +14,7 @@ struct CPosition {
                 + ", " + std::to_string(j) + "]"  ;
     }
 
-    bool operator==(const CPosition& other) const
+    inline bool operator==(const CPosition& other) const
     {
         return i == other.i && j == other.j;
     }

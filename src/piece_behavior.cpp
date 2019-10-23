@@ -1,5 +1,6 @@
 #include "../include/piece_behavior.hpp"
 
+
 namespace ch {
 
 bool CPawn::canMoveTo(CPosition pos) const

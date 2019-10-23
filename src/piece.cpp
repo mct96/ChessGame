@@ -6,7 +6,8 @@ namespace ch {
 CPiece::CPiece(CPosition pos, EColor col):
     _position{pos},
     _color{col},
-    _wasMoved{false}
+    _wasMoved{false},
+    _isActive{true}
 {
 
 }
@@ -19,9 +20,6 @@ CPiece::~CPiece()
 
 bool CPiece::moveTo(CPosition pos)
 {
-    if (!canMoveTo(pos))
-        throw new std::logic_error{"Invalid move."};
-
     setPosition(pos);
     return true;
 }
@@ -54,6 +52,16 @@ bool CPiece::wasMoved() const
     return _wasMoved;
 }
 
+bool CPiece::isActive() const
+{
+    return _isActive;
+}
+
+void CPiece::setActivity(bool activity)
+{
+    _isActive = activity;
+}
+
 bool CPiece::isDiagonalMove(CPosition dest) const
 {
     auto di = abs(_position.i - dest.i);
@@ -67,17 +75,19 @@ bool CPiece::isDiagonalMove(CPosition dest) const
 bool CPiece::isVerticalMove(CPosition dest) const
 {
     auto di = _position.i - dest.i;
+    auto dj = _position.j - dest.j;
 
     // O movitento vertical não possui deslocamento horizontal.
-    return di == 0;
+    return dj == 0 && di != 0;
 }
 
 bool CPiece::isHorizontalMove(CPosition dest) const
 {
+    auto di = _position.i - dest.i;
     auto dj = _position.j - dest.j;
 
     // O movimento horizontal não possui deslocamento vertical.
-    return dj == 0;
+    return di == 0 && dj != 0;
 }
 
 bool CPiece::isForwardMove(CPosition destination) const

@@ -23,10 +23,25 @@ int main()
 {
     using namespace ch;
     ch::CPuzzle puzzle{};
-    puzzle.print();
-    auto res = puzzle.getPieceAt(CPosition{1, 2});
-    cout << boolalpha << puzzle.isFreePosition({5, 5}) << endl;
-    showPath(puzzle.movesPruning(res->getAllMoves()));
+
+    try {
+        puzzle.move({2, 6}, {3, 6});
+        puzzle.move({7, 5}, {6, 5});
+
+        puzzle.move({3, 6}, {4, 6});
+        puzzle.move({6, 5}, {5, 5});
+
+        puzzle.move({4, 6}, {5, 5});
+        puzzle.print();
+        // puzzle.move({4, 6}, {5, 5});
+
+        std::vector<CPiece::CPath> path{};
+        puzzle.exceptionalMoves(puzzle.getPieceAt({4, 6}), path);
+        showPath(path);
+    } catch (std::exception * ptr) {
+        cout << ptr->what() << endl;
+    }
+
 
     return 0;
 }
