@@ -1,4 +1,4 @@
-#include "../include/move_path.hpp"
+#include "../../include/model/move_path.hpp"
 
 namespace ch {
 

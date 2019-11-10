@@ -1,10 +1,23 @@
-# ChessGame
 
-An simple implementation of chess game.
+# ♕ Chess ♛
 
-Project objectives:\
-    :ballot_box_with_check: Each piece must identify where it can move.\
-    :black_square_button: Pawn en Passant.\
-    :black_square_button: Pawn promotion.\
-    :black_square_button: Rook castling.\
-    :black_square_button: Check and Check mate detection.\
+    A simple implementation of a chess game.
+<br />
+<br />
+My goal in this project is to apply what I learned/studied about OOP, SFML, MVC and improve my knowledge of C ++ 2a (C ++ 20).
+<br />
+<br />
+
+#### At the end of this project, I will have:
+- A chess interface.
+- A checker for chess moves.
+
+#### Future Steps:
+- I can create chess bots.
+- I can add AI to the project, ie use AI to play chess.
+
+<div style= "text-align: center">
+
+![Sample](/sample/sample_code_1.png)
+
+</div>

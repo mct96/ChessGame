@@ -1,5 +1,5 @@
 
-#include "include/puzzle.hpp"
+#include "include/model/game.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -22,18 +22,18 @@ void showPath(std::vector<ch::CPiece::CPath> paths)
 int main()
 {
     using namespace ch;
-    ch::CPuzzle puzzle{};
+    ch::CGame puzzle{};
 
     try {
-        puzzle.move({2, 6}, {3, 6});
-        puzzle.move({7, 5}, {6, 5});
+        puzzle.move({2, 6}, {3, 6}); // Movendo peão branco.
+        puzzle.move({7, 5}, {6, 5}); // Movendo peão preto.
 
-        puzzle.move({3, 6}, {4, 6});
-        puzzle.move({6, 5}, {5, 5});
+        puzzle.move({3, 6}, {4, 6}); // Avançando peão branco.
+        puzzle.move({6, 5}, {5, 5}); // Avançando peão preto.
 
-        puzzle.move({4, 6}, {5, 5});
-        puzzle.print();
-        // puzzle.move({4, 6}, {5, 5});
+        puzzle.move({4, 6}, {5, 5}); // Peão branco atacando peão preto.
+
+        puzzle.print(); // Exibindo estado do jogo.
 
         std::vector<CPiece::CPath> path{};
         puzzle.exceptionalMoves(puzzle.getPieceAt({4, 6}), path);

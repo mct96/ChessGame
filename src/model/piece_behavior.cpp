@@ -1,4 +1,4 @@
-#include "../include/piece_behavior.hpp"
+#include "../../include/model/piece_behavior.hpp"
 
 
 namespace ch {

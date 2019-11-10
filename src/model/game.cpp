@@ -1,10 +1,10 @@
-#include "../include/puzzle.hpp"
+#include "../../include/model/game.hpp"
 #include <iostream>
 
 using namespace std;
 namespace ch {
 
-CPuzzle::CPuzzle()
+CGame::CGame()
     :
     _playerTurn{EColor::WHITE},
     _whitePieces{},
@@ -13,33 +13,38 @@ CPuzzle::CPuzzle()
     initializeGame();
 }
 
-CPuzzle::~CPuzzle()
+CGame::~CGame()
 {
 
 }
 
-bool CPuzzle::isCheck() const
-{
-    return false;
-}
-
-bool CPuzzle::isCheckMate() const
+bool CGame::isCheck() const
 {
     return false;
 }
 
-EColor CPuzzle::getPlayerTurn() const
+bool CGame::isCheckMate() const
+{
+    return false;
+}
+
+EColor CGame::getPlayerTurn() const
 {
     return _playerTurn;
 }
 
-void CPuzzle::move(CPosition from, CPosition to)
+void CGame::move(CPosition from, CPosition to)
 {
 
     auto piece = getPieceAt(from);
 
-    if (piece == nullptr || piece->getColor() != _playerTurn)
-        throw new std::logic_error{"Invalid move. Not your turn."};
+    if (piece == nullptr)
+        throw new std::logic_error{
+            "Invalid move. This position doesn't have a piece."};
+
+    if (piece->getColor() != _playerTurn)
+        throw new std::logic_error{
+            "Invalid move. Not your turn."};
 
     auto moves = piece->getAllMoves();
     moves = movesPruning(moves);
@@ -57,7 +62,8 @@ void CPuzzle::move(CPosition from, CPosition to)
         piece->moveTo(to);
         updatePosition(piece, from);
     } else {
-        throw new std::logic_error{"Invalid move."};
+        throw new std::logic_error{
+            "Invalid move. The destination is unreachable."};
     }
 
     // Salva no histórico de jogadas.
@@ -66,7 +72,7 @@ void CPuzzle::move(CPosition from, CPosition to)
     swapPlayerTurn();
 }
 
-std::shared_ptr<CPiece> CPuzzle::getPieceAt(CPosition pos) const
+std::shared_ptr<CPiece> CGame::getPieceAt(CPosition pos) const
 {
     std::shared_ptr<CPiece> piece = nullptr;
     if (_whitePieces.contains(posToInt(pos)))
@@ -79,12 +85,12 @@ std::shared_ptr<CPiece> CPuzzle::getPieceAt(CPosition pos) const
 
 }
 
-bool CPuzzle::isFreePosition(CPosition pos) const
+bool CGame::isFreePosition(CPosition pos) const
 {
     return getPieceAt(pos) == nullptr;
 }
 
-std::vector<CPiece::CPath> CPuzzle::
+std::vector<CPiece::CPath> CGame::
     movesPruning(std::vector<CPiece::CPath> moves) const
 {
     for (auto& move: moves) {
@@ -108,19 +114,19 @@ std::vector<CPiece::CPath> CPuzzle::
 }
 
 
-void CPuzzle::removePieceAt(CPosition pos)
+void CGame::removePieceAt(CPosition pos)
 {
     auto piece = getPieceAt(pos);
 
     if (piece) piece->setActivity(false);
 }
 
-bool CPuzzle::hasAnEnemyAt(CPosition pos) const
+bool CGame::hasAnEnemyAt(CPosition pos) const
 {
     return !isFreePosition(pos) && getPieceAt(pos)->getColor() != _playerTurn;
 }
 
-void CPuzzle::
+void CGame::
     pawnMove(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
     auto pos = piece->getPosition(); // auto [i, j] = .... C++1z
@@ -152,44 +158,83 @@ void CPuzzle::
     }
 }
 
-void CPuzzle::
+void CGame::
     castling(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
-
+    // Necessário verificar se não houve movimentos nem da Torre e nem do Rei
+    // e se a posições intermediarias não estão sobre ataque.
 }
 
-void CPuzzle::
+// TEST Testar ainda o enPassant
+void CGame::
     enPassant(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
+    // Basta olhar no histórico de jogadas. Se o último movimento do adversário
+    // for um peão que avançou duas posições adicione a posição intermediária,
+    // ie, (endPos + begPos) / 2.
+    auto inRange = [](int v, int low, int high) -> bool {
+        return v >= low || v <= high;
+    };
 
+    if (_history.empty()) return;
+
+    auto lastMove = _history.back();
+    auto lastPieceMoved = getPieceAt(lastMove.second);
+
+    // Se não for peão, apenas continue.
+    if (!dynamic_cast<ch::CPawn*>(lastPieceMoved.get())) return;
+    if (!dynamic_cast<ch::CPawn*>(piece.get())) return;
+
+    // A posição inicial do último movimento.
+    auto [iOld, jOld] = lastMove.first;
+
+    // A posição final do último movimento.
+    auto [iNew, jNew] = lastMove.second;
+
+    const auto& i = piece->getPosition().i;
+    const auto& j = piece->getPosition().j;
+
+    // Se o peão avançou duas posições e está a uma coluna de distância da peça
+    // selecionada, porém não na mesma coluna e após o último movimento ambas as
+    // peças acabarem na mesma posição, então todas as codições do en Passant
+    // são satizfeitas.
+    if (abs(iOld - iNew) == 2 &&
+        inRange(i, jNew - 1, jNew + 1) &&
+        j != jNew && jNew == jOld && i == iNew) {
+            ch::CPiece::CPath move;
+            int newI = static_cast<int>((iNew + iOld) / 2);
+            move.push_back({newI, jNew});
+
+            moves.push_back(move);
+        }
 }
 
-void CPuzzle::
+void CGame::
     promotion(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
 
 }
 
-void CPuzzle::exceptionalMoves(
+void CGame::exceptionalMoves(
             std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
     if (dynamic_cast<CPawn*>(piece.get())) {
         pawnMove(piece, moves); // Movimento de ataque do peão.
-        enPassant(piece, moves);
+        enPassant(piece, moves); // Adiciona o enPassant do peão.
     } else if (dynamic_cast<CRook*>(piece.get())) {
         castling(piece, moves); // Adiciona o Roque.
     }
 
 }
 
-void CPuzzle::initializeGame()
+void CGame::initializeGame()
 {
     initializeBlackPieces();
     initializeWhitePieces();
     _playerTurn = EColor::WHITE;
 }
 
-void CPuzzle::initializeWhitePieces()
+void CGame::initializeWhitePieces()
 {
     // Peças Brancas.
     auto pos1w = CPosition{1, 1};
@@ -231,7 +276,7 @@ void CPuzzle::initializeWhitePieces()
     }
 }
 
-void CPuzzle::initializeBlackPieces()
+void CGame::initializeBlackPieces()
 {
      // Peças Pretas.
     auto pos1b = CPosition{8, 1};
@@ -273,7 +318,7 @@ void CPuzzle::initializeBlackPieces()
     }
 }
 
-void CPuzzle::swapPlayerTurn()
+void CGame::swapPlayerTurn()
 {
     if (_playerTurn == EColor::WHITE)
         _playerTurn = EColor::BLACK;
@@ -281,8 +326,9 @@ void CPuzzle::swapPlayerTurn()
         _playerTurn = EColor::WHITE;
 }
 
-void CPuzzle::print()
+void CGame::print()
 {
+    // Imprime o estado de todas as peças do jogo. Um snapshot do tabuleiro.
     using namespace std;
 
     for (const auto& ptr: _whitePieces) {
@@ -297,12 +343,13 @@ void CPuzzle::print()
     }
 }
 
-int CPuzzle::posToInt(CPosition pos) const
+int CGame::posToInt(CPosition pos) const
 {
+    // Transforma a posição (2D) em um valor inteiro (1D).
     return pos.i * 8 + pos.j;
 }
 
-void CPuzzle::updatePosition(std::shared_ptr<CPiece> piece, CPosition old)
+void CGame::updatePosition(std::shared_ptr<CPiece> piece, CPosition old)
 {
     using Tp = decltype(_whitePieces)&;
     auto update = [&](Tp pieces) -> void {

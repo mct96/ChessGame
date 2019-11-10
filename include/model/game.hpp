@@ -13,13 +13,13 @@ extern int main();
 
 namespace ch {
 
-class CPuzzle {
+class CGame {
 public:
     // Apenas para propósito de teste.
     friend int ::main();
 
-    CPuzzle();
-    ~CPuzzle();
+    CGame();
+    ~CGame();
 
     // Indica se o jogo está em check.
     bool isCheck() const;
