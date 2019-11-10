@@ -181,9 +181,13 @@ void CGame::
     auto lastMove = _history.back();
     auto lastPieceMoved = getPieceAt(lastMove.second);
 
-    // Se não for peão, apenas continue.
-    if (!dynamic_cast<ch::CPawn*>(lastPieceMoved.get())) return;
-    if (!dynamic_cast<ch::CPawn*>(piece.get())) return;
+    // Se não for peão, não há en Passant.
+    if (lastPieceMoved->getType() != EType::PAWN ||
+        piece->getType() != EType::PAWN)
+            return;
+
+    // if (!dynamic_cast<ch::CPawn*>(lastPieceMoved.get())) return;
+    // if (!dynamic_cast<ch::CPawn*>(piece.get())) return;
 
     // A posição inicial do último movimento.
     auto [iOld, jOld] = lastMove.first;
@@ -218,11 +222,20 @@ void CGame::
 void CGame::exceptionalMoves(
             std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
 {
-    if (dynamic_cast<CPawn*>(piece.get())) {
-        pawnMove(piece, moves); // Movimento de ataque do peão.
+    if (piece == nullptr) return;
+
+    switch (piece->getType()) {
+    case EType::PAWN:
+        pawnMove(piece, moves);  // Movimento de ataque do peão.
         enPassant(piece, moves); // Adiciona o enPassant do peão.
-    } else if (dynamic_cast<CRook*>(piece.get())) {
-        castling(piece, moves); // Adiciona o Roque.
+        break;
+
+    case EType::ROOK:
+        castling(piece, moves);  // Adiciona o Roque.
+        break;
+
+    default:
+        ;
     }
 
 }
@@ -331,16 +344,21 @@ void CGame::print()
     // Imprime o estado de todas as peças do jogo. Um snapshot do tabuleiro.
     using namespace std;
 
-    for (const auto& ptr: _whitePieces) {
-        auto pos = static_cast<std::string>(ptr.second->getPosition());
-        cout << "Color: White, Position: " << pos << ", Active: " <<
-            ptr.second->isActive() <<  endl;
-    }
-    for (const auto& ptr: _blackPieces) {
-        auto pos = static_cast<std::string>(ptr.second->getPosition());
-        cout << "Color: Black, Position: " << pos << ", Active: " <<
-            ptr.second->isActive() <<  endl;
-    }
+    int k = 1;
+    for (const auto& pieces: {_whitePieces, _blackPieces})
+        for (const auto& ptr: pieces) {
+            auto pos = static_cast<std::string>(ptr.second->getPosition());
+            cout << setw(2) << k++ << " - ";
+            cout << setw(6) <<
+                "Color: " << colorToString(ptr.second->getColor());
+            cout << setw(5) <<
+                "| Pos: " << pos;
+            cout << setw(8) <<
+                "| Type: " << setw(8) << typeToString(ptr.second->getType());
+            cout << setw(5) << boolalpha <<
+                "| Active: " << ptr.second->isActive() << endl;
+        }
+
 }
 
 int CGame::posToInt(CPosition pos) const

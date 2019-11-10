@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <stdexcept>
+
 namespace ch {
 
 enum class EColor {
@@ -7,5 +10,6 @@ enum class EColor {
     WHITE
 };
 
+std::string colorToString(EColor color);
 
 }

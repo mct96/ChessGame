@@ -1,4 +1,4 @@
-#include "../../include/model/piece_behavior.hpp"
+#include "../../include/model/specialized_pieces.hpp"
 
 
 namespace ch {
@@ -37,6 +37,12 @@ std::vector<CPiece::CPath> CPawn::getAllMoves() const
     return forwardMove;
 }
 
+EType CPawn::getType() const {
+    return EType::PAWN;
+}
+
+/* -------------------------------------------------------------------------- */
+
 bool CRook::canMoveTo(CPosition pos) const
 {
     return isHorizontalMove(pos) || isVerticalMove(pos);
@@ -55,6 +61,12 @@ std::vector<CPiece::CPath> CRook::getAllMoves() const
     return result;
 
 }
+
+EType CRook::getType() const {
+    return EType::ROOK;
+}
+
+/* -------------------------------------------------------------------------- */
 
 bool CKnight::canMoveTo(CPosition pos) const
 {
@@ -80,6 +92,12 @@ std::vector<CPiece::CPath> CKnight::getAllMoves() const
     return result;
 }
 
+EType CKnight::getType() const {
+    return EType::KNIGHT;
+}
+
+/* -------------------------------------------------------------------------- */
+
 bool CBishop::canMoveTo(CPosition pos) const
 {
     return isVerticalMove(pos);
@@ -89,6 +107,12 @@ std::vector<CPiece::CPath> CBishop::getAllMoves() const
 {
     return getDiagonalMoves();
 }
+
+EType CBishop::getType() const {
+    return EType::BISHOP;
+}
+
+/* -------------------------------------------------------------------------- */
 
 bool CQueen::canMoveTo(CPosition pos) const
 {
@@ -110,6 +134,12 @@ std::vector<CPiece::CPath> CQueen::getAllMoves() const
 
     return result;
 }
+
+EType CQueen::getType() const {
+    return EType::QUEEN;
+}
+
+/* -------------------------------------------------------------------------- */
 
 bool CKing::canMoveTo(CPosition pos) const
 {
@@ -140,6 +170,10 @@ std::vector<CPiece::CPath> CKing::getAllMoves() const
         while (move.size() > 1) move.pop_back();
 
     return result;
+}
+
+EType CKing::getType() const {
+    return EType::KING;
 }
 
 }

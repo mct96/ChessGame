@@ -4,8 +4,9 @@
 #include <memory>
 #include <unordered_map>
 #include <iostream>
+#include <iomanip>
 
-#include "piece_behavior.hpp"
+#include "specialized_pieces.hpp"
 #include "move_path.hpp"
 
 

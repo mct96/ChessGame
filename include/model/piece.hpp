@@ -7,6 +7,7 @@
 
 #include "color.hpp"
 #include "position.hpp"
+#include "type.hpp"
 
 using namespace std;
 
@@ -29,6 +30,9 @@ public:
     // estão na mesma direção são agrupadas, por exemplo, todos os movimentos
     // na direção diagonal superior esquerda são unidos em um único vetor.
     virtual std::vector<CPath> getAllMoves() const = 0;
+
+    // Identifica qual o tipo da peça.
+    virtual EType getType() const = 0;
 
     // Move a peça para a posição especificada se for possível mover para esta
     // posição.

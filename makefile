@@ -1,8 +1,10 @@
 CC=g++-9
 ARGS=-std=c++2a
+ARGSV=-std=c++2a -lsfml-graphics -lsfml-window -lsfml-system
 
-test: test.cpp lib/piece.o lib/game.o lib/piece_behavior.o lib/move_path.o
-	$(CC) $^ -o $@ $(ARGS)
+game: main.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
+	  lib/color.o lib/type.o
+	$(CC) $^ -o $@ $(ARGSV)
 
 lib/piece.o : src/model/piece.cpp
 	$(CC) $< -c -o $@ $(ARGS)
@@ -10,11 +12,22 @@ lib/piece.o : src/model/piece.cpp
 lib/game.o : src/model/game.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
-lib/piece_behavior.o : src/model/piece_behavior.cpp
+lib/specialized_pieces.o : src/model/specialized_pieces.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
 lib/move_path.o : src/model/move_path.cpp
 	$(CC) $< -c -o $@ $(ARGS)
+
+lib/color.o : src/model/color.cpp
+	$(CC) $< -c -o $@ $(ARGS)
+
+lib/type.o : src/model/type.cpp
+	$(CC) $< -c -o $@ $(ARGS)
+
+.PHONY : build test
+test: test.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
+	  lib/color.o lib/type.o
+	$(CC) $^ -o $@ $(ARGS)
 
 .PHONY : clean
 clean :
