@@ -16,7 +16,10 @@ My goal in this project is to apply what I learned/studied about OOP, SFML, MVC 
 - I can create chess bots.
 - I can add AI to the project, ie use AI to play chess.
 
+
 <div style= "text-align: center">
+
+![Sample](/sample/sample_code_2.png)
 
 ![Sample](/sample/sample_code_1.png)
 

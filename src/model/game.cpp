@@ -254,19 +254,19 @@ void CGame::initializeWhitePieces()
     _whitePieces.insert( {posToInt(pos1w),
         std::shared_ptr<CPiece>{new CRook{pos1w, EColor::WHITE}}});
 
-    auto pos2w = CPosition{1, 2};
+    auto pos2w = CPosition{1, 8};
     _whitePieces.insert({ posToInt(pos2w),
         std::shared_ptr<CPiece>{new CRook{ pos2w, EColor::WHITE}}});
 
-    auto pos3w = CPosition{1, 3};
+    auto pos3w = CPosition{1, 2};
     _whitePieces.insert({ posToInt(pos3w),
         std::shared_ptr<CPiece>{new CKnight{ pos3w, EColor::WHITE}}});
 
-    auto pos4w = CPosition{1, 4};
+    auto pos4w = CPosition{1, 7};
     _whitePieces.insert({ posToInt(pos4w),
         std::shared_ptr<CPiece>{new CKnight{ pos4w, EColor::WHITE}}});
 
-    auto pos5w = CPosition{1, 5};
+    auto pos5w = CPosition{1, 3};
     _whitePieces.insert({ posToInt(pos5w),
         std::shared_ptr<CPiece>{new CBishop{ pos5w, EColor::WHITE}}});
 
@@ -274,11 +274,11 @@ void CGame::initializeWhitePieces()
     _whitePieces.insert({ posToInt(pos6w),
         std::shared_ptr<CPiece>{new CBishop{ pos6w, EColor::WHITE}}});
 
-    auto pos7w = CPosition{1, 7};
+    auto pos7w = CPosition{1, 4};
     _whitePieces.insert({ posToInt(pos7w),
         std::shared_ptr<CPiece>{new CQueen{ pos7w, EColor::WHITE}}});
 
-    auto pos8w = CPosition{1, 8};
+    auto pos8w = CPosition{1, 5};
     _whitePieces.insert({ posToInt(pos8w),
         std::shared_ptr<CPiece>{new CKing{ pos8w, EColor::WHITE}}});
 
@@ -296,19 +296,19 @@ void CGame::initializeBlackPieces()
     _blackPieces.insert({ posToInt(pos1b),
         std::shared_ptr<CPiece>{new CRook{pos1b, EColor::BLACK}}});
 
-    auto pos2b = CPosition{8, 2};
+    auto pos2b = CPosition{8, 8};
     _blackPieces.insert({ posToInt(pos2b),
         std::shared_ptr<CPiece>{new CRook{pos2b, EColor::BLACK}}});
 
-    auto pos3b = CPosition{8, 3};
+    auto pos3b = CPosition{8, 2};
     _blackPieces.insert({ posToInt(pos3b),
         std::shared_ptr<CPiece>{new CKnight{pos3b, EColor::BLACK}}});
 
-    auto pos4b = CPosition{8, 4};
+    auto pos4b = CPosition{8, 7};
     _blackPieces.insert({ posToInt(pos4b),
         std::shared_ptr<CPiece>{new CKnight{pos4b, EColor::BLACK}}});
 
-    auto pos5b = CPosition{8, 5};
+    auto pos5b = CPosition{8, 3};
     _blackPieces.insert({ posToInt(pos5b),
         std::shared_ptr<CPiece>{new CBishop{pos5b, EColor::BLACK}}});
 
@@ -316,11 +316,11 @@ void CGame::initializeBlackPieces()
     _blackPieces.insert({ posToInt(pos6b),
         std::shared_ptr<CPiece>{new CBishop{pos6b, EColor::BLACK}}});
 
-    auto pos7b = CPosition{8, 7};
+    auto pos7b = CPosition{8, 4};
     _blackPieces.insert({ posToInt(pos7b),
         std::shared_ptr<CPiece>{new CQueen{pos7b, EColor::BLACK}}});
 
-    auto pos8b = CPosition{8, 8};
+    auto pos8b = CPosition{8, 5};
     _blackPieces.insert({ posToInt(pos8b),
         std::shared_ptr<CPiece>{new CKing{pos8b, EColor::BLACK}}});
 

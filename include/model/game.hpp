@@ -36,19 +36,16 @@ public:
     // possue a vez de jogar.
     void move(CPosition from, CPosition to);
 
-
-
-protected:
     // Retorna a peça que está na posição "pos". Caso não haja peça é returnado
     // nullptr.
     std::shared_ptr<CPiece> getPieceAt(CPosition pos) const;
 
+protected:
     // Indica se uma posição está vazia.
     bool isFreePosition(CPosition pos) const;
 
     // Indica se um enimigo ocupa a posição específicada.
     bool hasAnEnemyAt(CPosition pos) const;
-public:
     // Remove as posições invalidas para uma peça. Casa peça conhece os movimen-
     // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
     // tanto este método deve remover os movimentos que não são válidos, isto é,

@@ -5,20 +5,27 @@
 
 
 int main() {
-    const auto width = 600, height = 600;
-    int x = 0, y = 0;
+    const auto width = 800, height = 600;
 
-
+    // sf::View boardView{sf::FloatRect{{0, 0}, {8 * 200, 8 * 200}}};
+    // boardView.setViewport({0, 0, .75, 1});
 
     sf::RenderWindow window{sf::VideoMode{width, height}, "Awesome Chess"};
+    // window.setView(boardView);
+    // window.setFramerateLimit(30);
 
+    ch::CBoardView gameView{
+        {0, 0, 800, 600},
+        "assets/sprite.png",
+        "assets/board.png"
+    };
+
+    sf::CircleShape d{13};
+    d.setPosition({700, 500});
+    d.setFillColor({255, 0, 0});
+    sf::Time time;
     while (window.isOpen()) {
-        sf::Texture tex{};
-        tex.loadFromFile("assets/pieces.png",
-            sf::IntRect{{205 * x + 25, 200 * y + 25}, {180, 170}});
 
-        sf::Sprite piece{tex};
-        piece.setColor(sf::Color{255, 0, 0});
 
         sf::Event event{};
         if (window.pollEvent(event)) {
@@ -28,16 +35,8 @@ int main() {
                 window.close();
                 break;
 
-            case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Up)
-                    y = std::min(y + 1, 1);
-                if (event.key.code == sf::Keyboard::Down)
-                    y = std::max(y - 1, 0);
-                if (event.key.code == sf::Keyboard::Right)
-                    x = std::min(x + 1, 7);
-                if (event.key.code == sf::Keyboard::Left)
-                    x = std::max(x - 1, 0);
-
+            case sf::Event::MouseButtonPressed:
+                gameView.onClick(event);
                 break;
 
             default:
@@ -46,8 +45,12 @@ int main() {
         }
 
         window.clear(sf::Color{255, 255, 255});
-        window.draw(piece);
+
+        if (window.hasFocus())
+            window.draw(gameView);
+
         window.display();
+
     }
 
 
