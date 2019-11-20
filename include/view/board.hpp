@@ -9,6 +9,8 @@
 #include "../model/color.hpp"
 #include "../model/game.hpp"
 
+#include "../controller/boardController.hpp"
+
 #include <SFML/Graphics.hpp>
 
 
@@ -36,21 +38,31 @@ public:
     // Trata eventos como cliques do mouse.
     void onClick(const sf::Event& mousePosition);
 
+    // Determina a região em que o jogo deve ser exibido. Útil para reservar es-
+    // paça para as demais funcionalidades como placar ou lista de movimentos
+    // em outras regiões da tela.
     void setBoardDimensions(sf::FloatRect screenDimensions);
     sf::FloatRect getBoardDimensions() const;
 
+    // Desenha o jogo.
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
 protected:
+    // Trasforma as coordenados do tabuleiro para as coordenas do View.
     sf::Vector2f coordToBoardLocation(int i, int j) const;
 
-    // Carrega as imagens das peças.
+    // Carrega os Sprites das peças.
     void loadPieces();
 
+    // Carrega os Sprites das regiões do tabuleiro.
     void loadBoardPositionColor();
 
+    // Escala cada Sprite (das peãs e das regiẽos) para adequá-las às dimenssões
+    // da tela.
     void scaleSprites();
 
+    // Obtém as dimenções de uma peça após ser escalada. Útil para destarcar a
+    // região/peça selecionada no tabuleiro.
     sf::Vector2f getPieceDimentions() const;
 
     // Destaca a peça selecionada.
@@ -80,11 +92,13 @@ protected:
         sf::Sprite,
         key_hash> _pieces;
 
+    // Contém os Sprites das regiões do tabuleiro.
     std::unordered_map<
         EColor,
         sf::Sprite> _boardPositionColor;
 
-    CGame _game;
+    // TODO Mover para o Controller.
+    CBoardController _gameController;
 
 private:
     sf::FloatRect _screenDimensions;

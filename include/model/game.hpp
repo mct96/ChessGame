@@ -46,6 +46,7 @@ protected:
 
     // Indica se um enimigo ocupa a posição específicada.
     bool hasAnEnemyAt(CPosition pos) const;
+
     // Remove as posições invalidas para uma peça. Casa peça conhece os movimen-
     // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
     // tanto este método deve remover os movimentos que não são válidos, isto é,

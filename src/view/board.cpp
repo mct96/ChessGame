@@ -18,7 +18,7 @@ CBoardView::CBoardView(
     _boardTexFile{boardTexFile},
     _selectedPiece{0, 0},
     _gameView{_screenDimensions},
-    _game{}
+    _gameController{}
 {
     init();
     // _gameView.setCenter(800, 800);
@@ -61,8 +61,8 @@ sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
     auto pieceWidth = (screenSize.x / 8);
     auto pieceHeight = (screenSize.y / 8);
 
-    auto x = (j - 1) * pieceWidth;
-    auto y = (8 - i) * pieceHeight;
+    auto x = _screenDimensions.left  + (j - 1) * pieceWidth;
+    auto y = _screenDimensions.top + (8 - i) * pieceHeight;
 
     return {x, y};
 }
@@ -142,8 +142,11 @@ void CBoardView::drawSelectedPiece(sf::RenderTarget& target) const
     auto pieceDimention = getPieceDimentions();
     auto pos = target.mapPixelToCoords(coord);
 
-    auto i = 7 - static_cast<int>(pos.y / pieceDimention.y);
-    auto j = static_cast<int>(pos.x / pieceDimention.x);
+    auto i = 7 - static_cast<int>(
+        (pos.y - _screenDimensions.top) / pieceDimention.y);
+
+    auto j = static_cast<int>(
+        (pos.x - _screenDimensions.left) / pieceDimention.x);
 
     if (i >= 0 && i < 8 && j >= 0 && j < 8) {
         sf::RectangleShape highlight{pieceDimention};
@@ -198,8 +201,9 @@ void CBoardView::drawPieces(sf::RenderTarget& target) const
 {
     for (int i = 0; i < 8; ++i)
         for (int j = 0; j < 8; ++j) {
-            auto piece = _game.getPieceAt({i + 1, j + 1});
+            auto piece = _gameController.getPieceAt({i + 1, j + 1});
 
+            // Não há peça nesta posição.
             if (piece == nullptr) continue;
 
             sf::Vector2f pos{200.f  * j, 1600 - 200.f * (i + 1)};

@@ -5,7 +5,7 @@
 
 
 int main() {
-    const auto width = 800, height = 600;
+    const auto width = 1000, height = 600;
 
     // sf::View boardView{sf::FloatRect{{0, 0}, {8 * 200, 8 * 200}}};
     // boardView.setViewport({0, 0, .75, 1});
@@ -15,15 +15,11 @@ int main() {
     // window.setFramerateLimit(30);
 
     ch::CBoardView gameView{
-        {0, 0, 800, 600},
+        {300, 100, 400, 400},
         "assets/sprite.png",
         "assets/board.png"
     };
 
-    sf::CircleShape d{13};
-    d.setPosition({700, 500});
-    d.setFillColor({255, 0, 0});
-    sf::Time time;
     while (window.isOpen()) {
 
 

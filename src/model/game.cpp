@@ -40,7 +40,7 @@ void CGame::move(CPosition from, CPosition to)
 
     if (piece == nullptr)
         throw new std::logic_error{
-            "Invalid move. This position doesn't have a piece."};
+            "Invalid move. This position doesn't has a piece."};
 
     if (piece->getColor() != _playerTurn)
         throw new std::logic_error{
