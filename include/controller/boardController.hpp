@@ -28,7 +28,7 @@ public:
     /**
      *  Retorna todos os possiveis movimentos que a peça "piece" pode realizar.
      */
-    std::vector<CPosition> possibleMoves(std::shared_ptr<CPiece> piece) const;
+    std::vector<CPiece::CPath> possibleMoves(std::shared_ptr<CPiece> piece) const;
 
 protected:
 

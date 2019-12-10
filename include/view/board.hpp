@@ -48,8 +48,11 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
 protected:
-    // Trasforma as coordenados do tabuleiro para as coordenas do View.
+    // Transforma as coordenadas do tabuleiro para as coordenadas do View.
     sf::Vector2f coordToBoardLocation(int i, int j) const;
+
+    // Transforma as coordenadas do View para as coordenadas do tabuleiro.
+    ch::CPosition boardLocationToCoord(int x, int y) const;
 
     // Carrega os Sprites das peças.
     void loadPieces();
@@ -65,6 +68,8 @@ protected:
     // região/peça selecionada no tabuleiro.
     sf::Vector2f getPieceDimentions() const;
 
+    void highlightCoord(ch::CPosition pos, sf::RenderTarget& target) const;
+
     // Destaca a peça selecionada.
     void drawSelectedPiece(sf::RenderTarget& target) const;
 
@@ -76,7 +81,7 @@ protected:
 
     // Mostra os possiveis movimentos de uma peça, quando alguma for seleciona-
     // da.
-    void showPossibleMoves();
+    void showPossibleMoves(sf::RenderTarget& target) const;
 
     // Armazena a textura que contém todas as peças.
     sf::Texture _piecesTex;

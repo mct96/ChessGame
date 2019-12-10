@@ -25,10 +25,14 @@ void CBoardController::move(CPosition from, CPosition to)
     _game.move(from, to);
 }
 
-std::vector<CPosition> CBoardController::
+std::vector<CPiece::CPath> CBoardController::
     possibleMoves(std::shared_ptr<CPiece> piece) const
 {
+    if (piece->getColor() != _game.getPlayerTurn())
+        return std::vector<CPiece::CPath>{};
 
+    auto moves = piece->getAllMoves();
+    return _game.movesPruning(moves);
 }
 
 }

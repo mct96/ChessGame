@@ -40,7 +40,6 @@ public:
     // nullptr.
     std::shared_ptr<CPiece> getPieceAt(CPosition pos) const;
 
-protected:
     // Indica se uma posição está vazia.
     bool isFreePosition(CPosition pos) const;
 
@@ -54,6 +53,7 @@ protected:
     std::vector<CPiece::CPath> movesPruning(
             std::vector<CPiece::CPath> moves) const;
 
+protected:
     // Remove que está na posição "pos". Esse método é usado quando uma peça é
     // capturada.
     void removePieceAt(CPosition pos);

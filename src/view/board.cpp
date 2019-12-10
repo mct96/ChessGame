@@ -47,6 +47,7 @@ void CBoardView::draw(sf::RenderTarget& target, sf::RenderStates state) const
 {
     drawBoard(target);
     drawSelectedPiece(target);
+    showPossibleMoves(target);
     drawPieces(target);
 }
 
@@ -65,6 +66,23 @@ sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
     auto y = _screenDimensions.top + (8 - i) * pieceHeight;
 
     return {x, y};
+}
+
+ch::CPosition CBoardView::boardLocationToCoord(int x, int y) const
+{
+    auto pieceDimention = getPieceDimentions();
+
+    auto i = 7 - static_cast<int>(
+         (y - _screenDimensions.top) / pieceDimention.y);
+
+    auto j = static_cast<int>(
+        (x - _screenDimensions.left) / pieceDimention.x);
+
+    if (i < 0) i = 0;
+    if (i > 7) i = 7;
+    if (j < 0) j = 0;
+    if (j > 7) j = 7;
+    return {i + 1, j + 1};
 }
 
 void CBoardView::loadPieces()
@@ -126,7 +144,6 @@ void CBoardView::scaleSprites()
     for (auto& boardColor: _boardPositionColor) {
         boardColor.second.scale({xScaleFactor, yScaleFactor});
     }
-
 }
 
 sf::Vector2f CBoardView::getPieceDimentions() const
@@ -136,33 +153,31 @@ sf::Vector2f CBoardView::getPieceDimentions() const
     return {boardSize.x/8, boardSize.y/8};
 }
 
+void CBoardView::
+    highlightCoord(ch::CPosition pos, sf::RenderTarget& target) const
+{
+    sf::RectangleShape highlight{getPieceDimentions()};
+    highlight.setFillColor(sf::Color{0, 255, 0, 50});
+    highlight.setOutlineColor(sf::Color{0, 255, 0, 255});
+    highlight.setOutlineThickness(-3.0f);
+    highlight.setPosition(coordToBoardLocation(pos.i, pos.j));
+
+    target.draw(highlight);
+}
+
 void CBoardView::drawSelectedPiece(sf::RenderTarget& target) const
 {
-    auto coord = sf::Vector2i{_selectedPiece.x, _selectedPiece.y};
-    auto pieceDimention = getPieceDimentions();
-    auto pos = target.mapPixelToCoords(coord);
+    auto [i, j] = boardLocationToCoord(_selectedPiece.x, _selectedPiece.y);
 
-    auto i = 7 - static_cast<int>(
-        (pos.y - _screenDimensions.top) / pieceDimention.y);
+    highlightCoord({i, j}, target);
 
-    auto j = static_cast<int>(
-        (pos.x - _screenDimensions.left) / pieceDimention.x);
-
-    if (i >= 0 && i < 8 && j >= 0 && j < 8) {
-        sf::RectangleShape highlight{pieceDimention};
-        highlight.setFillColor(sf::Color{0, 255, 0, 50});
-        highlight.setOutlineColor(sf::Color{0, 255, 0, 255});
-        highlight.setOutlineThickness(-5.0f);
-        highlight.setPosition(coordToBoardLocation(i + 1, j + 1));
-
-        target.draw(highlight);
-    }
 }
 
 void CBoardView::onClick(const sf::Event& event)
 {
     _selectedPiece.x = event.mouseButton.x;
     _selectedPiece.y = event.mouseButton.y;
+
 }
 
 void CBoardView::setBoardDimensions(sf::FloatRect screenDimensions)
@@ -219,9 +234,28 @@ void CBoardView::drawPieces(sf::RenderTarget& target) const
         }
 }
 
-void CBoardView::showPossibleMoves()
+void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
 {
+    // Obtém as coordenadas do tabuleiro da posição atualmente selecionada no
+    // view.
+    auto [i, j] = boardLocationToCoord(_selectedPiece.x, _selectedPiece.y);
 
+    // Obtém a peça selecionada, se houver.
+    auto selectedPiece = _gameController.getPieceAt({i, j});
+
+    // Caso não haja, retorne nulo.
+    if (!selectedPiece)
+        return;
+
+    // Lista os possiveis movimentos da peça selecionada.
+    auto moves = _gameController.possibleMoves(selectedPiece);
+
+    // Exibe todos esses movimentos.
+    for (auto move: moves) {
+        for (auto pos: move) {
+            highlightCoord({pos.i, pos.j}, target);
+        }
+    }
 }
 
 }

@@ -19,6 +19,8 @@ My goal in this project is to apply what I learned/studied about OOP, SFML, MVC 
 
 <div style= "text-align: center">
 
+![Sample](/sample/sample_view.gif)
+
 ![Sample](/sample/sample_code_2.png)
 
 ![Sample](/sample/sample_code_1.png)
