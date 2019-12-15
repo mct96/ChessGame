@@ -9,6 +9,7 @@
 #include "specialized_pieces.hpp"
 #include "move_path.hpp"
 
+using namespace std;
 
 extern int main();
 
@@ -53,6 +54,12 @@ public:
     std::vector<CPiece::CPath> movesPruning(
             std::vector<CPiece::CPath> moves) const;
 
+    // Associa todos os tipos extraordinários de movimentos, isto é, pawnMove,
+    // castling, enPassant.
+    void exceptionalMoves(
+            std::shared_ptr<CPiece> piece,
+            std::vector<CPiece::CPath>& moves) const;
+
 protected:
     // Remove que está na posição "pos". Esse método é usado quando uma peça é
     // capturada.
@@ -64,26 +71,21 @@ protected:
     // vido aqui. Para isso, esse método extende a lista de movimentos possiveis
     // quando a peça for do tipo "Pawn".
     void pawnMove(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
+        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
 
     // Semelhante a "pawnMove". Extende as possibilidades para as peças
     // do tipo "Rock".
     void castling(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
+        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
 
     // Semelhante a "pawnMove". Extende as possiblidades da peça do tipo "Pawn"
     // para permitir o en Passant.
     void enPassant(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
+        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
 
     // Trata o caso de Promotions no jogo.
     void promotion(
         std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
-
-    // Associa todos os tipos extraordinários de movimentos, isto é, pawnMove,
-    // castling, enPassant.
-    void exceptionalMoves(
-            std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
 
     // Inicializa todos as peças do jogo instanciando e inicializando cada uma
     // na sua respectiva posição.

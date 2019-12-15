@@ -35,16 +35,19 @@ EColor CGame::getPlayerTurn() const
 
 void CGame::move(CPosition from, CPosition to)
 {
-
+    cout << static_cast<string>(from) << " "
+         << static_cast<string>(to) << endl;
     auto piece = getPieceAt(from);
 
     if (piece == nullptr)
         throw new std::logic_error{
-            "Invalid move. This position doesn't has a piece."};
+            std::string{
+                "Invalid move. This position doesn't has a piece."}};
 
     if (piece->getColor() != _playerTurn)
         throw new std::logic_error{
-            "Invalid move. Not your turn."};
+            std::string{
+                "Invalid move. Not your turn."}};
 
     auto moves = piece->getAllMoves();
     moves = movesPruning(moves);
@@ -118,7 +121,10 @@ void CGame::removePieceAt(CPosition pos)
 {
     auto piece = getPieceAt(pos);
 
-    if (piece) piece->setActivity(false);
+    if (piece->getColor() == EColor::WHITE)
+        _whitePieces.erase(posToInt(piece->getPosition()));
+    else
+        _blackPieces.erase(posToInt(piece->getPosition()));
 }
 
 bool CGame::hasAnEnemyAt(CPosition pos) const
@@ -126,8 +132,9 @@ bool CGame::hasAnEnemyAt(CPosition pos) const
     return !isFreePosition(pos) && getPieceAt(pos)->getColor() != _playerTurn;
 }
 
-void CGame::
-    pawnMove(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
+void CGame::pawnMove(
+    std::shared_ptr<CPiece> piece,
+    std::vector<CPiece::CPath>& moves) const
 {
     auto pos = piece->getPosition(); // auto [i, j] = .... C++1z
     int i = pos.i, j = pos.j;
@@ -158,16 +165,18 @@ void CGame::
     }
 }
 
-void CGame::
-    castling(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
+void CGame::castling(
+    std::shared_ptr<CPiece> piece,
+    std::vector<CPiece::CPath>& moves) const
 {
     // Necessário verificar se não houve movimentos nem da Torre e nem do Rei
     // e se a posições intermediarias não estão sobre ataque.
 }
 
 // TEST Testar ainda o enPassant
-void CGame::
-    enPassant(std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
+void CGame::enPassant(
+    std::shared_ptr<CPiece> piece,
+    std::vector<CPiece::CPath>& moves) const
 {
     // Basta olhar no histórico de jogadas. Se o último movimento do adversário
     // for um peão que avançou duas posições adicione a posição intermediária,
@@ -220,7 +229,7 @@ void CGame::
 }
 
 void CGame::exceptionalMoves(
-            std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves)
+            std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const
 {
     if (piece == nullptr) return;
 
@@ -371,8 +380,9 @@ void CGame::updatePosition(std::shared_ptr<CPiece> piece, CPosition old)
 {
     using Tp = decltype(_whitePieces)&;
     auto update = [&](Tp pieces) -> void {
-        pieces.extract(posToInt(old));
-        pieces.insert({posToInt(piece->getPosition()), piece});
+        auto pieceToUpdate = pieces.extract(posToInt(old));
+        pieceToUpdate.key() = posToInt(piece->getPosition());
+        pieces.insert(std::move(pieceToUpdate));
     };
 
     if (piece->getColor() == EColor::WHITE)

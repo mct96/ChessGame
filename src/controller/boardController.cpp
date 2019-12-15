@@ -32,7 +32,15 @@ std::vector<CPiece::CPath> CBoardController::
         return std::vector<CPiece::CPath>{};
 
     auto moves = piece->getAllMoves();
-    return _game.movesPruning(moves);
+    _game.exceptionalMoves(piece, moves);
+    moves = _game.movesPruning(moves);
+
+    return moves;
+}
+
+ch::EColor CBoardController::getPlayerTurn() const
+{
+    return _game.getPlayerTurn();
 }
 
 }

@@ -26,9 +26,10 @@ bool CPiece::moveTo(CPosition pos)
 
 void CPiece::setPosition(CPosition pos)
 {
-    if (pos.i < 0 || pos.i > 7 || pos.j < 0 || pos.j > 7)
+    if (pos.i < 1 || pos.i > 8 || pos.j < 1 || pos.j > 8)
         throw new std::out_of_range{"Invalid position"};
 
+    _wasMoved = true;
     _position = pos;
 }
 
@@ -167,15 +168,15 @@ std::vector<CPiece::CPath> CPiece::getDiagonalMoves() const
 
     // Adiciona os movimentos à direita superior em relação a posição atual.
     for (int ru = 1; pos.i + ru <= 8 && pos.j + ru <= 8; ++ru)
-        diagonalLUPath.push_back({pos.i + ru, pos.j + ru});
+        diagonalRUPath.push_back({pos.i + ru, pos.j + ru});
 
     // Adiciona os movimentos à esquerda inferior em relação a posição atual.
     for (int ld = 1; pos.i - ld > 0 && pos.j - ld > 0; ++ld)
-        diagonalLUPath.push_back({pos.i - ld, pos.j - ld});
+        diagonalLDPath.push_back({pos.i - ld, pos.j - ld});
 
     // Adiciona os movimentos à direita inferior em relação a posição atual.
     for (int rd = 1; pos.i - rd > 0 && pos.j + rd <= 8; ++rd)
-        diagonalLUPath.push_back({pos.i - rd, pos.j + rd});
+        diagonalRDPath.push_back({pos.i - rd, pos.j + rd});
 
 
     // Adiciona as direções em que há movimentos.

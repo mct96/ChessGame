@@ -130,7 +130,7 @@ std::vector<CPiece::CPath> CQueen::getAllMoves() const
     // Concatena todos os movimentos.
     auto& result = verticalMoves;
     for (auto path: horizontalMoves) result.push_back(path);
-    for (auto path: verticalMoves) result.push_back(path);
+    for (auto path: diagonalMoves) result.push_back(path);
 
     return result;
 }
@@ -163,10 +163,10 @@ std::vector<CPiece::CPath> CKing::getAllMoves() const
 
     auto& result = verticalMove;
     for (auto move: horizontalMove) result.push_back(move);
-    for (auto move: verticalMove) result.push_back(move);
+    for (auto move: diagonalMove) result.push_back(move);
 
     // Apenas 1 movimento em cada caminho.
-    for (auto move: result)
+    for (auto& move: result)
         while (move.size() > 1) move.pop_back();
 
     return result;

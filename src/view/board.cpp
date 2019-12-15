@@ -16,7 +16,8 @@ CBoardView::CBoardView(
     _boardTex{},
     _pieceTexFile{pieceTexFile},
     _boardTexFile{boardTexFile},
-    _selectedPiece{0, 0},
+    _selectedPoint{screenDimensions.left, screenDimensions.top},
+    _selectedPiece{nullptr},
     _gameView{_screenDimensions},
     _gameController{}
 {
@@ -78,10 +79,6 @@ ch::CPosition CBoardView::boardLocationToCoord(int x, int y) const
     auto j = static_cast<int>(
         (x - _screenDimensions.left) / pieceDimention.x);
 
-    if (i < 0) i = 0;
-    if (i > 7) i = 7;
-    if (j < 0) j = 0;
-    if (j > 7) j = 7;
     return {i + 1, j + 1};
 }
 
@@ -154,7 +151,7 @@ sf::Vector2f CBoardView::getPieceDimentions() const
 }
 
 void CBoardView::
-    highlightCoord(ch::CPosition pos, sf::RenderTarget& target) const
+    highlightSelectedPiece(ch::CPosition pos, sf::RenderTarget& target) const
 {
     sf::RectangleShape highlight{getPieceDimentions()};
     highlight.setFillColor(sf::Color{0, 255, 0, 50});
@@ -165,19 +162,56 @@ void CBoardView::
     target.draw(highlight);
 }
 
+void CBoardView::highlightPossibleMoves(
+    ch::CPosition pos,
+    bool isOccupied,
+    sf::RenderTarget& target) const
+{
+    auto dim = getPieceDimentions();
+    auto radius = 10.f;
+    auto circleCenter = sf::Vector2f{dim.x/2, dim.y/2};
+
+    // Desenha um círculo vermelho caso a posição desejada esteja ocupada, isto
+    // é, um ataque e desenha um círculo amarelo caso contrário.
+    sf::CircleShape highlight{radius};
+    highlight.setOrigin({radius, radius});
+    highlight.setFillColor({255, 255, 0, 100});
+    highlight.setOutlineThickness(radius*0.4);
+
+    highlight.setOutlineColor(
+        isOccupied ? sf::Color::Red : sf::Color::Yellow);
+
+    highlight.setPosition(
+        circleCenter + coordToBoardLocation(pos.i, pos.j));
+
+    target.draw(highlight);
+}
+
 void CBoardView::drawSelectedPiece(sf::RenderTarget& target) const
 {
-    auto [i, j] = boardLocationToCoord(_selectedPiece.x, _selectedPiece.y);
-
-    highlightCoord({i, j}, target);
-
+    if (_selectedPiece)
+        highlightSelectedPiece(_selectedPiece->getPosition(), target);
 }
 
 void CBoardView::onClick(const sf::Event& event)
 {
-    _selectedPiece.x = event.mouseButton.x;
-    _selectedPiece.y = event.mouseButton.y;
+    auto point = sf::Vector2f{event.mouseButton.x, event.mouseButton.y};
 
+    // Verifica se a região selecionada está dentro da área do tabuleiro. Caso
+    // contrário, não faz nada.
+    if (!_screenDimensions.contains(point)) return;
+
+    _selectedPoint.x = point.x;
+    _selectedPoint.y = point.y;
+
+    // Se alguma peça for selecionada, marque-a como peça selecionada.
+    auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
+    if (auto piece = _gameController.getPieceAt({i, j});
+        piece && piece->getColor() == _gameController.getPlayerTurn())
+        _selectedPiece = piece;
+
+    // Verifica se essa ação foi a de mover uma peça.
+    handleMove();
 }
 
 void CBoardView::setBoardDimensions(sf::FloatRect screenDimensions)
@@ -238,7 +272,7 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
 {
     // Obtém as coordenadas do tabuleiro da posição atualmente selecionada no
     // view.
-    auto [i, j] = boardLocationToCoord(_selectedPiece.x, _selectedPiece.y);
+    auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
 
     // Obtém a peça selecionada, se houver.
     auto selectedPiece = _gameController.getPieceAt({i, j});
@@ -253,9 +287,28 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
     // Exibe todos esses movimentos.
     for (auto move: moves) {
         for (auto pos: move) {
-            highlightCoord({pos.i, pos.j}, target);
+            auto isOccupied = _gameController.getPieceAt(pos) != nullptr;
+            highlightPossibleMoves({pos.i, pos.j}, isOccupied, target);
         }
     }
+}
+
+void CBoardView::handleMove()
+{
+    if (!_selectedPiece) return;
+
+    auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
+
+    if (auto to = CPosition{i, j}; _selectedPiece->getPosition() != to)
+        move(_selectedPiece->getPosition(), to);
+}
+
+void CBoardView::move(CPosition from, CPosition to)
+{
+
+    try {
+    _gameController.move(from, to);
+    } catch(std::logic_error* msg){ cout << msg->what() << endl;}
 }
 
 }

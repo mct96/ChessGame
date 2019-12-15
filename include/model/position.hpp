@@ -18,6 +18,11 @@ struct CPosition {
     {
         return i == other.i && j == other.j;
     }
+
+    inline bool operator!=(const CPosition& other) const
+    {
+        return !((*this) == other);
+    }
 };
 
 }

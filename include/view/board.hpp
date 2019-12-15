@@ -68,7 +68,11 @@ protected:
     // região/peça selecionada no tabuleiro.
     sf::Vector2f getPieceDimentions() const;
 
-    void highlightCoord(ch::CPosition pos, sf::RenderTarget& target) const;
+    void highlightSelectedPiece(
+        ch::CPosition pos, sf::RenderTarget& target) const;
+
+    void highlightPossibleMoves(
+        ch::CPosition pos, bool isOccupied, sf::RenderTarget& target) const;
 
     // Destaca a peça selecionada.
     void drawSelectedPiece(sf::RenderTarget& target) const;
@@ -82,6 +86,13 @@ protected:
     // Mostra os possiveis movimentos de uma peça, quando alguma for seleciona-
     // da.
     void showPossibleMoves(sf::RenderTarget& target) const;
+
+    // Verifica que é a ação é de movimento, isto é, uma peça está selecionada
+    // e uma posição desejado foi pressionada.
+    void handleMove();
+
+    // Realiza o movimento propriamente.
+    void move(CPosition from, CPosition to);
 
     // Armazena a textura que contém todas as peças.
     sf::Texture _piecesTex;
@@ -110,7 +121,9 @@ private:
 
     // TODO Refatorar. Acho que não será necessário utilizar um sf::View.
     sf::View _gameView;
-    sf::Vector2i _selectedPiece;
+    sf::Vector2i _selectedPoint;
+
+    std::shared_ptr<CPiece> _selectedPiece;
 
     std::string _pieceTexFile;
     std::string _boardTexFile;
