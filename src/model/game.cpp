@@ -136,6 +136,22 @@ void CGame::pawnMove(
     std::shared_ptr<CPiece> piece,
     std::vector<CPiece::CPath>& moves) const
 {
+    // O peão possui comportamento anomalo. Ele não ataca as posições em que ele
+    // move. Ele ataca nas diagonais em direção ao inimigo, move em direção ao
+    // inimigo uma casa, pode salta um ou duas posição na partida. Esta função
+    // trata esses três casos.
+
+    // Impede que o peão ataque verticalmente.
+    for (auto& path: moves) {
+        for (int i = 0; i < path.size(); ++i) {
+            if (hasAnEnemyAt(path[i])) {
+                auto at = path.begin() + i;
+                path.erase(at, path.end());
+                break;
+            }
+        }
+    }
+
     auto pos = piece->getPosition(); // auto [i, j] = .... C++1z
     int i = pos.i, j = pos.j;
 
@@ -146,7 +162,7 @@ void CGame::pawnMove(
         return path;
     };
 
-    // White.
+    // Adiciona os movimentos de ataques para as peças brancas, caso haja algum.
     if (i + 1  <= 8 && _playerTurn == EColor::WHITE) {
         if (j - 1 >= 1 && hasAnEnemyAt({i + 1, j - 1}))
             moves.push_back(genPath(i + 1, j - 1));
@@ -155,7 +171,7 @@ void CGame::pawnMove(
             moves.push_back(genPath(i + 1, j + 1));
     }
 
-    // Black.
+    // Adiciona os movimentos de ataques para as peças pretas, caso haja algum.
     else if (i - 1 >= 1 && _playerTurn == EColor::BLACK) {
         if (j - 1 >= 1 && hasAnEnemyAt({i - 1, j - 1}))
             moves.push_back(genPath(i - 1, j - 1));
@@ -163,6 +179,7 @@ void CGame::pawnMove(
         if (j + 1 <= 8 && hasAnEnemyAt({i - 1, j + 1}))
             moves.push_back(genPath(i - 1, j + 1));
     }
+
 }
 
 void CGame::castling(
