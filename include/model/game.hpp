@@ -100,6 +100,13 @@ protected:
     // Alterna entre os jogadores.
     void swapPlayerTurn();
 
+    // Indica se a peça "piece" específicada nos parâmetros pode mover para a
+    // posição especificada pelo parâmetro "to".
+    bool canMoveTo(std::shared_ptr<CPiece> piece, CPosition to) const;
+
+    // Retorna o rei que possui a cor específicada no parâmetro.
+    std::shared_ptr<CPiece> getKing(EColor kingColor) const;
+
     // Apenas utilizado para testes. Deverá ser substituido por logs conforme o
     // desenvolvimento avançar.
     void print();

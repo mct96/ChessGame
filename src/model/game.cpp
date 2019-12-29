@@ -20,6 +20,15 @@ CGame::~CGame()
 
 bool CGame::isCheck() const
 {
+    auto king = getKing(_playerTurn);
+    auto enemies = _playerTurn == EColor::WHITE ? _blackPieces : _whitePieces;
+
+    for (auto enemy: enemies)
+        if (canMoveTo(enemy.second, king->getPosition())) {
+            cout << "Check" << endl;
+            return true;
+        }
+    cout << "Not Check" << endl;
     return false;
 }
 
@@ -35,6 +44,7 @@ EColor CGame::getPlayerTurn() const
 
 void CGame::move(CPosition from, CPosition to)
 {
+    isCheck();
     cout << static_cast<string>(from) << " "
          << static_cast<string>(to) << endl;
     auto piece = getPieceAt(from);
@@ -179,7 +189,6 @@ void CGame::pawnMove(
         if (j + 1 <= 8 && hasAnEnemyAt({i - 1, j + 1}))
             moves.push_back(genPath(i - 1, j + 1));
     }
-
 }
 
 void CGame::castling(
@@ -363,6 +372,40 @@ void CGame::swapPlayerTurn()
         _playerTurn = EColor::BLACK;
     else
         _playerTurn = EColor::WHITE;
+}
+
+bool CGame::canMoveTo(std::shared_ptr<CPiece> piece, CPosition to) const
+{
+    auto moves = piece->getAllMoves();
+    exceptionalMoves(piece, moves);
+    movesPruning(moves);
+
+    for (auto move: moves) {
+        for (auto pos: move) {
+            if (pos == to)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+std::shared_ptr<CPiece> CGame::getKing(EColor kingColor) const
+{
+    // Inicializa o conjunto de peças baseado na cor específicada.
+    const std::unordered_map<int, std::shared_ptr<CPiece>> *pieces = nullptr;
+    if (kingColor == EColor::WHITE)
+        pieces = &_whitePieces;
+    else
+        pieces = &_blackPieces;
+
+    // Procura pelo rei.
+    for (auto piece: *pieces) {
+        if (piece.second->getType() == EType::KING)
+            return piece.second;
+    }
+
+    return nullptr;
 }
 
 void CGame::print()
