@@ -55,7 +55,7 @@ void CBoardView::draw(sf::RenderTarget& target, sf::RenderStates state) const
 
 sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
 {
-    if (i <= 0 || i > 8 || j <= 0 || j > 8)
+    if (i < 0 || i > 7 || j < 0 || j > 7)
         throw std::invalid_argument{
             "The board position is from 1-8 in both directions."};
 
@@ -64,8 +64,8 @@ sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
     auto pieceWidth = (screenSize.x / 8);
     auto pieceHeight = (screenSize.y / 8);
 
-    auto x = _screenDimensions.left  + (j - 1) * pieceWidth;
-    auto y = _screenDimensions.top + (8 - i) * pieceHeight;
+    auto x = _screenDimensions.left  + j * pieceWidth;
+    auto y = _screenDimensions.top + (7 - i) * pieceHeight;
 
     return {x, y};
 }
@@ -80,7 +80,7 @@ ch::CCoordinate CBoardView::boardLocationToCoord(int x, int y) const
     auto j = static_cast<int>(
         (x - _screenDimensions.left) / pieceDimention.x);
 
-    return {i + 1, j + 1};
+    return {i , j};
 }
 
 void CBoardView::loadPieces()
@@ -246,7 +246,7 @@ void CBoardView::drawBoard(sf::RenderTarget& target) const
     for (int i = 0; i < 8; ++i)
         for (int j = 0; j < 8; ++j) {
 
-        auto topLeftConer = coordToBoardLocation(i + 1, j + 1);
+        auto topLeftConer = coordToBoardLocation(i, j);
 
         auto color =
          ((isOdd(i) && isOdd(j)) || (isEven(i) && isEven(j))) ?
@@ -263,7 +263,7 @@ void CBoardView::drawPieces(sf::RenderTarget& target) const
 {
     for (int i = 0; i < 8; ++i)
         for (int j = 0; j < 8; ++j) {
-            auto piece = _gameController.getPieceAt({i + 1, j + 1});
+            auto piece = _gameController.getPieceAt({i, j});
 
             // Não há peça nesta posição.
             if (piece == nullptr) continue;
@@ -276,7 +276,7 @@ void CBoardView::drawPieces(sf::RenderTarget& target) const
             auto pieceSprite =
                 _pieces.at(std::make_tuple(type, color));
 
-            pieceSprite.setPosition(coordToBoardLocation(i + 1, j + 1));
+            pieceSprite.setPosition(coordToBoardLocation(i, j));
             target.draw(pieceSprite);
         }
 }

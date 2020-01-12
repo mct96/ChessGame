@@ -6,9 +6,7 @@ namespace ch {
 
 CGame::CGame()
     :
-    _playerTurn{EColor::WHITE},
-    _whitePieces{},
-    _blackPieces{}
+    _playerTurn{EColor::WHITE}
 {
     initializeGame();
 }
@@ -21,12 +19,20 @@ CGame::~CGame()
 bool CGame::isCheck() const
 {
     auto king = getKing(_playerTurn);
-    auto enemies = _playerTurn == EColor::WHITE ? _blackPieces : _whitePieces;
 
-    for (auto enemy: enemies)
-        if (canMoveTo(enemy.second, king->getPosition())) {
-            return true;
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            auto location = _boardLocations[i][j];
+            auto piece = location.getPiece();
+
+            if (location.isEmpty() || piece->getColor() == king->getColor())
+                continue;
+
+            if (canMoveTo(piece, king->getPosition())) {
+                return true;
+            }
         }
+    }
 
     return false;
 }
@@ -85,20 +91,12 @@ void CGame::move(CCoordinate from, CCoordinate to)
 
 std::shared_ptr<CPiece> CGame::getPieceAt(CCoordinate pos) const
 {
-    std::shared_ptr<CPiece> piece = nullptr;
-    if (_whitePieces.contains(posToInt(pos)))
-        piece = _whitePieces.at(posToInt(pos));
-
-    if (_blackPieces.contains(posToInt(pos)))
-        piece = _blackPieces.at(posToInt(pos));
-
-    return (piece && piece->isActive()) ? piece : nullptr;
-
+    return this->_boardLocations[pos.i][pos.j].getPiece();
 }
 
 bool CGame::isFreePosition(CCoordinate pos) const
 {
-    return getPieceAt(pos) == nullptr;
+    return this->_boardLocations[pos.i][pos.j].isEmpty();
 }
 
 std::vector<CPiece::CPath> CGame::movesPruning(
@@ -109,7 +107,7 @@ std::vector<CPiece::CPath> CGame::movesPruning(
     auto enemyColor = color == EColor::WHITE ? EColor::BLACK : EColor::WHITE;
 
     for (auto& move: moves) {
-        for (int i=0;i<move.size(); ++i) {
+        for (int i = 0; i < move.size(); ++i) {
             auto& pos = move[i];
 
             if (!isFreePosition(pos)) {
@@ -131,17 +129,20 @@ std::vector<CPiece::CPath> CGame::movesPruning(
 
 void CGame::removePieceAt(CCoordinate pos)
 {
-    auto piece = getPieceAt(pos);
+    auto location = this->_boardLocations[pos.i][pos.j];
 
-    if (piece->getColor() == EColor::WHITE)
-        _whitePieces.erase(posToInt(piece->getPosition()));
-    else
-        _blackPieces.erase(posToInt(piece->getPosition()));
+    if (!location.isEmpty())
+        location.removePiece();
 }
 
 bool CGame::hasAnEnemyAt(CCoordinate pos) const
 {
-    return !isFreePosition(pos) && getPieceAt(pos)->getColor() != _playerTurn;
+    auto location = this->_boardLocations[pos.i][pos.j];
+
+    return (
+        !location.isEmpty() &&
+        location.getPiece()->getColor() != _playerTurn
+    );
 }
 
 void CGame::pawnMove(
@@ -153,6 +154,40 @@ void CGame::pawnMove(
     // inimigo uma casa, pode salta um ou duas posição na partida. Esta função
     // trata esses três casos.
 
+    moves = pawnPruningVerticalAttack(piece, moves);
+
+
+    auto [i, j] = piece->getPosition();
+
+    // Gera um caminho a partir de uma única posição.
+    auto genPath = [](int i, int j) -> auto {
+        CPiece::CPath path{};
+        path.push_back({i, j});
+        return path;
+    };
+
+    // Adiciona os movimentos de ataques para as peças brancas, caso haja algum.
+    if (i + 1  < 8 && _playerTurn == EColor::WHITE) {
+        if (j - 1 >= 0 && hasAnEnemyAt({i + 1, j - 1}))
+            moves.push_back(genPath(i + 1, j - 1));
+
+        if (j + 1 < 8 && hasAnEnemyAt({i + 1, j + 1}))
+            moves.push_back(genPath(i + 1, j + 1));
+    }
+
+    // Adiciona os movimentos de ataques para as peças pretas, caso haja algum.
+    else if (i - 1 >= 0 && _playerTurn == EColor::BLACK) {
+        if (j - 1 >= 0 && hasAnEnemyAt({i - 1, j - 1}))
+            moves.push_back(genPath(i - 1, j - 1));
+
+        if (j + 1 < 8 && hasAnEnemyAt({i - 1, j + 1}))
+            moves.push_back(genPath(i - 1, j + 1));
+    }
+}
+
+std::vector<CPiece::CPath>& CGame::pawnPruningVerticalAttack(
+    std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const
+{
     // Impede que o peão ataque verticalmente.
     for (auto& path: moves) {
         for (int i = 0; i < path.size(); ++i) {
@@ -164,33 +199,7 @@ void CGame::pawnMove(
         }
     }
 
-    auto pos = piece->getPosition(); // auto [i, j] = .... C++1z
-    int i = pos.i, j = pos.j;
-
-    // Gera um caminho a partir de uma única posição.
-    auto genPath = [](int i, int j) -> auto {
-        CPiece::CPath path{};
-        path.push_back({i, j});
-        return path;
-    };
-
-    // Adiciona os movimentos de ataques para as peças brancas, caso haja algum.
-    if (i + 1  <= 8 && _playerTurn == EColor::WHITE) {
-        if (j - 1 >= 1 && hasAnEnemyAt({i + 1, j - 1}))
-            moves.push_back(genPath(i + 1, j - 1));
-
-        if (j + 1 <= 8 && hasAnEnemyAt({i + 1, j + 1}))
-            moves.push_back(genPath(i + 1, j + 1));
-    }
-
-    // Adiciona os movimentos de ataques para as peças pretas, caso haja algum.
-    else if (i - 1 >= 1 && _playerTurn == EColor::BLACK) {
-        if (j - 1 >= 1 && hasAnEnemyAt({i - 1, j - 1}))
-            moves.push_back(genPath(i - 1, j - 1));
-
-        if (j + 1 <= 8 && hasAnEnemyAt({i - 1, j + 1}))
-            moves.push_back(genPath(i - 1, j + 1));
-    }
+    return moves;
 }
 
 void CGame::castling(
@@ -287,84 +296,84 @@ void CGame::initializeGame()
 void CGame::initializeWhitePieces()
 {
     // Peças Brancas.
-    auto pos1w = CCoordinate{1, 1};
-    _whitePieces.insert( {posToInt(pos1w),
-        std::shared_ptr<CPiece>{new CRook{pos1w, EColor::WHITE}}});
+    auto pos1w = CCoordinate{0, 0};
+    _boardLocations[0][0].setPiece(
+        std::shared_ptr<CPiece>{new CRook{pos1w, EColor::WHITE}});
 
-    auto pos2w = CCoordinate{1, 8};
-    _whitePieces.insert({ posToInt(pos2w),
-        std::shared_ptr<CPiece>{new CRook{ pos2w, EColor::WHITE}}});
+    auto pos2w = CCoordinate{0, 7};
+    _boardLocations[0][7].setPiece(
+        std::shared_ptr<CPiece>{new CRook{ pos2w, EColor::WHITE}});
 
-    auto pos3w = CCoordinate{1, 2};
-    _whitePieces.insert({ posToInt(pos3w),
-        std::shared_ptr<CPiece>{new CKnight{ pos3w, EColor::WHITE}}});
+    auto pos3w = CCoordinate{0, 1};
+    _boardLocations[0][1].setPiece(
+        std::shared_ptr<CPiece>{new CKnight{ pos3w, EColor::WHITE}});
 
-    auto pos4w = CCoordinate{1, 7};
-    _whitePieces.insert({ posToInt(pos4w),
-        std::shared_ptr<CPiece>{new CKnight{ pos4w, EColor::WHITE}}});
+    auto pos4w = CCoordinate{0, 6};
+    _boardLocations[0][6].setPiece(
+        std::shared_ptr<CPiece>{new CKnight{ pos4w, EColor::WHITE}});
 
-    auto pos5w = CCoordinate{1, 3};
-    _whitePieces.insert({ posToInt(pos5w),
-        std::shared_ptr<CPiece>{new CBishop{ pos5w, EColor::WHITE}}});
+    auto pos5w = CCoordinate{0, 2};
+    _boardLocations[0][2].setPiece(
+        std::shared_ptr<CPiece>{new CBishop{ pos5w, EColor::WHITE}});
 
-    auto pos6w = CCoordinate{1, 6};
-    _whitePieces.insert({ posToInt(pos6w),
-        std::shared_ptr<CPiece>{new CBishop{ pos6w, EColor::WHITE}}});
+    auto pos6w = CCoordinate{0, 5};
+    _boardLocations[0][5].setPiece(
+        std::shared_ptr<CPiece>{new CBishop{ pos6w, EColor::WHITE}});
 
-    auto pos7w = CCoordinate{1, 4};
-    _whitePieces.insert({ posToInt(pos7w),
-        std::shared_ptr<CPiece>{new CQueen{ pos7w, EColor::WHITE}}});
+    auto pos7w = CCoordinate{0, 3};
+    _boardLocations[0][3].setPiece(
+        std::shared_ptr<CPiece>{new CQueen{ pos7w, EColor::WHITE}});
 
-    auto pos8w = CCoordinate{1, 5};
-    _whitePieces.insert({ posToInt(pos8w),
-        std::shared_ptr<CPiece>{new CKing{ pos8w, EColor::WHITE}}});
+    auto pos8w = CCoordinate{0, 4};
+    _boardLocations[0][4].setPiece(
+        std::shared_ptr<CPiece>{new CKing{ pos8w, EColor::WHITE}});
 
-    for (int j = 1; j <= 8; ++j) {
-        auto posxw = CCoordinate{2, j};
-        _whitePieces.insert({ posToInt(posxw),
-        std::shared_ptr<CPiece>{new CPawn{posxw, EColor::WHITE}}});
+    for (int j = 0; j < 8; ++j) {
+        auto posxw = CCoordinate{1, j};
+        _boardLocations[1][j].setPiece(
+            std::shared_ptr<CPiece>{new CPawn{posxw, EColor::WHITE}});
     }
 }
 
 void CGame::initializeBlackPieces()
 {
      // Peças Pretas.
-    auto pos1b = CCoordinate{8, 1};
-    _blackPieces.insert({ posToInt(pos1b),
-        std::shared_ptr<CPiece>{new CRook{pos1b, EColor::BLACK}}});
+    auto pos1b = CCoordinate{7, 0};
+    _boardLocations[7][0].setPiece(
+        std::shared_ptr<CPiece>{new CRook{pos1b, EColor::BLACK}});
 
-    auto pos2b = CCoordinate{8, 8};
-    _blackPieces.insert({ posToInt(pos2b),
-        std::shared_ptr<CPiece>{new CRook{pos2b, EColor::BLACK}}});
+    auto pos2b = CCoordinate{7, 7};
+    _boardLocations[7][7].setPiece(
+        std::shared_ptr<CPiece>{new CRook{pos2b, EColor::BLACK}});
 
-    auto pos3b = CCoordinate{8, 2};
-    _blackPieces.insert({ posToInt(pos3b),
-        std::shared_ptr<CPiece>{new CKnight{pos3b, EColor::BLACK}}});
+    auto pos3b = CCoordinate{7, 1};
+    _boardLocations[7][1].setPiece(
+        std::shared_ptr<CPiece>{new CKnight{pos3b, EColor::BLACK}});
 
-    auto pos4b = CCoordinate{8, 7};
-    _blackPieces.insert({ posToInt(pos4b),
-        std::shared_ptr<CPiece>{new CKnight{pos4b, EColor::BLACK}}});
+    auto pos4b = CCoordinate{7, 6};
+    _boardLocations[7][6].setPiece(
+        std::shared_ptr<CPiece>{new CKnight{pos4b, EColor::BLACK}});
 
-    auto pos5b = CCoordinate{8, 3};
-    _blackPieces.insert({ posToInt(pos5b),
-        std::shared_ptr<CPiece>{new CBishop{pos5b, EColor::BLACK}}});
+    auto pos5b = CCoordinate{7, 2};
+    _boardLocations[7][2].setPiece(
+        std::shared_ptr<CPiece>{new CBishop{pos5b, EColor::BLACK}});
 
-    auto pos6b = CCoordinate{8, 6};
-    _blackPieces.insert({ posToInt(pos6b),
-        std::shared_ptr<CPiece>{new CBishop{pos6b, EColor::BLACK}}});
+    auto pos6b = CCoordinate{7, 5};
+    _boardLocations[7][5].setPiece(
+        std::shared_ptr<CPiece>{new CBishop{pos6b, EColor::BLACK}});
 
-    auto pos7b = CCoordinate{8, 4};
-    _blackPieces.insert({ posToInt(pos7b),
-        std::shared_ptr<CPiece>{new CQueen{pos7b, EColor::BLACK}}});
+    auto pos7b = CCoordinate{7, 3};
+    _boardLocations[7][3].setPiece(
+        std::shared_ptr<CPiece>{new CQueen{pos7b, EColor::BLACK}});
 
-    auto pos8b = CCoordinate{8, 5};
-    _blackPieces.insert({ posToInt(pos8b),
-        std::shared_ptr<CPiece>{new CKing{pos8b, EColor::BLACK}}});
+    auto pos8b = CCoordinate{7, 4};
+    _boardLocations[7][4].setPiece(
+        std::shared_ptr<CPiece>{new CKing{pos8b, EColor::BLACK}});
 
-    for (int j = 1; j <= 8; ++j) {
-        CCoordinate posxb = CCoordinate{7, j};
-        _blackPieces.insert({ posToInt(posxb),
-            std::shared_ptr<CPiece>{new CPawn{posxb, EColor::BLACK}}});
+    for (int j = 0; j < 8; ++j) {
+        CCoordinate posxb = CCoordinate{6, j};
+        _boardLocations[6][j].setPiece(
+            std::shared_ptr<CPiece>{new CPawn{posxb, EColor::BLACK}});
     }
 }
 
@@ -387,17 +396,18 @@ bool CGame::canMoveTo(std::shared_ptr<CPiece> piece, CCoordinate to) const
 
 std::shared_ptr<CPiece> CGame::getKing(EColor kingColor) const
 {
-    // Inicializa o conjunto de peças baseado na cor específicada.
-    const std::unordered_map<int, std::shared_ptr<CPiece>> *pieces = nullptr;
-    if (kingColor == EColor::WHITE)
-        pieces = &_whitePieces;
-    else
-        pieces = &_blackPieces;
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            auto location = _boardLocations[i][j];
+            auto piece = location.getPiece();
 
-    // Procura pelo rei.
-    for (auto piece: *pieces) {
-        if (piece.second->getType() == EType::KING)
-            return piece.second;
+            if (location.isEmpty())
+                continue;
+
+            if (piece->getColor() == kingColor &&
+                piece->getType() == EType::KING)
+                return location.getPiece();
+        }
     }
 
     return nullptr;
@@ -409,20 +419,25 @@ void CGame::print()
     using namespace std;
 
     int k = 1;
-    for (const auto& pieces: {_whitePieces, _blackPieces})
-        for (const auto& ptr: pieces) {
-            auto pos = static_cast<std::string>(ptr.second->getPosition());
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            auto location = _boardLocations[i][j];
+            auto piece = location.getPiece();
+
+            if (location.isEmpty()) continue;
+
+            auto pos = static_cast<std::string>(piece->getPosition());
             cout << setw(2) << k++ << " - ";
             cout << setw(6) <<
-                "Color: " << colorToString(ptr.second->getColor());
+                "Color: " << colorToString(piece->getColor());
             cout << setw(5) <<
                 "| Pos: " << pos;
             cout << setw(8) <<
-                "| Type: " << setw(8) << typeToString(ptr.second->getType());
+                "| Type: " << setw(8) << typeToString(piece->getType());
             cout << setw(5) << boolalpha <<
-                "| Active: " << ptr.second->isActive() << endl;
+                "| Active: " << piece->isActive() << endl;
         }
-
+    }
 }
 
 int CGame::posToInt(CCoordinate pos) const
@@ -431,19 +446,14 @@ int CGame::posToInt(CCoordinate pos) const
     return pos.i * 8 + pos.j;
 }
 
-void CGame::updatePosition(std::shared_ptr<CPiece> piece, CCoordinate old)
+void CGame::updatePosition(
+    std::shared_ptr<CPiece> piece,
+    CCoordinate oldPosition)
 {
-    using Tp = decltype(_whitePieces)&;
-    auto update = [&](Tp pieces) -> void {
-        auto pieceToUpdate = pieces.extract(posToInt(old));
-        pieceToUpdate.key() = posToInt(piece->getPosition());
-        pieces.insert(std::move(pieceToUpdate));
-    };
+    auto newPosition = piece->getPosition();
 
-    if (piece->getColor() == EColor::WHITE)
-        update(_whitePieces);
-    else
-        update(_blackPieces);
+    _boardLocations[oldPosition.i][oldPosition.j].removePiece();
+    _boardLocations[newPosition.i][newPosition.j].setPiece(piece);
 }
 
 }

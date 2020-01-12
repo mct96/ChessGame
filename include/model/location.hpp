@@ -1,6 +1,7 @@
 #pragma once
 
 #include "piece.hpp"
+#include "coordinate.hpp"
 #include "specialized_pieces.hpp"
 
 namespace ch {

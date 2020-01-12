@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 
 #include "color.hpp"
 #include "coordinate.hpp"

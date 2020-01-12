@@ -3,6 +3,8 @@
 namespace ch {
 
 CLocation::CLocation()
+    :
+    _piece{nullptr}
 {
 
 }

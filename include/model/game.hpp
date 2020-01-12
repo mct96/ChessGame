@@ -8,6 +8,7 @@
 
 #include "specialized_pieces.hpp"
 #include "move_path.hpp"
+#include "location.hpp"
 
 using namespace std;
 
@@ -74,6 +75,9 @@ protected:
     void pawnMove(
         std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
 
+    std::vector<CPiece::CPath>& pawnPruningVerticalAttack(
+        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
+
     // Semelhante a "pawnMove". Extende as possibilidades para as peças
     // do tipo "Rock".
     void castling(
@@ -123,11 +127,8 @@ private:
     // como o en passant e castling.
     std::vector<std::pair<CCoordinate, CCoordinate>> _history;
 
-    // TODO usar uma array associativo. Cada posição pode ser unicamente identi-
-    // ficada através do cálculo i*8+j. Isso acelerará a verificação significa-
-    // tivamente.
-    std::unordered_map<int, std::shared_ptr<CPiece>> _whitePieces;
-    std::unordered_map<int, std::shared_ptr<CPiece>> _blackPieces;
+    // Todas as posições do jogo.
+    CLocation _boardLocations[8][8];
 
 };
 

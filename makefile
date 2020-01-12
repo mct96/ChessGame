@@ -3,7 +3,7 @@ ARGS=-std=c++2a
 ARGSV=-std=c++2a -lsfml-graphics -lsfml-window -lsfml-system
 
 game: main.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
-	  lib/color.o lib/type.o lib/board.o lib/boardController.o
+	  lib/color.o lib/type.o lib/board.o lib/boardController.o lib/location.o
 	$(CC) $^ -o $@ $(ARGSV)
 
 lib/piece.o : src/model/piece.cpp
@@ -22,6 +22,9 @@ lib/color.o : src/model/color.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
 lib/type.o : src/model/type.cpp
+	$(CC) $< -c -o $@ $(ARGS)
+
+lib/location.o : src/model/location.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
 lib/board.o : src/view/board.cpp

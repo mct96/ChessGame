@@ -26,7 +26,7 @@ bool CPiece::moveTo(CCoordinate pos)
 
 void CPiece::setPosition(CCoordinate pos)
 {
-    if (pos.i < 1 || pos.i > 8 || pos.j < 1 || pos.j > 8)
+    if (pos.i < 0 || pos.i > 7 || pos.j < 0 || pos.j > 7)
         throw new std::out_of_range{"Invalid position"};
 
     _wasMoved = true;
@@ -93,8 +93,8 @@ bool CPiece::isHorizontalMove(CCoordinate dest) const
 
 bool CPiece::isForwardMove(CCoordinate destination) const
 {
-    // As peças brancas estão em i = [1 .. 2] e as peças pretas
-    // estão em i = [7 .. 8].
+    // As peças brancas estão em i = [0 .. 0] e as peças pretas
+    // estão em i = [6 .. 7].
     auto di = destination.i - _position.i;
 
     return (
@@ -119,11 +119,11 @@ std::vector<CPiece::CPath> CPiece::getHorizontalMoves() const
     std::vector<CPath> moves{};
 
     // Adiciona os movimentos à esquerda da posição atual.
-    for (int j = pos.j - 1; j > 0; --j)
+    for (int j = pos.j - 1; j >= 0; --j)
         leftPath.push_back({pos.i, j});
 
     // Adiciona os movimentos à direita da posição atual.
-    for (int j = pos.j + 1; j <= 8; ++j)
+    for (int j = pos.j + 1; j < 8; ++j)
         rightPath.push_back({pos.i, j});
 
     // Adiciona as direções em que há movimentos.
@@ -140,11 +140,11 @@ std::vector<CPiece::CPath> CPiece::getVerticalMoves() const
     std::vector<CPath> moves{};
 
     // Adiciona os movimentos abaixo da posição atual.
-    for (int i = pos.i - 1; i > 0; --i)
+    for (int i = pos.i - 1; i >= 0; --i)
         downPath.push_back({i, pos.j});
 
     // Adiciona os movimentos acima da posição atual.
-    for (int i = pos.i + 1; i <= 8; ++i)
+    for (int i = pos.i + 1; i < 8; ++i)
         upPath.push_back({i, pos.j});
 
     // Adiciona as direções em que há movimentos.
@@ -163,19 +163,19 @@ std::vector<CPiece::CPath> CPiece::getDiagonalMoves() const
     std::vector<CPath> moves{};
 
     // Adiciona os movimentos à esquerda superior em relação a posição atual.
-    for (int lu = 1; pos.i + lu <= 8 && pos.j - lu > 0; ++lu)
+    for (int lu = 1; pos.i + lu < 8 && pos.j - lu >= 0; ++lu)
         diagonalLUPath.push_back({pos.i + lu, pos.j - lu});
 
     // Adiciona os movimentos à direita superior em relação a posição atual.
-    for (int ru = 1; pos.i + ru <= 8 && pos.j + ru <= 8; ++ru)
+    for (int ru = 1; pos.i + ru < 8 && pos.j + ru < 8; ++ru)
         diagonalRUPath.push_back({pos.i + ru, pos.j + ru});
 
     // Adiciona os movimentos à esquerda inferior em relação a posição atual.
-    for (int ld = 1; pos.i - ld > 0 && pos.j - ld > 0; ++ld)
+    for (int ld = 1; pos.i - ld >= 0 && pos.j - ld >= 0; ++ld)
         diagonalLDPath.push_back({pos.i - ld, pos.j - ld});
 
     // Adiciona os movimentos à direita inferior em relação a posição atual.
-    for (int rd = 1; pos.i - rd > 0 && pos.j + rd <= 8; ++rd)
+    for (int rd = 1; pos.i - rd >= 0 && pos.j + rd < 8; ++rd)
         diagonalRDPath.push_back({pos.i - rd, pos.j + rd});
 
 
@@ -193,8 +193,8 @@ std::vector<CPiece::CPath> CPiece::getRangeBasedMoves(int range) const
     std::vector<CPath> moves{};
 
     // Certamente deve haver algum algoritmo melhor do que este...
-    for (int i=1; i<=8; ++i)
-        for (int j=1; j<=8; ++j)
+    for (int i = 1; i < 8; ++i)
+        for (int j = 1; j < 8; ++j)
             if (getMoveRange(CCoordinate{i, j}) == range) {
                     CPath path{};
                     path.push_back({i, j});
