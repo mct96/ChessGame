@@ -3,7 +3,7 @@
 
 namespace ch {
 
-bool CPawn::canMoveTo(CPosition pos) const
+bool CPawn::canMoveTo(CCoordinate pos) const
 {
     if (isVerticalMove(pos) && isForwardMove(pos))
         return (
@@ -43,7 +43,7 @@ EType CPawn::getType() const {
 
 /* -------------------------------------------------------------------------- */
 
-bool CRook::canMoveTo(CPosition pos) const
+bool CRook::canMoveTo(CCoordinate pos) const
 {
     return isHorizontalMove(pos) || isVerticalMove(pos);
 }
@@ -68,7 +68,7 @@ EType CRook::getType() const {
 
 /* -------------------------------------------------------------------------- */
 
-bool CKnight::canMoveTo(CPosition pos) const
+bool CKnight::canMoveTo(CCoordinate pos) const
 {
     return (
         !isHorizontalMove(pos) &&
@@ -98,7 +98,7 @@ EType CKnight::getType() const {
 
 /* -------------------------------------------------------------------------- */
 
-bool CBishop::canMoveTo(CPosition pos) const
+bool CBishop::canMoveTo(CCoordinate pos) const
 {
     return isVerticalMove(pos);
 }
@@ -114,7 +114,7 @@ EType CBishop::getType() const {
 
 /* -------------------------------------------------------------------------- */
 
-bool CQueen::canMoveTo(CPosition pos) const
+bool CQueen::canMoveTo(CCoordinate pos) const
 {
     return (
         isVerticalMove(pos) ||
@@ -141,7 +141,7 @@ EType CQueen::getType() const {
 
 /* -------------------------------------------------------------------------- */
 
-bool CKing::canMoveTo(CPosition pos) const
+bool CKing::canMoveTo(CCoordinate pos) const
 {
     // Dá para simplificar a expressão, porém é preferível manter a
     // legibilidade do código.

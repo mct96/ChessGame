@@ -17,13 +17,13 @@ public:
      *  Obtém a peça que está na posição específicada pelo parâmetro. Caso não
      *  haja nenhuma peça na posição indica é retornado nullptr.
      */
-    std::shared_ptr<CPiece> getPieceAt(CPosition position) const;
+    std::shared_ptr<CPiece> getPieceAt(CCoordinate position) const;
 
     /**
      * Move a peça que está na posição "from" para a posição "to". Caso o movi-
      * mento seja inválido uma exceção é emitida.
      */
-    void move(CPosition from, CPosition to);
+    void move(CCoordinate from, CCoordinate to);
 
     /**
      *  Retorna todos os possiveis movimentos que a peça "piece" pode realizar.

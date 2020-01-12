@@ -52,7 +52,7 @@ protected:
     sf::Vector2f coordToBoardLocation(int i, int j) const;
 
     // Transforma as coordenadas do View para as coordenadas do tabuleiro.
-    ch::CPosition boardLocationToCoord(int x, int y) const;
+    ch::CCoordinate boardLocationToCoord(int x, int y) const;
 
     // Carrega os Sprites das peças.
     void loadPieces();
@@ -69,10 +69,10 @@ protected:
     sf::Vector2f getPieceDimentions() const;
 
     void highlightSelectedPiece(
-        ch::CPosition pos, sf::RenderTarget& target) const;
+        ch::CCoordinate pos, sf::RenderTarget& target) const;
 
     void highlightPossibleMoves(
-        ch::CPosition pos, bool isOccupied, sf::RenderTarget& target) const;
+        ch::CCoordinate pos, bool isOccupied, sf::RenderTarget& target) const;
 
     void checkStateIndicator(sf::RenderTarget& target) const;
 
@@ -94,7 +94,7 @@ protected:
     void handleMove();
 
     // Realiza o movimento propriamente.
-    void move(CPosition from, CPosition to);
+    void move(CCoordinate from, CCoordinate to);
 
     // Armazena a textura que contém todas as peças.
     sf::Texture _piecesTex;

@@ -41,7 +41,7 @@ EColor CGame::getPlayerTurn() const
     return _playerTurn;
 }
 
-void CGame::move(CPosition from, CPosition to)
+void CGame::move(CCoordinate from, CCoordinate to)
 {
     cout << static_cast<string>(from) << " "
          << static_cast<string>(to) << endl;
@@ -83,7 +83,7 @@ void CGame::move(CPosition from, CPosition to)
     swapPlayerTurn();
 }
 
-std::shared_ptr<CPiece> CGame::getPieceAt(CPosition pos) const
+std::shared_ptr<CPiece> CGame::getPieceAt(CCoordinate pos) const
 {
     std::shared_ptr<CPiece> piece = nullptr;
     if (_whitePieces.contains(posToInt(pos)))
@@ -96,7 +96,7 @@ std::shared_ptr<CPiece> CGame::getPieceAt(CPosition pos) const
 
 }
 
-bool CGame::isFreePosition(CPosition pos) const
+bool CGame::isFreePosition(CCoordinate pos) const
 {
     return getPieceAt(pos) == nullptr;
 }
@@ -129,7 +129,7 @@ std::vector<CPiece::CPath> CGame::movesPruning(
 }
 
 
-void CGame::removePieceAt(CPosition pos)
+void CGame::removePieceAt(CCoordinate pos)
 {
     auto piece = getPieceAt(pos);
 
@@ -139,7 +139,7 @@ void CGame::removePieceAt(CPosition pos)
         _blackPieces.erase(posToInt(piece->getPosition()));
 }
 
-bool CGame::hasAnEnemyAt(CPosition pos) const
+bool CGame::hasAnEnemyAt(CCoordinate pos) const
 {
     return !isFreePosition(pos) && getPieceAt(pos)->getColor() != _playerTurn;
 }
@@ -287,40 +287,40 @@ void CGame::initializeGame()
 void CGame::initializeWhitePieces()
 {
     // Peças Brancas.
-    auto pos1w = CPosition{1, 1};
+    auto pos1w = CCoordinate{1, 1};
     _whitePieces.insert( {posToInt(pos1w),
         std::shared_ptr<CPiece>{new CRook{pos1w, EColor::WHITE}}});
 
-    auto pos2w = CPosition{1, 8};
+    auto pos2w = CCoordinate{1, 8};
     _whitePieces.insert({ posToInt(pos2w),
         std::shared_ptr<CPiece>{new CRook{ pos2w, EColor::WHITE}}});
 
-    auto pos3w = CPosition{1, 2};
+    auto pos3w = CCoordinate{1, 2};
     _whitePieces.insert({ posToInt(pos3w),
         std::shared_ptr<CPiece>{new CKnight{ pos3w, EColor::WHITE}}});
 
-    auto pos4w = CPosition{1, 7};
+    auto pos4w = CCoordinate{1, 7};
     _whitePieces.insert({ posToInt(pos4w),
         std::shared_ptr<CPiece>{new CKnight{ pos4w, EColor::WHITE}}});
 
-    auto pos5w = CPosition{1, 3};
+    auto pos5w = CCoordinate{1, 3};
     _whitePieces.insert({ posToInt(pos5w),
         std::shared_ptr<CPiece>{new CBishop{ pos5w, EColor::WHITE}}});
 
-    auto pos6w = CPosition{1, 6};
+    auto pos6w = CCoordinate{1, 6};
     _whitePieces.insert({ posToInt(pos6w),
         std::shared_ptr<CPiece>{new CBishop{ pos6w, EColor::WHITE}}});
 
-    auto pos7w = CPosition{1, 4};
+    auto pos7w = CCoordinate{1, 4};
     _whitePieces.insert({ posToInt(pos7w),
         std::shared_ptr<CPiece>{new CQueen{ pos7w, EColor::WHITE}}});
 
-    auto pos8w = CPosition{1, 5};
+    auto pos8w = CCoordinate{1, 5};
     _whitePieces.insert({ posToInt(pos8w),
         std::shared_ptr<CPiece>{new CKing{ pos8w, EColor::WHITE}}});
 
     for (int j = 1; j <= 8; ++j) {
-        auto posxw = CPosition{2, j};
+        auto posxw = CCoordinate{2, j};
         _whitePieces.insert({ posToInt(posxw),
         std::shared_ptr<CPiece>{new CPawn{posxw, EColor::WHITE}}});
     }
@@ -329,40 +329,40 @@ void CGame::initializeWhitePieces()
 void CGame::initializeBlackPieces()
 {
      // Peças Pretas.
-    auto pos1b = CPosition{8, 1};
+    auto pos1b = CCoordinate{8, 1};
     _blackPieces.insert({ posToInt(pos1b),
         std::shared_ptr<CPiece>{new CRook{pos1b, EColor::BLACK}}});
 
-    auto pos2b = CPosition{8, 8};
+    auto pos2b = CCoordinate{8, 8};
     _blackPieces.insert({ posToInt(pos2b),
         std::shared_ptr<CPiece>{new CRook{pos2b, EColor::BLACK}}});
 
-    auto pos3b = CPosition{8, 2};
+    auto pos3b = CCoordinate{8, 2};
     _blackPieces.insert({ posToInt(pos3b),
         std::shared_ptr<CPiece>{new CKnight{pos3b, EColor::BLACK}}});
 
-    auto pos4b = CPosition{8, 7};
+    auto pos4b = CCoordinate{8, 7};
     _blackPieces.insert({ posToInt(pos4b),
         std::shared_ptr<CPiece>{new CKnight{pos4b, EColor::BLACK}}});
 
-    auto pos5b = CPosition{8, 3};
+    auto pos5b = CCoordinate{8, 3};
     _blackPieces.insert({ posToInt(pos5b),
         std::shared_ptr<CPiece>{new CBishop{pos5b, EColor::BLACK}}});
 
-    auto pos6b = CPosition{8, 6};
+    auto pos6b = CCoordinate{8, 6};
     _blackPieces.insert({ posToInt(pos6b),
         std::shared_ptr<CPiece>{new CBishop{pos6b, EColor::BLACK}}});
 
-    auto pos7b = CPosition{8, 4};
+    auto pos7b = CCoordinate{8, 4};
     _blackPieces.insert({ posToInt(pos7b),
         std::shared_ptr<CPiece>{new CQueen{pos7b, EColor::BLACK}}});
 
-    auto pos8b = CPosition{8, 5};
+    auto pos8b = CCoordinate{8, 5};
     _blackPieces.insert({ posToInt(pos8b),
         std::shared_ptr<CPiece>{new CKing{pos8b, EColor::BLACK}}});
 
     for (int j = 1; j <= 8; ++j) {
-        CPosition posxb = CPosition{7, j};
+        CCoordinate posxb = CCoordinate{7, j};
         _blackPieces.insert({ posToInt(posxb),
             std::shared_ptr<CPiece>{new CPawn{posxb, EColor::BLACK}}});
     }
@@ -376,7 +376,7 @@ void CGame::swapPlayerTurn()
         _playerTurn = EColor::WHITE;
 }
 
-bool CGame::canMoveTo(std::shared_ptr<CPiece> piece, CPosition to) const
+bool CGame::canMoveTo(std::shared_ptr<CPiece> piece, CCoordinate to) const
 {
     auto moves = piece->getAllMoves();
     moves = movesPruning(piece, moves);
@@ -425,13 +425,13 @@ void CGame::print()
 
 }
 
-int CGame::posToInt(CPosition pos) const
+int CGame::posToInt(CCoordinate pos) const
 {
     // Transforma a posição (2D) em um valor inteiro (1D).
     return pos.i * 8 + pos.j;
 }
 
-void CGame::updatePosition(std::shared_ptr<CPiece> piece, CPosition old)
+void CGame::updatePosition(std::shared_ptr<CPiece> piece, CCoordinate old)
 {
     using Tp = decltype(_whitePieces)&;
     auto update = [&](Tp pieces) -> void {

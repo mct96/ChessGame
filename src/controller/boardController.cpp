@@ -14,12 +14,12 @@ CBoardController::~CBoardController()
 
 }
 
-std::shared_ptr<CPiece> CBoardController::getPieceAt(CPosition position) const
+std::shared_ptr<CPiece> CBoardController::getPieceAt(CCoordinate position) const
 {
     return _game.getPieceAt(position);
 }
 
-void CBoardController::move(CPosition from, CPosition to)
+void CBoardController::move(CCoordinate from, CCoordinate to)
 {
     _game.move(from, to);
 }

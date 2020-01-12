@@ -2,7 +2,7 @@
 
 namespace ch {
 
-bool inPath(std::vector<CPiece::CPath> paths, CPosition pos)
+bool inPath(std::vector<CPiece::CPath> paths, CCoordinate pos)
 {
     for (auto path: paths) {
         for (auto position: path)

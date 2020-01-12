@@ -3,7 +3,7 @@
 
 namespace ch {
 
-CPiece::CPiece(CPosition pos, EColor col):
+CPiece::CPiece(CCoordinate pos, EColor col):
     _position{pos},
     _color{col},
     _wasMoved{false},
@@ -18,13 +18,13 @@ CPiece::~CPiece()
 }
 
 
-bool CPiece::moveTo(CPosition pos)
+bool CPiece::moveTo(CCoordinate pos)
 {
     setPosition(pos);
     return true;
 }
 
-void CPiece::setPosition(CPosition pos)
+void CPiece::setPosition(CCoordinate pos)
 {
     if (pos.i < 1 || pos.i > 8 || pos.j < 1 || pos.j > 8)
         throw new std::out_of_range{"Invalid position"};
@@ -33,7 +33,7 @@ void CPiece::setPosition(CPosition pos)
     _position = pos;
 }
 
-CPosition CPiece::getPosition() const
+CCoordinate CPiece::getPosition() const
 {
     return _position;
 }
@@ -63,7 +63,7 @@ void CPiece::setActivity(bool activity)
     _isActive = activity;
 }
 
-bool CPiece::isDiagonalMove(CPosition dest) const
+bool CPiece::isDiagonalMove(CCoordinate dest) const
 {
     auto di = abs(_position.i - dest.i);
     auto dj = abs(_position.j - dest.j);
@@ -73,7 +73,7 @@ bool CPiece::isDiagonalMove(CPosition dest) const
     return di == dj;
 }
 
-bool CPiece::isVerticalMove(CPosition dest) const
+bool CPiece::isVerticalMove(CCoordinate dest) const
 {
     auto di = _position.i - dest.i;
     auto dj = _position.j - dest.j;
@@ -82,7 +82,7 @@ bool CPiece::isVerticalMove(CPosition dest) const
     return dj == 0 && di != 0;
 }
 
-bool CPiece::isHorizontalMove(CPosition dest) const
+bool CPiece::isHorizontalMove(CCoordinate dest) const
 {
     auto di = _position.i - dest.i;
     auto dj = _position.j - dest.j;
@@ -91,7 +91,7 @@ bool CPiece::isHorizontalMove(CPosition dest) const
     return di == 0 && dj != 0;
 }
 
-bool CPiece::isForwardMove(CPosition destination) const
+bool CPiece::isForwardMove(CCoordinate destination) const
 {
     // As peças brancas estão em i = [1 .. 2] e as peças pretas
     // estão em i = [7 .. 8].
@@ -103,7 +103,7 @@ bool CPiece::isForwardMove(CPosition destination) const
     );
 }
 
-int CPiece::getMoveRange(CPosition dest) const
+int CPiece::getMoveRange(CCoordinate dest) const
 {
     auto di = abs(_position.i - dest.i);
     auto dj = abs(_position.j - dest.j);
@@ -195,7 +195,7 @@ std::vector<CPiece::CPath> CPiece::getRangeBasedMoves(int range) const
     // Certamente deve haver algum algoritmo melhor do que este...
     for (int i=1; i<=8; ++i)
         for (int j=1; j<=8; ++j)
-            if (getMoveRange(CPosition{i, j}) == range) {
+            if (getMoveRange(CCoordinate{i, j}) == range) {
                     CPath path{};
                     path.push_back({i, j});
                     moves.push_back(path);

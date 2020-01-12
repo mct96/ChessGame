@@ -35,17 +35,17 @@ public:
     // Move uma peça da posição "from" para a posição "to".
     // Note que a peça em "from" deve estar na lista de peça do jogador que
     // possue a vez de jogar.
-    void move(CPosition from, CPosition to);
+    void move(CCoordinate from, CCoordinate to);
 
     // Retorna a peça que está na posição "pos". Caso não haja peça é returnado
     // nullptr.
-    std::shared_ptr<CPiece> getPieceAt(CPosition pos) const;
+    std::shared_ptr<CPiece> getPieceAt(CCoordinate pos) const;
 
     // Indica se uma posição está vazia.
-    bool isFreePosition(CPosition pos) const;
+    bool isFreePosition(CCoordinate pos) const;
 
     // Indica se um enimigo ocupa a posição específicada.
-    bool hasAnEnemyAt(CPosition pos) const;
+    bool hasAnEnemyAt(CCoordinate pos) const;
 
     // Remove as posições invalidas para uma peça. Casa peça conhece os movimen-
     // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
@@ -64,7 +64,7 @@ public:
 protected:
     // Remove que está na posição "pos". Esse método é usado quando uma peça é
     // capturada.
-    void removePieceAt(CPosition pos);
+    void removePieceAt(CCoordinate pos);
 
     // O peão possui um comportamento anomalo, pois a movimentação dessa peça
     // não segue o padrão do seu movimento ordinário. Para resolver é necessário
@@ -103,7 +103,7 @@ protected:
 
     // Indica se a peça "piece" específicada nos parâmetros pode mover para a
     // posição especificada pelo parâmetro "to".
-    bool canMoveTo(std::shared_ptr<CPiece> piece, CPosition to) const;
+    bool canMoveTo(std::shared_ptr<CPiece> piece, CCoordinate to) const;
 
     // Retorna o rei que possui a cor específicada no parâmetro.
     std::shared_ptr<CPiece> getKing(EColor kingColor) const;
@@ -113,15 +113,15 @@ protected:
     void print();
 
 private:
-    int posToInt(CPosition pos) const;
-    void updatePosition(std::shared_ptr<CPiece> piece, CPosition old);
+    int posToInt(CCoordinate pos) const;
+    void updatePosition(std::shared_ptr<CPiece> piece, CCoordinate old);
 
     // Indica qual jogador deve jogar.
     EColor _playerTurn;
 
     // Guarda o histórico de jogadas do jogo. Utilizado para validar jogadas
     // como o en passant e castling.
-    std::vector<std::pair<CPosition, CPosition>> _history;
+    std::vector<std::pair<CCoordinate, CCoordinate>> _history;
 
     // TODO usar uma array associativo. Cada posição pode ser unicamente identi-
     // ficada através do cálculo i*8+j. Isso acelerará a verificação significa-

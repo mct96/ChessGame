@@ -70,7 +70,7 @@ sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
     return {x, y};
 }
 
-ch::CPosition CBoardView::boardLocationToCoord(int x, int y) const
+ch::CCoordinate CBoardView::boardLocationToCoord(int x, int y) const
 {
     auto pieceDimention = getPieceDimentions();
 
@@ -152,7 +152,7 @@ sf::Vector2f CBoardView::getPieceDimentions() const
 }
 
 void CBoardView::
-    highlightSelectedPiece(ch::CPosition pos, sf::RenderTarget& target) const
+    highlightSelectedPiece(ch::CCoordinate pos, sf::RenderTarget& target) const
 {
     sf::RectangleShape highlight{getPieceDimentions()};
     highlight.setFillColor(sf::Color{0, 255, 0, 50});
@@ -164,7 +164,7 @@ void CBoardView::
 }
 
 void CBoardView::highlightPossibleMoves(
-    ch::CPosition pos,
+    ch::CCoordinate pos,
     bool isOccupied,
     sf::RenderTarget& target) const
 {
@@ -312,11 +312,11 @@ void CBoardView::handleMove()
 
     auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
 
-    if (auto to = CPosition{i, j}; _selectedPiece->getPosition() != to)
+    if (auto to = CCoordinate{i, j}; _selectedPiece->getPosition() != to)
         move(_selectedPiece->getPosition(), to);
 }
 
-void CBoardView::move(CPosition from, CPosition to)
+void CBoardView::move(CCoordinate from, CCoordinate to)
 {
 
     try {

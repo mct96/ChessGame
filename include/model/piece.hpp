@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "color.hpp"
-#include "position.hpp"
+#include "coordinate.hpp"
 #include "type.hpp"
 
 using namespace std;
@@ -16,15 +16,15 @@ namespace ch {
 class CPiece {
 
 public:
-    using CPath = std::vector<CPosition>;
+    using CPath = std::vector<CCoordinate>;
 
-    CPiece(CPosition position, EColor color);
+    CPiece(CCoordinate position, EColor color);
     virtual ~CPiece();
 
     // Indica se a peça pode se mover para uma determinada posição. Esse método
     // indica se é válido "genericamente" e não analisa a validade baseado no
     // estado do jogo.
-    virtual bool canMoveTo(CPosition position) const = 0;
+    virtual bool canMoveTo(CCoordinate position) const = 0;
 
     // Gera todas as posições no qual a peça pode se mover. As posições que
     // estão na mesma direção são agrupadas, por exemplo, todos os movimentos
@@ -36,9 +36,9 @@ public:
 
     // Move a peça para a posição especificada se for possível mover para esta
     // posição.
-    bool moveTo(CPosition position);
+    bool moveTo(CCoordinate position);
 
-    CPosition getPosition() const;
+    CCoordinate getPosition() const;
 
     void setColor(EColor color);
     EColor getColor() const;
@@ -50,23 +50,23 @@ public:
     void setActivity(bool activity);
 
 protected:
-    void setPosition(CPosition position);
+    void setPosition(CCoordinate position);
 
     // Indica se o movimento realizado pela peça até o destino é diagonal.
-    bool isDiagonalMove(CPosition destination) const;
+    bool isDiagonalMove(CCoordinate destination) const;
 
     // Indica se o movimento é vertical.
-    bool isVerticalMove(CPosition destination) const;
+    bool isVerticalMove(CCoordinate destination) const;
 
     // Indica se o movimento é horizontal.
-    bool isHorizontalMove(CPosition destination) const;
+    bool isHorizontalMove(CCoordinate destination) const;
 
     // Indica se o movimento é para "frente". "Frente" varia de acordo com a
     // cor da peça.
-    bool isForwardMove(CPosition destination) const;
+    bool isForwardMove(CCoordinate destination) const;
 
     // Retorna a distância entre a posição atual e o destino.
-    int getMoveRange(CPosition dest) const;
+    int getMoveRange(CCoordinate dest) const;
 
     // Obtém um vetor com todos os movimentos verticais possíveis.
     std::vector<CPath> getVerticalMoves() const;
@@ -82,7 +82,7 @@ protected:
     std::vector<CPath> getRangeBasedMoves(int range) const;
 
 private:
-    CPosition _position; // Indica a posição atual.
+    CCoordinate _position; // Indica a posição atual.
     EColor _color;       // Indica a cor da peça.
     bool _wasMoved;      // Indica se a peça já foi movida. (Peão e Torre)
     bool _isActive;      // Indica se a peça ainda está em jogo.

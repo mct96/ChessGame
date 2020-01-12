@@ -7,7 +7,7 @@ namespace ch {
 class CPawn: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 
@@ -16,7 +16,7 @@ public:
 class CRook: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 
@@ -25,7 +25,7 @@ public:
 class CKnight: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 };
@@ -33,7 +33,7 @@ public:
 class CBishop: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 };
@@ -41,7 +41,7 @@ public:
 class CQueen: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 };
@@ -49,7 +49,7 @@ public:
 class CKing: public CPiece {
 public:
     using CPiece::CPiece;
-    bool canMoveTo(CPosition position) const override;
+    bool canMoveTo(CCoordinate position) const override;
     std::vector<CPiece::CPath> getAllMoves() const override;
     EType getType() const override;
 };

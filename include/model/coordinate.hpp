@@ -4,7 +4,7 @@
 
 namespace ch {
 
-struct CPosition {
+struct CCoordinate {
     int i;
     int j;
 
@@ -14,12 +14,12 @@ struct CPosition {
                 + ", " + std::to_string(j) + "]"  ;
     }
 
-    inline bool operator==(const CPosition& other) const
+    inline bool operator==(const CCoordinate& other) const
     {
         return i == other.i && j == other.j;
     }
 
-    inline bool operator!=(const CPosition& other) const
+    inline bool operator!=(const CCoordinate& other) const
     {
         return !((*this) == other);
     }
