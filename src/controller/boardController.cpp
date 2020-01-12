@@ -14,7 +14,6 @@ CBoardController::~CBoardController()
 
 }
 
-
 std::shared_ptr<CPiece> CBoardController::getPieceAt(CPosition position) const
 {
     return _game.getPieceAt(position);
@@ -33,9 +32,14 @@ std::vector<CPiece::CPath> CBoardController::
 
     auto moves = piece->getAllMoves();
     _game.exceptionalMoves(piece, moves);
-    moves = _game.movesPruning(moves);
+    moves = _game.movesPruning(piece, moves);
 
     return moves;
+}
+
+bool CBoardController::isCheck() const
+{
+    return _game.isCheck();
 }
 
 ch::EColor CBoardController::getPlayerTurn() const

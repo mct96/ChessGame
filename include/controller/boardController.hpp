@@ -31,6 +31,8 @@ public:
     std::vector<CPiece::CPath> possibleMoves(
         std::shared_ptr<CPiece> piece) const;
 
+    bool isCheck() const;
+
     EColor getPlayerTurn() const;
 protected:
 

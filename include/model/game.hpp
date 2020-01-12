@@ -52,6 +52,7 @@ public:
     // tanto este método deve remover os movimentos que não são válidos, isto é,
     // posições que possuem peças da mesma cor ou que passam por uma dessas.
     std::vector<CPiece::CPath> movesPruning(
+            std::shared_ptr<CPiece> piece,
             std::vector<CPiece::CPath> moves) const;
 
     // Associa todos os tipos extraordinários de movimentos, isto é, pawnMove,

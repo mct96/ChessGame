@@ -47,6 +47,7 @@ void CBoardView::init()
 void CBoardView::draw(sf::RenderTarget& target, sf::RenderStates state) const
 {
     drawBoard(target);
+    checkStateIndicator(target);
     drawSelectedPiece(target);
     showPossibleMoves(target);
     drawPieces(target);
@@ -185,6 +186,18 @@ void CBoardView::highlightPossibleMoves(
         circleCenter + coordToBoardLocation(pos.i, pos.j));
 
     target.draw(highlight);
+}
+
+void CBoardView::checkStateIndicator(sf::RenderTarget& target) const
+{
+    auto isCheck = _gameController.isCheck();
+    if (!isCheck) return;
+
+    auto dim = _screenDimensions;
+    sf::RectangleShape rect{{dim.width, dim.height}};
+    rect.setPosition({dim.left, dim.top});
+    rect.setFillColor({255, 255, 0, 50}); // Amarelo transparente.
+    target.draw(rect);
 }
 
 void CBoardView::drawSelectedPiece(sf::RenderTarget& target) const

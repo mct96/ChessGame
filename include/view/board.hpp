@@ -74,6 +74,8 @@ protected:
     void highlightPossibleMoves(
         ch::CPosition pos, bool isOccupied, sf::RenderTarget& target) const;
 
+    void checkStateIndicator(sf::RenderTarget& target) const;
+
     // Destaca a peça selecionada.
     void drawSelectedPiece(sf::RenderTarget& target) const;
 

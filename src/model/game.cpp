@@ -25,10 +25,9 @@ bool CGame::isCheck() const
 
     for (auto enemy: enemies)
         if (canMoveTo(enemy.second, king->getPosition())) {
-            cout << "Check" << endl;
             return true;
         }
-    cout << "Not Check" << endl;
+
     return false;
 }
 
@@ -44,7 +43,6 @@ EColor CGame::getPlayerTurn() const
 
 void CGame::move(CPosition from, CPosition to)
 {
-    isCheck();
     cout << static_cast<string>(from) << " "
          << static_cast<string>(to) << endl;
     auto piece = getPieceAt(from);
@@ -60,7 +58,7 @@ void CGame::move(CPosition from, CPosition to)
                 "Invalid move. Not your turn."}};
 
     auto moves = piece->getAllMoves();
-    moves = movesPruning(moves);
+    moves = movesPruning(piece, moves);
 
     // Adiciona os movimentos de ataque no caso do peão.
     // Adiciona o roque no caso da torre.
@@ -103,20 +101,24 @@ bool CGame::isFreePosition(CPosition pos) const
     return getPieceAt(pos) == nullptr;
 }
 
-std::vector<CPiece::CPath> CGame::
-    movesPruning(std::vector<CPiece::CPath> moves) const
+std::vector<CPiece::CPath> CGame::movesPruning(
+    std::shared_ptr<CPiece> piece,
+    std::vector<CPiece::CPath> moves) const
 {
+    auto color = piece->getColor();
+    auto enemyColor = color == EColor::WHITE ? EColor::BLACK : EColor::WHITE;
+
     for (auto& move: moves) {
         for (int i=0;i<move.size(); ++i) {
             auto& pos = move[i];
 
             if (!isFreePosition(pos)) {
-                auto piece = getPieceAt(pos);
+                auto target = getPieceAt(pos);
 
                 // Se a posição estiver ocupada tem de haver a poda, porém se a
                 // posição for ocupada pelo adversário ela é incluida, caso
                 // contrário ela deve ser eliminada.
-                int extendPosition = piece->getColor() == _playerTurn ? 0 : 1;
+                int extendPosition = target->getColor() == enemyColor ? 1 : 0;
                 move.erase(move.begin() + i + extendPosition, move.end());
                 break;
             }
@@ -377,17 +379,10 @@ void CGame::swapPlayerTurn()
 bool CGame::canMoveTo(std::shared_ptr<CPiece> piece, CPosition to) const
 {
     auto moves = piece->getAllMoves();
+    moves = movesPruning(piece, moves);
     exceptionalMoves(piece, moves);
-    movesPruning(moves);
 
-    for (auto move: moves) {
-        for (auto pos: move) {
-            if (pos == to)
-                return true;
-        }
-    }
-
-    return false;
+    return inPath(moves, to);
 }
 
 std::shared_ptr<CPiece> CGame::getKing(EColor kingColor) const
