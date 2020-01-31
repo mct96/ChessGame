@@ -7,7 +7,8 @@ namespace ch {
 
 enum class EColor {
     BLACK,
-    WHITE
+    WHITE,
+    NULL_COLOR
 };
 
 std::string colorToString(EColor color);

@@ -3,52 +3,136 @@
 
 namespace ch {
 
-bool CPawn::canMoveTo(CCoordinate pos) const
+CPawn::CPawn()
+    :
+    CPiece{}
 {
-    if (isVerticalMove(pos) && isForwardMove(pos))
-        return (
-            (getMoveRange(pos) == 1) ||
-            (getMoveRange(pos) == 2 && !wasMoved())
-        );
 
-    return false;
 }
 
-
-std::vector<CPiece::CPath> CPawn::getAllMoves() const
+CPawn::~CPawn()
 {
-    auto verticalMove = getVerticalMoves();
+
+}
+
+std::vector<CPath> CPawn::getAllMoves(
+    const  CLocation (*const gameState)[8],
+    const CHistory& history) const
+{
+    cout << "CPawn::getAllMoves" << endl;
+
     auto forwardMove = std::vector<CPath>{};
+    auto path = CPath{};
+    auto pos = getPosition();
 
-    // Seleciona o caminho vertical que avança.
-    for (auto move: verticalMove)
-        if (isForwardMove(move[0]))
-            forwardMove.push_back(move);
+    if (getColor() == EColor::WHITE && pos.i < 7) {
+        path.push_back({pos.i + 1, pos.j});
+        if (pos.i == 1) path.push_back({pos.i + 2, pos.j});
 
-    // forwardMove sempre tem no máximo um CPath.
+    } else if (getColor() == EColor::BLACK && pos.i > 0) {
+        path.push_back({pos.i - 1, pos.j});
+        if (pos.i == 6) path.push_back({pos.i - 2, pos.j});
+    }
 
-    // Move uma ou duas posições dependendo se já moveu ou não.
-    while (forwardMove[0].size() > 2)
-        forwardMove[0].pop_back();
+    forwardMove.push_back(path);
 
-    if (wasMoved())
-        forwardMove[0].pop_back();
+    forwardMove = pawnPruningVerticalAttack(gameState, forwardMove);
+    enPassant(history, forwardMove);
+    pawnMove(gameState, forwardMove);
 
     return forwardMove;
 }
 
-EType CPawn::getType() const {
-    return EType::PAWN;
+void CPawn::enPassant(
+    const CHistory& history, std::vector<CPath>& moves) const
+{
+    cout << "CPawn::enPassant" << endl;
+
+    if (history.getTurnNumber() == 0) return;
+
+    auto lastMove = history.getLastTurn();
+    auto wasPawn = lastMove._stateAfter.getType() == EType::PAWN;
+    auto distance = lastMove._from.i - lastMove._to.i;
+
+    if (wasPawn && abs(distance) == 2 && lastMove._to.i == getPosition().i) {
+        auto path = CPath{};
+        int mid = static_cast<int>(lastMove._from.i + lastMove._to.i)/2;
+        path.push_back({mid, lastMove._to.j});
+        moves.push_back(path);
+    }
+}
+
+void CPawn::pawnMove(
+    const CLocation (*const gameState)[8], std::vector<CPath>& moves) const
+{
+
+    // O peão possui comportamento anomalo. Ele não ataca as posições em que ele
+    // move. Ele ataca nas diagonais em direção ao inimigo, move em direção ao
+    // inimigo uma casa, pode salta um ou duas posição na partida. Esta função
+    // trata esses três casos.
+    cout << "CPawn::pawnMove" << endl;
+
+    auto pos = getPosition();
+
+    auto path = CPath{};
+
+    if (getColor() == EColor::WHITE) {
+        if (pos.i + 1 <= 7 && pos.j + 1 <= 7 &&
+            gameState[pos.i + 1][pos.j + 1].getColor() == EColor::BLACK)
+            path.push_back({pos.i + 1 , pos.j + 1});
+
+        if (pos.i + 1 <= 7 && pos.j - 1 >= 0 &&
+            gameState[pos.i + 1][pos.j - 1].getColor() == EColor::BLACK)
+            path.push_back({pos.i + 1 , pos.j - 1});
+
+    } else if (getColor() == EColor::BLACK ) {
+        if (pos.i - 1 >= 0 && pos.j + 1 <= 7 &&
+            gameState[pos.i - 1][pos.j + 1].getColor() == EColor::WHITE)
+            path.push_back({pos.i - 1 , pos.j + 1});
+
+        if (pos.i - 1 >= 0 && pos.j - 1 >= 0 &&
+            gameState[pos.i - 1][pos.j - 1].getColor() == EColor::WHITE)
+            path.push_back({pos.i - 1 , pos.j - 1});
+    }
+
+    moves.push_back(path);
+}
+
+std::vector<CPath>& CPawn::pawnPruningVerticalAttack(
+    const CLocation (*const gameState)[8],
+    std::vector<CPath>& moves) const
+{
+    cout << "CPawn::pawnPruningVerticalAttack" << endl;
+    auto& path = moves[0];
+
+    for (unsigned int k = 0; k < path.size(); ++k) {
+        auto position = gameState[path[k].i][path[k].j];
+        if (!position.isEmpty() && position.getColor() != getColor()) {
+            path.erase(path.begin() + k);
+            break;
+        }
+   }
+
+    return moves;
 }
 
 /* -------------------------------------------------------------------------- */
 
-bool CRook::canMoveTo(CCoordinate pos) const
+CRook::CRook()
+    :
+    CPiece{}
 {
-    return isHorizontalMove(pos) || isVerticalMove(pos);
+
 }
 
-std::vector<CPiece::CPath> CRook::getAllMoves() const
+CRook::~CRook()
+{
+
+}
+
+std::vector<CPath> CRook::getAllMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
 {
     auto verticalMove = getVerticalMoves();
     auto horizontalMove = getHorizontalMoves();
@@ -62,22 +146,28 @@ std::vector<CPiece::CPath> CRook::getAllMoves() const
 
 }
 
-EType CRook::getType() const {
-    return EType::ROOK;
+void CRook::castling(std::vector<CPath>& moves) const
+{
+
 }
 
 /* -------------------------------------------------------------------------- */
 
-bool CKnight::canMoveTo(CCoordinate pos) const
+CKnight::CKnight()
+    :
+    CPiece{}
 {
-    return (
-        !isHorizontalMove(pos) &&
-        !isVerticalMove(pos) &&
-        getMoveRange(pos) == 2
-    );
+
 }
 
-std::vector<CPiece::CPath> CKnight::getAllMoves() const
+CKnight::~CKnight()
+{
+
+}
+
+std::vector<CPath> CKnight::getAllMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
 {
     auto rangeMoves = getRangeBasedMoves(3);
     auto result = decltype(rangeMoves){};
@@ -92,36 +182,44 @@ std::vector<CPiece::CPath> CKnight::getAllMoves() const
     return result;
 }
 
-EType CKnight::getType() const {
-    return EType::KNIGHT;
-}
-
 /* -------------------------------------------------------------------------- */
 
-bool CBishop::canMoveTo(CCoordinate pos) const
+CBishop::CBishop()
+    :
+    CPiece{}
 {
-    return isVerticalMove(pos);
+
 }
 
-std::vector<CPiece::CPath> CBishop::getAllMoves() const
+CBishop::~CBishop()
+{
+
+}
+
+std::vector<CPath> CBishop::getAllMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
 {
     return getDiagonalMoves();
 }
 
-EType CBishop::getType() const {
-    return EType::BISHOP;
-}
-
 /* -------------------------------------------------------------------------- */
 
-bool CQueen::canMoveTo(CCoordinate pos) const
+CQueen::CQueen()
+    :
+    CPiece{}
 {
-    return (
-        isVerticalMove(pos) ||
-        isHorizontalMove(pos));
+
 }
 
-std::vector<CPiece::CPath> CQueen::getAllMoves() const
+CQueen::~CQueen()
+{
+
+}
+
+std::vector<CPath> CQueen::getAllMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
 {
     auto verticalMoves = getVerticalMoves();
     auto horizontalMoves = getHorizontalMoves();
@@ -135,27 +233,23 @@ std::vector<CPiece::CPath> CQueen::getAllMoves() const
     return result;
 }
 
-EType CQueen::getType() const {
-    return EType::QUEEN;
-}
-
 /* -------------------------------------------------------------------------- */
 
-bool CKing::canMoveTo(CCoordinate pos) const
+CKing::CKing()
+    :
+    CPiece{}
 {
-    // Dá para simplificar a expressão, porém é preferível manter a
-    // legibilidade do código.
 
-    // O Rei se move em todas as direções. As distância diagonal é igual
-    // a 2 por causa da distância de Manhattan.
-    return (
-        (isVerticalMove(pos)   && getMoveRange(pos) == 1) ||
-        (isHorizontalMove(pos) && getMoveRange(pos) == 1) ||
-        (isDiagonalMove(pos)   && getMoveRange(pos) == 2)
-    );
 }
 
-std::vector<CPiece::CPath> CKing::getAllMoves() const
+CKing::~CKing()
+{
+
+}
+
+std::vector<CPath> CKing::getAllMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
 {
     auto verticalMove = getVerticalMoves();
     auto horizontalMove = getHorizontalMoves();
@@ -170,10 +264,6 @@ std::vector<CPiece::CPath> CKing::getAllMoves() const
         while (move.size() > 1) move.pop_back();
 
     return result;
-}
-
-EType CKing::getType() const {
-    return EType::KING;
 }
 
 }

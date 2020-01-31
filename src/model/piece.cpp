@@ -5,62 +5,95 @@ namespace ch {
 
 CPiece::CPiece(CCoordinate pos, EColor col):
     _position{pos},
-    _color{col},
-    _wasMoved{false},
-    _isActive{true}
+    _color{col}
 {
+    cout << "CPiece::CPiece" << endl;
+}
 
+CPiece::CPiece()
+    :
+    _color{EColor::NULL_COLOR}
+{
+    cout << "CPiece::CPiece" << endl;
 }
 
 CPiece::~CPiece()
 {
-
+    cout << "CPiece::~CPiece" << endl;
 }
 
-
-bool CPiece::moveTo(CCoordinate pos)
+void CPiece::setColor(EColor color)
 {
-    setPosition(pos);
-    return true;
+    cout << "CPiece::setColor" << endl;
+    _color = color;
+}
+
+void CPiece::setType(EType type)
+{
+    cout << "CPiece::setType" << endl;
+    _type = type;
 }
 
 void CPiece::setPosition(CCoordinate pos)
 {
+    cout << "CPiece::setPosition" << endl;
     if (pos.i < 0 || pos.i > 7 || pos.j < 0 || pos.j > 7)
         throw new std::out_of_range{"Invalid position"};
 
-    _wasMoved = true;
     _position = pos;
+}
+
+std::vector<CPath> CPiece::getPossibleMoves(
+    const CLocation (*const gameState)[8],
+    const CHistory& history) const
+{
+    cout << "CPiece::getPossibleMoves" << endl;
+    return movesPruning(gameState, getAllMoves(gameState, history));
 }
 
 CCoordinate CPiece::getPosition() const
 {
+    cout << "CPiece::getPosition" << endl;
     return _position;
-}
-
-void CPiece::setColor(EColor col)
-{
-    _color = col;
 }
 
 EColor CPiece::getColor() const
 {
+    cout << "CPiece::getColor" << endl;
     return _color;
+}
+
+EType CPiece::getType() const
+{
+    cout << "CPiece::getType" << endl;
+    return _type;
 }
 
 bool CPiece::wasMoved() const
 {
+    cout << "CPiece::wasMoved" << endl;
     return _wasMoved;
 }
 
-bool CPiece::isActive() const
+std::vector<CPath> CPiece::movesPruning(
+            const CLocation (*const gameState)[8],
+            std::vector<CPath> moves) const
 {
-    return _isActive;
-}
+    cout << "CPiece::movesPruning" << endl;
 
-void CPiece::setActivity(bool activity)
-{
-    _isActive = activity;
+    for (auto& move: moves) {
+        for (int i = 0; i < move.size(); ++i) {
+            auto& pos = move[i];
+            const CLocation& location = gameState[pos.i][pos.j];
+
+            if (!location.isEmpty() && location.getColor() == _color) {
+                move.erase(move.begin() + i, move.end());
+                break;
+            }
+        }
+    }
+
+    return moves;
 }
 
 bool CPiece::isDiagonalMove(CCoordinate dest) const
@@ -112,7 +145,7 @@ int CPiece::getMoveRange(CCoordinate dest) const
     return di + dj;
 }
 
-std::vector<CPiece::CPath> CPiece::getHorizontalMoves() const
+std::vector<CPath> CPiece::getHorizontalMoves() const
 {
     auto pos = _position;
     CPath leftPath{}, rightPath{};
@@ -133,7 +166,7 @@ std::vector<CPiece::CPath> CPiece::getHorizontalMoves() const
     return moves;
 }
 
-std::vector<CPiece::CPath> CPiece::getVerticalMoves() const
+std::vector<CPath> CPiece::getVerticalMoves() const
 {
     auto pos = _position;
     CPath upPath{}, downPath{};
@@ -154,7 +187,7 @@ std::vector<CPiece::CPath> CPiece::getVerticalMoves() const
     return moves;
 }
 
-std::vector<CPiece::CPath> CPiece::getDiagonalMoves() const
+std::vector<CPath> CPiece::getDiagonalMoves() const
 {
     auto pos = _position;
     CPath diagonalLUPath{}, diagonalRUPath{},
@@ -188,7 +221,7 @@ std::vector<CPiece::CPath> CPiece::getDiagonalMoves() const
     return moves;
 }
 
-std::vector<CPiece::CPath> CPiece::getRangeBasedMoves(int range) const
+std::vector<CPath> CPiece::getRangeBasedMoves(int range) const
 {
     std::vector<CPath> moves{};
 

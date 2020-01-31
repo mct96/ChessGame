@@ -6,9 +6,11 @@
 #include <vector>
 #include <iostream>
 
+#include "path.hpp"
 #include "color.hpp"
-#include "coordinate.hpp"
 #include "type.hpp"
+#include "location.hpp"
+#include "history.hpp"
 
 using namespace std;
 
@@ -17,41 +19,40 @@ namespace ch {
 class CPiece {
 
 public:
-    using CPath = std::vector<CCoordinate>;
-
     CPiece(CCoordinate position, EColor color);
+    CPiece();
     virtual ~CPiece();
 
-    // Indica se a peça pode se mover para uma determinada posição. Esse método
-    // indica se é válido "genericamente" e não analisa a validade baseado no
-    // estado do jogo.
-    virtual bool canMoveTo(CCoordinate position) const = 0;
+    void setColor(EColor color);
+    void setType(EType type);
+    void setPosition(CCoordinate position);
 
-    // Gera todas as posições no qual a peça pode se mover. As posições que
-    // estão na mesma direção são agrupadas, por exemplo, todos os movimentos
-    // na direção diagonal superior esquerda são unidos em um único vetor.
-    virtual std::vector<CPath> getAllMoves() const = 0;
-
-    // Identifica qual o tipo da peça.
-    virtual EType getType() const = 0;
-
-    // Move a peça para a posição especificada se for possível mover para esta
-    // posição.
-    bool moveTo(CCoordinate position);
+    std::vector<CPath> getPossibleMoves(
+        const CLocation (*const gameState)[8],
+        const CHistory& history) const;
 
     CCoordinate getPosition() const;
-
-    void setColor(EColor color);
     EColor getColor() const;
+    EType getType() const;
 
     // Indica se a peça foi movida.
     bool wasMoved() const;
 
-    bool isActive() const;
-    void setActivity(bool activity);
-
 protected:
-    void setPosition(CCoordinate position);
+    // Gera todas as posições no qual a peça pode se mover. As posições que
+    // estão na mesma direção são agrupadas, por exemplo, todos os movimentos
+    // na direção diagonal superior esquerda são unidos em um único vetor.
+    virtual std::vector<CPath> getAllMoves(
+        const CLocation (*const gameState)[8],
+        const CHistory& history) const = 0;
+
+    // Remove as posições invalidas para uma peça. Casa peça conhece os movimen-
+    // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
+    // tanto este método deve remover os movimentos que não são válidos, isto é,
+    // posições que possuem peças da mesma cor ou que passam por uma dessas.
+    std::vector<CPath> movesPruning(
+            const CLocation (*const gameState)[8],
+            std::vector<CPath> moves) const;
 
     // Indica se o movimento realizado pela peça até o destino é diagonal.
     bool isDiagonalMove(CCoordinate destination) const;
@@ -85,8 +86,8 @@ protected:
 private:
     CCoordinate _position; // Indica a posição atual.
     EColor _color;       // Indica a cor da peça.
+    EType _type;         // Indica o tipo de peça.
     bool _wasMoved;      // Indica se a peça já foi movida. (Peão e Torre)
-    bool _isActive;      // Indica se a peça ainda está em jogo.
 };
 
 }

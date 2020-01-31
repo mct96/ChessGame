@@ -17,7 +17,7 @@ public:
      *  Obtém a peça que está na posição específicada pelo parâmetro. Caso não
      *  haja nenhuma peça na posição indica é retornado nullptr.
      */
-    std::shared_ptr<CPiece> getPieceAt(CCoordinate position) const;
+    CLocation getPieceAt(CCoordinate position) const;
 
     /**
      * Move a peça que está na posição "from" para a posição "to". Caso o movi-
@@ -26,10 +26,9 @@ public:
     void move(CCoordinate from, CCoordinate to);
 
     /**
-     *  Retorna todos os possiveis movimentos que a peça "piece" pode realizar.
      */
-    std::vector<CPiece::CPath> possibleMoves(
-        std::shared_ptr<CPiece> piece) const;
+    std::vector<CPath> possibleMoves(
+        CCoordinate pos) const;
 
     bool isCheck() const;
 

@@ -2,9 +2,20 @@
 
 namespace ch {
 
+CLocation::CLocation(EType type, EColor color)
+    :
+    _isEmpty{false},
+    _type{type},
+    _color{color}
+{
+
+}
+
 CLocation::CLocation()
     :
-    _piece{nullptr}
+    _isEmpty{true},
+    _type{EType::NULL_TYPE},
+    _color{EColor::NULL_COLOR}
 {
 
 }
@@ -14,20 +25,30 @@ CLocation::~CLocation()
 
 }
 
-void CLocation::setPiece(std::shared_ptr<CPiece> piece) {
-    this->_piece = piece;
+void CLocation::setPiece(EType type, EColor color) {
+    _type = type;
+    _color = color;
+
+    _isEmpty = false;
 }
 
-std::shared_ptr<CPiece> CLocation::getPiece() const {
-    return this->_piece;
+EType CLocation::getType() const {
+    return _type;
+}
+
+EColor CLocation::getColor() const {
+    return _color;
 }
 
 void CLocation::removePiece() {
-    this->_piece = nullptr;
+    _isEmpty = true;
+
+    _type = EType::NULL_TYPE;
+    _color = EColor::NULL_COLOR;
 }
 
 bool CLocation::isEmpty() const {
-    return this->_piece == nullptr;
+    return _isEmpty;
 }
 
 }

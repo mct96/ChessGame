@@ -6,9 +6,12 @@
 #include <iostream>
 #include <iomanip>
 
+#include "color.hpp"
+#include "type.hpp"
+#include "location.hpp"
+#include "coordinate.hpp"
 #include "specialized_pieces.hpp"
 #include "move_path.hpp"
-#include "location.hpp"
 
 using namespace std;
 
@@ -24,6 +27,8 @@ public:
     CGame();
     ~CGame();
 
+    CLocation getPieceAt(CCoordinate pos) const;
+
     // Indica se o jogo está em check.
     bool isCheck() const;
 
@@ -33,64 +38,22 @@ public:
     // Indica qual jogador deve se mover.
     EColor getPlayerTurn() const;
 
+    std::vector<CPath> possibleMoves(
+        CCoordinate pos) const;
+
     // Move uma peça da posição "from" para a posição "to".
     // Note que a peça em "from" deve estar na lista de peça do jogador que
     // possue a vez de jogar.
     void move(CCoordinate from, CCoordinate to);
-
-    // Retorna a peça que está na posição "pos". Caso não haja peça é returnado
-    // nullptr.
-    std::shared_ptr<CPiece> getPieceAt(CCoordinate pos) const;
-
-    // Indica se uma posição está vazia.
-    bool isFreePosition(CCoordinate pos) const;
-
-    // Indica se um enimigo ocupa a posição específicada.
-    bool hasAnEnemyAt(CCoordinate pos) const;
-
-    // Remove as posições invalidas para uma peça. Casa peça conhece os movimen-
-    // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
-    // tanto este método deve remover os movimentos que não são válidos, isto é,
-    // posições que possuem peças da mesma cor ou que passam por uma dessas.
-    std::vector<CPiece::CPath> movesPruning(
-            std::shared_ptr<CPiece> piece,
-            std::vector<CPiece::CPath> moves) const;
-
-    // Associa todos os tipos extraordinários de movimentos, isto é, pawnMove,
-    // castling, enPassant.
-    void exceptionalMoves(
-            std::shared_ptr<CPiece> piece,
-            std::vector<CPiece::CPath>& moves) const;
-
 protected:
-    // Remove que está na posição "pos". Esse método é usado quando uma peça é
-    // capturada.
-    void removePieceAt(CCoordinate pos);
-
-    // O peão possui um comportamento anomalo, pois a movimentação dessa peça
-    // não segue o padrão do seu movimento ordinário. Para resolver é necessário
-    // saber o estado das demais peças, portanto, esse problema deve ser resol-
-    // vido aqui. Para isso, esse método extende a lista de movimentos possiveis
-    // quando a peça for do tipo "Pawn".
-    void pawnMove(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
-
-    std::vector<CPiece::CPath>& pawnPruningVerticalAttack(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
-
-    // Semelhante a "pawnMove". Extende as possibilidades para as peças
-    // do tipo "Rock".
-    void castling(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
-
-    // Semelhante a "pawnMove". Extende as possiblidades da peça do tipo "Pawn"
-    // para permitir o en Passant.
-    void enPassant(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves) const;
+    CPiece * const factoryPiece(
+        EType type,
+        EColor color
+    ) const;
 
     // Trata o caso de Promotions no jogo.
     void promotion(
-        std::shared_ptr<CPiece> piece, std::vector<CPiece::CPath>& moves);
+        std::shared_ptr<CPiece> piece, std::vector<CPath>& moves);
 
     // Inicializa todos as peças do jogo instanciando e inicializando cada uma
     // na sua respectiva posição.
@@ -112,24 +75,26 @@ protected:
     // Retorna o rei que possui a cor específicada no parâmetro.
     std::shared_ptr<CPiece> getKing(EColor kingColor) const;
 
-    // Apenas utilizado para testes. Deverá ser substituido por logs conforme o
-    // desenvolvimento avançar.
-    void print();
+
 
 private:
-    int posToInt(CCoordinate pos) const;
-    void updatePosition(std::shared_ptr<CPiece> piece, CCoordinate old);
 
+    // Todas as posições do jogo.
+    CLocation _boardLocations[8][8];
     // Indica qual jogador deve jogar.
+
     EColor _playerTurn;
 
     // Guarda o histórico de jogadas do jogo. Utilizado para validar jogadas
     // como o en passant e castling.
-    std::vector<std::pair<CCoordinate, CCoordinate>> _history;
+    CHistory _history;
 
-    // Todas as posições do jogo.
-    CLocation _boardLocations[8][8];
-
+    static CPawn   _pawn;
+    static CRook   _rook;
+    static CKnight _knight;
+    static CBishop _bishop;
+    static CQueen  _queen;
+    static CKing   _king;
 };
 
 }

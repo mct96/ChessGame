@@ -2,12 +2,16 @@
 
 namespace ch {
 
-bool inPath(std::vector<CPiece::CPath> paths, CCoordinate pos)
+bool inPath(std::vector<CPath> paths, CCoordinate pos)
 {
+    cout << "::inPath" << endl;
+
     for (auto path: paths) {
-        for (auto position: path)
+        std::cout << path.size() << std::endl;
+        for (auto position: path) {
             if (pos == position)
                 return true;
+        }
     }
 
     return false;

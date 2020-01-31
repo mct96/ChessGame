@@ -21,8 +21,4 @@ My goal in this project is to apply what I learned/studied about OOP, SFML, MVC 
 
 ![Sample](/sample/sample_view_update.gif)
 
-![Sample](/sample/sample_code_2.png)
-
-![Sample](/sample/sample_code_1.png)
-
 </div>

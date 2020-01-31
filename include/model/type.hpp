@@ -12,6 +12,7 @@ enum class EType {
     BISHOP,
     KING,
     QUEEN,
+    NULL_TYPE
 };
 
 std::string typeToString(EType type);

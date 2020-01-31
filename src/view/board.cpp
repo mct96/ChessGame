@@ -17,7 +17,7 @@ CBoardView::CBoardView(
     _pieceTexFile{pieceTexFile},
     _boardTexFile{boardTexFile},
     _selectedPoint{screenDimensions.left, screenDimensions.top},
-    _selectedPiece{nullptr},
+    _selectedPiece{},
     _gameView{_screenDimensions},
     _gameController{}
 {
@@ -72,6 +72,8 @@ sf::Vector2f CBoardView::coordToBoardLocation(int i, int j) const
 
 ch::CCoordinate CBoardView::boardLocationToCoord(int x, int y) const
 {
+    cout << "CBoardView::boardLocationToCoord" << endl;
+
     auto pieceDimention = getPieceDimentions();
 
     auto i = 7 - static_cast<int>(
@@ -85,6 +87,8 @@ ch::CCoordinate CBoardView::boardLocationToCoord(int x, int y) const
 
 void CBoardView::loadPieces()
 {
+    cout << "CBoardView::loadPieces" << endl;
+
     auto whiteKing   = sf::Sprite{_piecesTex, {{0 * 200, 0}, {200, 200}}};
     auto whiteQueen  = sf::Sprite{_piecesTex, {{1 * 200, 0}, {200, 200}}};
     auto whiteBishop = sf::Sprite{_piecesTex, {{2 * 200, 0}, {200, 200}}};
@@ -117,6 +121,8 @@ void CBoardView::loadPieces()
 
 void CBoardView::loadBoardPositionColor()
 {
+    cout << "CBoardView::loadBoardPositionColor" << endl;
+
     sf::Sprite whitePiece{_boardTex, {{0  , 0}, {200, 200}}};
     sf::Sprite blackPiece{_boardTex, {{200, 0}, {200, 200}}};
 
@@ -127,6 +133,8 @@ void CBoardView::loadBoardPositionColor()
 
 void CBoardView::scaleSprites()
 {
+    cout << "CBoardView::scaleSprites" << endl;
+
     auto screenSize = _gameView.getSize();
     auto pieceDimentions = getPieceDimentions();
 
@@ -146,6 +154,8 @@ void CBoardView::scaleSprites()
 
 sf::Vector2f CBoardView::getPieceDimentions() const
 {
+    cout << "CBoardView::getPieceDimentions" << endl;
+
     auto boardSize = _gameView.getSize();
 
     return {boardSize.x/8, boardSize.y/8};
@@ -154,6 +164,8 @@ sf::Vector2f CBoardView::getPieceDimentions() const
 void CBoardView::
     highlightSelectedPiece(ch::CCoordinate pos, sf::RenderTarget& target) const
 {
+    cout << "CBoardView::highlightSelectedPiece" << endl;
+
     sf::RectangleShape highlight{getPieceDimentions()};
     highlight.setFillColor(sf::Color{0, 255, 0, 50});
     highlight.setOutlineColor(sf::Color{0, 255, 0, 255});
@@ -168,6 +180,8 @@ void CBoardView::highlightPossibleMoves(
     bool isOccupied,
     sf::RenderTarget& target) const
 {
+    cout << "CBoardView::highlightPossibleMoves" << endl;
+
     auto dim = getPieceDimentions();
     auto radius = 10.f;
     auto circleCenter = sf::Vector2f{dim.x/2, dim.y/2};
@@ -190,6 +204,7 @@ void CBoardView::highlightPossibleMoves(
 
 void CBoardView::checkStateIndicator(sf::RenderTarget& target) const
 {
+    cout << "CBoardView::checkStateIndicator" << endl;
     auto isCheck = _gameController.isCheck();
     if (!isCheck) return;
 
@@ -202,12 +217,16 @@ void CBoardView::checkStateIndicator(sf::RenderTarget& target) const
 
 void CBoardView::drawSelectedPiece(sf::RenderTarget& target) const
 {
-    if (_selectedPiece)
-        highlightSelectedPiece(_selectedPiece->getPosition(), target);
+    cout << "CBoardView::drawSelectedPiece" << endl;
+
+    if (!_selectedPiece.first.isEmpty())
+        highlightSelectedPiece(_selectedPiece.second, target);
 }
 
 void CBoardView::onClick(const sf::Event& event)
 {
+    cout << "CBoardView::onClick" << endl;
+
     auto point = sf::Vector2f{event.mouseButton.x, event.mouseButton.y};
 
     // Verifica se a região selecionada está dentro da área do tabuleiro. Caso
@@ -219,9 +238,14 @@ void CBoardView::onClick(const sf::Event& event)
 
     // Se alguma peça for selecionada, marque-a como peça selecionada.
     auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
-    if (auto piece = _gameController.getPieceAt({i, j});
-        piece && piece->getColor() == _gameController.getPlayerTurn())
-        _selectedPiece = piece;
+    auto piece = _gameController.getPieceAt({i, j});
+
+
+    if (!piece.isEmpty() &&
+         piece.getColor() == _gameController.getPlayerTurn()) {
+             _selectedPiece.first = piece;
+             _selectedPiece.second = {i, j};
+         }
 
     // Verifica se essa ação foi a de mover uma peça.
     handleMove();
@@ -266,12 +290,12 @@ void CBoardView::drawPieces(sf::RenderTarget& target) const
             auto piece = _gameController.getPieceAt({i, j});
 
             // Não há peça nesta posição.
-            if (piece == nullptr) continue;
+            if (piece.isEmpty()) continue;
 
             sf::Vector2f pos{200.f  * j, 1600 - 200.f * (i + 1)};
 
-            auto type = piece->getType();
-            auto color = piece->getColor();
+            auto type = piece.getType();
+            auto color = piece.getColor();
 
             auto pieceSprite =
                 _pieces.at(std::make_tuple(type, color));
@@ -291,16 +315,15 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
     auto selectedPiece = _gameController.getPieceAt({i, j});
 
     // Caso não haja, retorne nulo.
-    if (!selectedPiece)
-        return;
+    if (selectedPiece.isEmpty()) return;
 
     // Lista os possiveis movimentos da peça selecionada.
-    auto moves = _gameController.possibleMoves(selectedPiece);
+    auto moves = _gameController.possibleMoves(_selectedPiece.second);
 
     // Exibe todos esses movimentos.
     for (auto move: moves) {
         for (auto pos: move) {
-            auto isOccupied = _gameController.getPieceAt(pos) != nullptr;
+            auto isOccupied = !_gameController.getPieceAt(pos).isEmpty();
             highlightPossibleMoves({pos.i, pos.j}, isOccupied, target);
         }
     }
@@ -308,12 +331,12 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
 
 void CBoardView::handleMove()
 {
-    if (!_selectedPiece) return;
+    if (_selectedPiece.first.isEmpty()) return;
 
     auto [i, j] = boardLocationToCoord(_selectedPoint.x, _selectedPoint.y);
 
-    if (auto to = CCoordinate{i, j}; _selectedPiece->getPosition() != to)
-        move(_selectedPiece->getPosition(), to);
+    if (auto to = CCoordinate{i, j}; _selectedPiece.second != to)
+        move(_selectedPiece.second, to);
 }
 
 void CBoardView::move(CCoordinate from, CCoordinate to)

@@ -1,18 +1,20 @@
 #pragma once
 
-#include "piece.hpp"
-#include "coordinate.hpp"
-#include "specialized_pieces.hpp"
+#include "color.hpp"
+#include "type.hpp"
 
 namespace ch {
 
 class CLocation {
 public:
+    CLocation(EType type, EColor color);
     CLocation();
     ~CLocation();
 
-    void setPiece(std::shared_ptr<CPiece> piece);
-    std::shared_ptr<CPiece> getPiece() const;
+    void setPiece(EType type, EColor color);
+
+    EType getType() const;
+    EColor getColor() const;
 
     void removePiece();
 
@@ -21,7 +23,10 @@ public:
 protected:
 
 private:
-    std::shared_ptr<CPiece> _piece;
+    bool _isEmpty;
+
+    EType _type;
+    EColor _color;
 };
 
 }

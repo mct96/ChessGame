@@ -3,7 +3,8 @@ ARGS=-std=c++2a
 ARGSV=-std=c++2a -lsfml-graphics -lsfml-window -lsfml-system
 
 game: main.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
-	  lib/color.o lib/type.o lib/board.o lib/boardController.o lib/location.o
+	  lib/color.o lib/type.o lib/board.o lib/boardController.o lib/location.o \
+	  lib/history.o
 	$(CC) $^ -o $@ $(ARGSV)
 
 lib/piece.o : src/model/piece.cpp
@@ -27,6 +28,9 @@ lib/type.o : src/model/type.cpp
 lib/location.o : src/model/location.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
+lib/history.o : src/model/history.cpp
+	$(CC) $< -c -o $@ $(ARGS)
+
 lib/board.o : src/view/board.cpp
 	$(CC) $< -c -o $@ $(ARGS)
 
@@ -35,7 +39,7 @@ lib/boardController.o : src/controller/boardController.cpp
 
 .PHONY : build test
 test: test.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
-	  lib/color.o lib/type.o
+	  lib/color.o lib/type.o lib/history.o
 	$(CC) $^ -o $@ $(ARGS)
 
 .PHONY : clean

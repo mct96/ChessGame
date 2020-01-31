@@ -125,7 +125,7 @@ private:
     sf::View _gameView;
     sf::Vector2i _selectedPoint;
 
-    std::shared_ptr<CPiece> _selectedPiece;
+    std::pair<CLocation, CCoordinate> _selectedPiece;
 
     std::string _pieceTexFile;
     std::string _boardTexFile;
