@@ -1,9 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "coordinate.hpp"
 #include "location.hpp"
+
+using namespace std;
 
 namespace ch {
 
@@ -38,6 +41,7 @@ class CMove
 {
 public:
     CMove(CAtomicMove move);
+    CMove() = default;
     ~CMove();
 
     void setMove(CAtomicMove move);
@@ -72,7 +76,7 @@ public:
     // Adiciona um movimento.
     void append(CMove move);
 
-    inline CMove operator[](unsigned int i) const;
+    CMove operator[](unsigned int i) const;
     CMove get(unsigned int i) const;
 
     // Adiciona uma sequência de movimentos.
@@ -80,6 +84,7 @@ public:
 
     // Remove o elemento especificado.
     void remove(unsigned int at);
+    void removeLast();
 
     // Remove todos elementos a partir da posição especificada.
     void removeFrom(unsigned int at);
@@ -88,21 +93,23 @@ private:
     std::vector<CMove> _moves;
 };
 
-class CPath: public std::vector<CCoordinate>
+class CMoveTree
 {
 public:
-   /*  CPath(std::initializer_list<CMoveBranch> branchs);
-    CPath();// = default;
-    ~CPath();
+    CMoveTree(std::initializer_list<CMoveBranch> branchs);
+    CMoveTree();// = default;
+    ~CMoveTree();
 
     void append(CMoveBranch branch);
     void remove(unsigned int at);
 
     unsigned int numberOfBranchs() const;
-    std::vector<CMoveBranch> getBranchs() const; */
+    std::vector<CMoveBranch> getBranchs() const;
+
+    void pruningBranchFrom(unsigned int branch, unsigned int from);
 
 private:
-    // std::vector<CMoveBranch> _branchs;
+    std::vector<CMoveBranch> _branchs;
 };
 
 }

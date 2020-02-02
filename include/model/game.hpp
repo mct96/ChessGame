@@ -38,7 +38,7 @@ public:
     // Indica qual jogador deve se mover.
     EColor getPlayerTurn() const;
 
-    std::vector<CPath> possibleMoves(
+    CMoveTree possibleMoves(
         CCoordinate pos) const;
 
     // Move uma peça da posição "from" para a posição "to".
@@ -53,7 +53,7 @@ protected:
 
     // Trata o caso de Promotions no jogo.
     void promotion(
-        std::shared_ptr<CPiece> piece, std::vector<CPath>& moves);
+        std::shared_ptr<CPiece> piece, CMoveTree& moves);
 
     // Inicializa todos as peças do jogo instanciando e inicializando cada uma
     // na sua respectiva posição.

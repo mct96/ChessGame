@@ -27,7 +27,7 @@ public:
     void setType(EType type);
     void setPosition(CCoordinate position);
 
-    std::vector<CPath> getPossibleMoves(
+    CMoveTree getPossibleMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const;
 
@@ -42,7 +42,7 @@ protected:
     // Gera todas as posições no qual a peça pode se mover. As posições que
     // estão na mesma direção são agrupadas, por exemplo, todos os movimentos
     // na direção diagonal superior esquerda são unidos em um único vetor.
-    virtual std::vector<CPath> getAllMoves(
+    virtual CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const = 0;
 
@@ -50,9 +50,9 @@ protected:
     // tos possiveis, porém não possuem informações sobre o estado do jogo, por-
     // tanto este método deve remover os movimentos que não são válidos, isto é,
     // posições que possuem peças da mesma cor ou que passam por uma dessas.
-    std::vector<CPath> movesPruning(
+    void movesPruning(
             const CLocation (*const gameState)[8],
-            std::vector<CPath> moves) const;
+            CMoveTree& moves) const;
 
     // Indica se o movimento realizado pela peça até o destino é diagonal.
     bool isDiagonalMove(CCoordinate destination) const;
@@ -71,17 +71,17 @@ protected:
     int getMoveRange(CCoordinate dest) const;
 
     // Obtém um vetor com todos os movimentos verticais possíveis.
-    std::vector<CPath> getVerticalMoves() const;
+    CMoveTree getVerticalMoves() const;
 
     // Obtém um vetor com todos os movimentos horizontais possíveis.
-    std::vector<CPath> getHorizontalMoves() const;
+    CMoveTree getHorizontalMoves() const;
 
     // Obtém um vetor com todos os movimentos diagonais possíveis.
-    std::vector<CPath> getDiagonalMoves() const;
+    CMoveTree getDiagonalMoves() const;
 
     // Obtém um vetor com todos os movimentos cujo a distância de manhattan
     // é igual a "range".
-    std::vector<CPath> getRangeBasedMoves(int range) const;
+    CMoveTree getRangeBasedMoves(int range) const;
 
 private:
     CCoordinate _position; // Indica a posição atual.

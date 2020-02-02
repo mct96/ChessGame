@@ -12,7 +12,7 @@ public:
     CPawn();
     virtual ~CPawn();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 
@@ -20,7 +20,7 @@ public:
     // para permitir o en Passant.
     void enPassant(
         const CHistory& history,
-        std::vector<CPath>& moves) const;
+        CMoveTree& moves) const;
 
     // O peão possui um comportamento anômalo, pois a movimentação dessa peça
     // não segue o padrão do seu movimento ordinário. Para resolver é necessário
@@ -29,12 +29,12 @@ public:
     // quando a peça for do tipo "Pawn".
     void pawnMove(
         const CLocation (*const gameState)[8],
-        std::vector<CPath>& moves) const;
+        CMoveTree& moves) const;
 
 
-    std::vector<CPath>& pawnPruningVerticalAttack(
+    void pawnPruningVerticalAttack(
         const CLocation (*const gameState)[8],
-        std::vector<CPath>& moves) const;
+        CMoveTree& moves) const;
 
 };
 
@@ -43,13 +43,13 @@ public:
     CRook();
     virtual ~CRook();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 
     // Semelhante a "pawnMove". Extende as possibilidades para as peças
     // do tipo "Rock".
-    void castling(std::vector<CPath>& moves) const;
+    void castling(CMoveTree& moves) const;
 
 };
 
@@ -58,7 +58,7 @@ public:
     CKnight();
     virtual ~CKnight();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 
@@ -69,7 +69,7 @@ public:
     CBishop();
     virtual ~CBishop();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 };
@@ -79,7 +79,7 @@ public:
     CQueen();
     virtual ~CQueen();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 };
@@ -89,7 +89,7 @@ public:
     CKing();
     virtual ~CKing();
 
-    std::vector<CPath> getAllMoves(
+    CMoveTree getAllMoves(
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 };

@@ -15,28 +15,32 @@ CPawn::~CPawn()
 
 }
 
-std::vector<CPath> CPawn::getAllMoves(
+CMoveTree CPawn::getAllMoves(
     const  CLocation (*const gameState)[8],
     const CHistory& history) const
 {
     cout << "CPawn::getAllMoves" << endl;
 
-    auto forwardMove = std::vector<CPath>{};
-    auto path = CPath{};
-    auto pos = getPosition();
+    auto forwardMove = CMoveTree{};
+    auto branch = CMoveBranch{};
+    auto curPos = getPosition();
 
-    if (getColor() == EColor::WHITE && pos.i < 7) {
-        path.push_back({pos.i + 1, pos.j});
-        if (pos.i == 1) path.push_back({pos.i + 2, pos.j});
+    if (getColor() == EColor::WHITE && curPos.i < 7) {
+        branch.append(CMove{CAtomicMove{curPos, {curPos.i + 1, curPos.j}}});
 
-    } else if (getColor() == EColor::BLACK && pos.i > 0) {
-        path.push_back({pos.i - 1, pos.j});
-        if (pos.i == 6) path.push_back({pos.i - 2, pos.j});
+        if (curPos.i == 1)
+            branch.append(CMove{CAtomicMove{curPos, {curPos.i + 2, curPos.j}}});
+
+    } else if (getColor() == EColor::BLACK && curPos.i > 0) {
+        branch.append(CMove{CAtomicMove{curPos, {curPos.i - 1, curPos.j}}});
+
+        if (curPos.i == 6)
+            branch.append(CMove{CAtomicMove{curPos, {curPos.i - 2, curPos.j}}});
     }
 
-    forwardMove.push_back(path);
+    forwardMove.append(branch);
 
-    forwardMove = pawnPruningVerticalAttack(gameState, forwardMove);
+    pawnPruningVerticalAttack(gameState, forwardMove);
     enPassant(history, forwardMove);
     pawnMove(gameState, forwardMove);
 
@@ -44,9 +48,11 @@ std::vector<CPath> CPawn::getAllMoves(
 }
 
 void CPawn::enPassant(
-    const CHistory& history, std::vector<CPath>& moves) const
+    const CHistory& history, CMoveTree& moves) const
 {
     cout << "CPawn::enPassant" << endl;
+
+    auto curPos = getPosition();
 
     if (history.getTurnNumber() == 0) return;
 
@@ -54,66 +60,81 @@ void CPawn::enPassant(
     auto wasPawn = lastMove._stateAfter.getType() == EType::PAWN;
     auto distance = lastMove._from.i - lastMove._to.i;
 
-    if (wasPawn && abs(distance) == 2 && lastMove._to.i == getPosition().i) {
-        auto path = CPath{};
+    if (wasPawn && abs(distance) == 2 && lastMove._to.i == curPos.i) {
+        auto branch = CMoveBranch{};
         int mid = static_cast<int>(lastMove._from.i + lastMove._to.i)/2;
-        path.push_back({mid, lastMove._to.j});
-        moves.push_back(path);
+        CAtomicMove atomicMove{curPos, {mid, lastMove._to.j}};
+        CAtomicMove sideEffect{lastMove._to, lastMove._to};
+
+        CMove move{atomicMove};
+        move.setSideEffect(sideEffect);
+
+        branch.append(move);
+
+        moves.append(branch);
     }
 }
 
 void CPawn::pawnMove(
-    const CLocation (*const gameState)[8], std::vector<CPath>& moves) const
+    const CLocation (*const gameState)[8], CMoveTree& moves) const
 {
 
-    // O peão possui comportamento anomalo. Ele não ataca as posições em que ele
+    // O peão curPossui comportamento anomalo. Ele não ataca as curPosições em que ele
     // move. Ele ataca nas diagonais em direção ao inimigo, move em direção ao
-    // inimigo uma casa, pode salta um ou duas posição na partida. Esta função
+    // inimigo uma casa, pode salta um ou duas curPosição na partida. Esta função
     // trata esses três casos.
     cout << "CPawn::pawnMove" << endl;
 
-    auto pos = getPosition();
+    auto curPos = getPosition();
 
-    auto path = CPath{};
+    cout << curPos.i << ", "  << curPos.j << endl;
+
+    auto branch = CMoveBranch{};
 
     if (getColor() == EColor::WHITE) {
-        if (pos.i + 1 <= 7 && pos.j + 1 <= 7 &&
-            gameState[pos.i + 1][pos.j + 1].getColor() == EColor::BLACK)
-            path.push_back({pos.i + 1 , pos.j + 1});
+        if (curPos.i + 1 <= 7 && curPos.j + 1 <= 7 &&
+            gameState[curPos.i + 1][curPos.j + 1].getColor() == EColor::BLACK)
+            branch.append(
+                CMove{CAtomicMove{curPos, {curPos.i + 1 , curPos.j + 1}}});
 
-        if (pos.i + 1 <= 7 && pos.j - 1 >= 0 &&
-            gameState[pos.i + 1][pos.j - 1].getColor() == EColor::BLACK)
-            path.push_back({pos.i + 1 , pos.j - 1});
+        if (curPos.i + 1 <= 7 && curPos.j - 1 >= 0 &&
+            gameState[curPos.i + 1][curPos.j - 1].getColor() == EColor::BLACK)
+            branch.append(
+                CMove{CAtomicMove{curPos, {curPos.i + 1 , curPos.j - 1}}});
 
     } else if (getColor() == EColor::BLACK ) {
-        if (pos.i - 1 >= 0 && pos.j + 1 <= 7 &&
-            gameState[pos.i - 1][pos.j + 1].getColor() == EColor::WHITE)
-            path.push_back({pos.i - 1 , pos.j + 1});
+        if (curPos.i - 1 >= 0 && curPos.j + 1 <= 7 &&
+            gameState[curPos.i - 1][curPos.j + 1].getColor() == EColor::WHITE)
+            branch.append(
+                CMove{CAtomicMove{curPos, {curPos.i - 1 , curPos.j + 1}}});
 
-        if (pos.i - 1 >= 0 && pos.j - 1 >= 0 &&
-            gameState[pos.i - 1][pos.j - 1].getColor() == EColor::WHITE)
-            path.push_back({pos.i - 1 , pos.j - 1});
+        if (curPos.i - 1 >= 0 && curPos.j - 1 >= 0 &&
+            gameState[curPos.i - 1][curPos.j - 1].getColor() == EColor::WHITE)
+            branch.append(
+                CMove{CAtomicMove{curPos, {curPos.i - 1 , curPos.j - 1}}});
     }
 
-    moves.push_back(path);
+    moves.append(branch);
 }
 
-std::vector<CPath>& CPawn::pawnPruningVerticalAttack(
+void CPawn::pawnPruningVerticalAttack(
     const CLocation (*const gameState)[8],
-    std::vector<CPath>& moves) const
+    CMoveTree& moves) const
 {
     cout << "CPawn::pawnPruningVerticalAttack" << endl;
-    auto& path = moves[0];
 
-    for (unsigned int k = 0; k < path.size(); ++k) {
-        auto position = gameState[path[k].i][path[k].j];
-        if (!position.isEmpty() && position.getColor() != getColor()) {
-            path.erase(path.begin() + k);
+    auto branch = moves.getBranchs()[0];
+    for (unsigned int k = 0; k < branch.numberOfMoves(); ++k) {
+        auto curBranch = branch[k].getMove().getTo();
+        auto curPosition = gameState[curBranch.i][curBranch.j];
+
+        if (!curPosition.isEmpty() && curPosition.getColor() != getColor()) {
+            branch.removeFrom(k);
             break;
         }
    }
 
-    return moves;
+
 }
 
 /* -------------------------------------------------------------------------- */
@@ -130,7 +151,7 @@ CRook::~CRook()
 
 }
 
-std::vector<CPath> CRook::getAllMoves(
+CMoveTree CRook::getAllMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
@@ -139,14 +160,14 @@ std::vector<CPath> CRook::getAllMoves(
 
     // Extende os resultados dos movimentos verticais e horizontais.
     auto& result = verticalMove;
-    for (auto element: horizontalMove)
-        result.push_back(element);
+    for (auto element: horizontalMove.getBranchs())
+        result.append(element);
 
     return result;
 
 }
 
-void CRook::castling(std::vector<CPath>& moves) const
+void CRook::castling(CMoveTree& moves) const
 {
 
 }
@@ -165,7 +186,7 @@ CKnight::~CKnight()
 
 }
 
-std::vector<CPath> CKnight::getAllMoves(
+CMoveTree CKnight::getAllMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
@@ -174,9 +195,10 @@ std::vector<CPath> CKnight::getAllMoves(
 
     // Adiciona os movimentos com distância igual a 3 e que não são
     // nem verticais e nem horizontais.
-    for (auto& move: rangeMoves) {
-        if (!isVerticalMove(move[0]) && !isHorizontalMove(move[0]))
-            result.push_back(move);
+    for (auto& branch: rangeMoves.getBranchs()) {
+        auto destination = branch[0].getMove().getTo();
+        if (!isVerticalMove(destination) && !isHorizontalMove(destination))
+            result.append(branch);
     }
 
     return result;
@@ -196,7 +218,7 @@ CBishop::~CBishop()
 
 }
 
-std::vector<CPath> CBishop::getAllMoves(
+CMoveTree CBishop::getAllMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
@@ -217,7 +239,7 @@ CQueen::~CQueen()
 
 }
 
-std::vector<CPath> CQueen::getAllMoves(
+CMoveTree CQueen::getAllMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
@@ -227,8 +249,8 @@ std::vector<CPath> CQueen::getAllMoves(
 
     // Concatena todos os movimentos.
     auto& result = verticalMoves;
-    for (auto path: horizontalMoves) result.push_back(path);
-    for (auto path: diagonalMoves) result.push_back(path);
+    for (auto branch: horizontalMoves.getBranchs()) result.append(branch);
+    for (auto branch: diagonalMoves.getBranchs()) result.append(branch);
 
     return result;
 }
@@ -247,7 +269,7 @@ CKing::~CKing()
 
 }
 
-std::vector<CPath> CKing::getAllMoves(
+CMoveTree CKing::getAllMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
@@ -255,15 +277,20 @@ std::vector<CPath> CKing::getAllMoves(
     auto horizontalMove = getHorizontalMoves();
     auto diagonalMove = getDiagonalMoves();
 
-    auto& result = verticalMove;
-    for (auto move: horizontalMove) result.push_back(move);
-    for (auto move: diagonalMove) result.push_back(move);
+    auto& tree = verticalMove;
+    for (auto branch: horizontalMove.getBranchs()) tree.append(branch);
+    for (auto branch: diagonalMove.getBranchs()) tree.append(branch);
 
     // Apenas 1 movimento em cada caminho.
-    for (auto& move: result)
-        while (move.size() > 1) move.pop_back();
+    auto branchs = tree.getBranchs();
+    for (unsigned int branchNum = 0;
+            branchNum < tree.numberOfBranchs(); ++branchNum) {
+        auto branch = branchs[branchNum];
 
-    return result;
+        if (branch.numberOfMoves() > 1)
+            tree.pruningBranchFrom(branchNum, 1);
+    }
+    return tree;
 }
 
 }

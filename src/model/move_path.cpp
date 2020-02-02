@@ -2,15 +2,17 @@
 
 namespace ch {
 
-bool inPath(std::vector<CPath> paths, CCoordinate pos)
+bool inPath(CMoveTree tree, CCoordinate pos, CMove *selectedMove)
 {
     cout << "::inPath" << endl;
 
-    for (auto path: paths) {
-        std::cout << path.size() << std::endl;
-        for (auto position: path) {
-            if (pos == position)
+    for (auto branch: tree.getBranchs()) {
+        for (unsigned int i = 0; i < branch.numberOfMoves(); ++i) {
+            auto position = branch[i].getMove().getTo();
+            if (pos == position) {
+                if (selectedMove) *selectedMove = branch[i];
                 return true;
+            }
         }
     }
 

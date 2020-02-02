@@ -69,6 +69,7 @@ void CMove::setMove(CAtomicMove move)
 
 void CMove::setSideEffect(CAtomicMove sideEffectMove)
 {
+    _hasSideEffect = true;
     _sideEffect = sideEffectMove;
 }
 
@@ -137,44 +138,61 @@ void CMoveBranch::remove(unsigned int at)
 
 void CMoveBranch::removeFrom(unsigned int at)
 {
-    _moves.erase(_moves.begin() + at, _moves.end());
+    if (at < _moves.size())
+        _moves.erase(_moves.begin() + at, _moves.end());
 }
-/*
-CPath::CPath(std::initializer_list<CMoveBranch> branchs)
+
+void CMoveBranch::removeLast()
+{
+    _moves.pop_back();
+}
+
+CMoveTree::CMoveTree(std::initializer_list<CMoveBranch> branchs)
     :
     _branchs{branchs}
 {
 
 }
 
-CPath::CPath()
+CMoveTree::CMoveTree()
 {
 
 }
 
-CPath::~CPath()
+CMoveTree::~CMoveTree()
 {
 
 }
 
-void CPath::append(CMoveBranch branch)
+void CMoveTree::append(CMoveBranch branch)
 {
     _branchs.push_back(branch);
 }
 
-void CPath::remove(unsigned int at)
+void CMoveTree::remove(unsigned int at)
 {
     _branchs.erase(_branchs.begin() + at);
 }
 
-unsigned int CPath::numberOfBranchs() const
+unsigned int CMoveTree::numberOfBranchs() const
 {
     return _branchs.size();
 }
 
-std::vector<CMoveBranch> CPath::getBranchs() const
+std::vector<CMoveBranch> CMoveTree::getBranchs() const
 {
     return _branchs;
 }
- */
+
+void CMoveTree::pruningBranchFrom(unsigned int branch, unsigned int from)
+{
+    cout << "CMoveTree::pruningBranchFrom" << endl;
+    CMoveBranch newBranch = _branchs[branch];
+    newBranch.removeFrom(from);
+
+    remove(branch);
+
+    _branchs.insert(_branchs.begin() + branch, newBranch);
+}
+
 }

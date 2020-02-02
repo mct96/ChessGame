@@ -5,8 +5,8 @@
 namespace ch {
 
 struct CCoordinate {
-    int i;
-    int j;
+    int i = 0;
+    int j = 0;
 
     operator std::string() const
     {

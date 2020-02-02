@@ -24,7 +24,7 @@ void CBoardController::move(CCoordinate from, CCoordinate to)
     _game.move(from, to);
 }
 
-std::vector<CPath> CBoardController::possibleMoves(
+CMoveTree CBoardController::possibleMoves(
         CCoordinate pos) const
 {
     return _game.possibleMoves(pos);

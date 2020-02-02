@@ -2,10 +2,13 @@ CC=g++-9
 ARGS=-std=c++2a
 ARGSV=-std=c++2a -lsfml-graphics -lsfml-window -lsfml-system
 
-game: main.cpp lib/piece.o lib/game.o lib/specialized_pieces.o lib/move_path.o \
-	  lib/color.o lib/type.o lib/board.o lib/boardController.o lib/location.o \
-	  lib/history.o
+game: main.cpp lib/path.o lib/piece.o lib/game.o lib/specialized_pieces.o \
+	  lib/move_path.o lib/color.o lib/type.o lib/board.o lib/boardController.o \
+	  lib/history.o lib/location.o
 	$(CC) $^ -o $@ $(ARGSV)
+
+lib/path.o : src/model/path.cpp
+	$(CC) $< -c -o $@ $(ARGS)
 
 lib/piece.o : src/model/piece.cpp
 	$(CC) $< -c -o $@ $(ARGS)

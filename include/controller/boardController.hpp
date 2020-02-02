@@ -27,7 +27,7 @@ public:
 
     /**
      */
-    std::vector<CPath> possibleMoves(
+    CMoveTree possibleMoves(
         CCoordinate pos) const;
 
     bool isCheck() const;

@@ -9,6 +9,6 @@ using namespace std;
 
 namespace ch {
 
-bool inPath(std::vector<CPath> paths, CCoordinate pos);
+bool inPath(CMoveTree paths, CCoordinate pos, CMove * selectedMove = nullptr);
 
 }

@@ -61,7 +61,8 @@ void CGame::move(CCoordinate from, CCoordinate to)
     auto moves = piece->getPossibleMoves(_boardLocations, _history);
 
     // Verifica se a posição de destino é válida.
-    if (inPath(moves, to)) {
+    CMove move{};
+    if (inPath(moves, to, &move)) {
         auto& destination = _boardLocations[to.i][to.j];
 
         auto oldLocation = CLocation{
@@ -73,6 +74,14 @@ void CGame::move(CCoordinate from, CCoordinate to)
         _boardLocations[from.i][from.j].removePiece();
 
         destination.setPiece(newLocation.getType(), newLocation.getColor());
+
+        if (move.hasSideEffect()) {
+            auto sideEffect = move.getSideEffect();
+            if (sideEffect.getFrom() == sideEffect.getTo()) {
+                auto pos = sideEffect.getFrom();
+                _boardLocations[pos.i][pos.j].removePiece();
+            }
+        }
     } else {
         throw new std::logic_error{
             "Invalid move. The destination is unreachable."};
@@ -122,7 +131,7 @@ CPiece *const CGame::factoryPiece(
 }
 
 void CGame::
-    promotion(std::shared_ptr<CPiece> piece, std::vector<CPath>& moves)
+    promotion(std::shared_ptr<CPiece> piece, CMoveTree& moves)
 {
     cout << "CGame::promotion" << endl;
 }
@@ -195,7 +204,7 @@ std::shared_ptr<CPiece> CGame::getKing(EColor kingColor) const
     return nullptr;
 }
 
-std::vector<CPath> CGame::possibleMoves(
+CMoveTree CGame::possibleMoves(
         CCoordinate pos) const
 {
     cout << "CGame::possibleMoves" << endl;

@@ -3,8 +3,8 @@
 
 namespace ch {
 
-CPiece::CPiece(CCoordinate pos, EColor col):
-    _position{pos},
+CPiece::CPiece(CCoordinate curPos, EColor col):
+    _position{curPos},
     _color{col}
 {
     cout << "CPiece::CPiece" << endl;
@@ -34,21 +34,25 @@ void CPiece::setType(EType type)
     _type = type;
 }
 
-void CPiece::setPosition(CCoordinate pos)
+void CPiece::setPosition(CCoordinate curPos)
 {
     cout << "CPiece::setPosition" << endl;
-    if (pos.i < 0 || pos.i > 7 || pos.j < 0 || pos.j > 7)
+    if (curPos.i < 0 || curPos.i > 7 || curPos.j < 0 || curPos.j > 7)
         throw new std::out_of_range{"Invalid position"};
 
-    _position = pos;
+    _position = curPos;
 }
 
-std::vector<CPath> CPiece::getPossibleMoves(
+CMoveTree CPiece::getPossibleMoves(
     const CLocation (*const gameState)[8],
     const CHistory& history) const
 {
     cout << "CPiece::getPossibleMoves" << endl;
-    return movesPruning(gameState, getAllMoves(gameState, history));
+    cout << _position.i << ", " << _position.j << endl;
+    CMoveTree allMoves = getAllMoves(gameState, history);
+    movesPruning(gameState, allMoves);
+
+    return allMoves;
 }
 
 CCoordinate CPiece::getPosition() const
@@ -75,25 +79,27 @@ bool CPiece::wasMoved() const
     return _wasMoved;
 }
 
-std::vector<CPath> CPiece::movesPruning(
+void CPiece::movesPruning(
             const CLocation (*const gameState)[8],
-            std::vector<CPath> moves) const
+            CMoveTree& tree) const
 {
     cout << "CPiece::movesPruning" << endl;
 
-    for (auto& move: moves) {
-        for (int i = 0; i < move.size(); ++i) {
-            auto& pos = move[i];
-            const CLocation& location = gameState[pos.i][pos.j];
+    auto branchs = tree.getBranchs();
+    for (unsigned int i = 0; i < tree.numberOfBranchs(); ++i) {
+        for (unsigned int k = 0; k < branchs[i].numberOfMoves(); ++k) {
+            auto curPos = branchs[i].get(k).getMove().getTo();
+            CLocation location = gameState[curPos.i][curPos.j];
 
-            if (!location.isEmpty() && location.getColor() == _color) {
-                move.erase(move.begin() + i, move.end());
+            if (!location.isEmpty()) {
+                if (location.getColor() == _color)
+                    tree.pruningBranchFrom(i, k);
+                else
+                    tree.pruningBranchFrom(i, k + 1);
                 break;
             }
         }
     }
-
-    return moves;
 }
 
 bool CPiece::isDiagonalMove(CCoordinate dest) const
@@ -124,11 +130,11 @@ bool CPiece::isHorizontalMove(CCoordinate dest) const
     return di == 0 && dj != 0;
 }
 
-bool CPiece::isForwardMove(CCoordinate destination) const
+bool CPiece::isForwardMove(CCoordinate curPos) const
 {
     // As peças brancas estão em i = [0 .. 0] e as peças pretas
     // estão em i = [6 .. 7].
-    auto di = destination.i - _position.i;
+    auto di = curPos.i - _position.i;
 
     return (
         (di > 0 && _color == EColor::WHITE) ||
@@ -145,96 +151,100 @@ int CPiece::getMoveRange(CCoordinate dest) const
     return di + dj;
 }
 
-std::vector<CPath> CPiece::getHorizontalMoves() const
+CMoveTree CPiece::getHorizontalMoves() const
 {
-    auto pos = _position;
-    CPath leftPath{}, rightPath{};
-    std::vector<CPath> moves{};
+    auto curPos = _position;
+    CMoveBranch leftBranch{}, rightBranch{};
+    CMoveTree tree{};
 
     // Adiciona os movimentos à esquerda da posição atual.
-    for (int j = pos.j - 1; j >= 0; --j)
-        leftPath.push_back({pos.i, j});
+    for (int j = curPos.j - 1; j >= 0; --j)
+        leftBranch.append(CMove{CAtomicMove{curPos, {curPos.i, j}}});
 
     // Adiciona os movimentos à direita da posição atual.
-    for (int j = pos.j + 1; j < 8; ++j)
-        rightPath.push_back({pos.i, j});
+    for (int j = curPos.j + 1; j < 8; ++j)
+        rightBranch.append(CMove{CAtomicMove{curPos, {curPos.i, j}}});
 
     // Adiciona as direções em que há movimentos.
-    if (leftPath.size()) moves.push_back(leftPath);
-    if (rightPath.size()) moves.push_back(rightPath);
+    tree.append(leftBranch);
+    tree.append(rightBranch);
 
-    return moves;
+    return tree;
 }
 
-std::vector<CPath> CPiece::getVerticalMoves() const
+CMoveTree CPiece::getVerticalMoves() const
 {
-    auto pos = _position;
-    CPath upPath{}, downPath{};
-    std::vector<CPath> moves{};
+    auto curPos = _position;
+    CMoveBranch upPath{}, downPath{};
+    CMoveTree tree{};
 
     // Adiciona os movimentos abaixo da posição atual.
-    for (int i = pos.i - 1; i >= 0; --i)
-        downPath.push_back({i, pos.j});
+    for (int i = curPos.i - 1; i >= 0; --i)
+        downPath.append(CMove{CAtomicMove{curPos, {i, curPos.j}}});
 
     // Adiciona os movimentos acima da posição atual.
-    for (int i = pos.i + 1; i < 8; ++i)
-        upPath.push_back({i, pos.j});
+    for (int i = curPos.i + 1; i < 8; ++i)
+        upPath.append(CMove{CAtomicMove{curPos, {i, curPos.j}}});
 
     // Adiciona as direções em que há movimentos.
-    if (upPath.size()) moves.push_back(upPath);
-    if (downPath.size()) moves.push_back(downPath);
+    tree.append(downPath);
+    tree.append(upPath);
 
-    return moves;
+    return tree;
 }
 
-std::vector<CPath> CPiece::getDiagonalMoves() const
+CMoveTree CPiece::getDiagonalMoves() const
 {
-    auto pos = _position;
-    CPath diagonalLUPath{}, diagonalRUPath{},
+    auto curPos = _position;
+    CMoveBranch diagonalLUPath{}, diagonalRUPath{},
         diagonalLDPath{}, diagonalRDPath{};
 
-    std::vector<CPath> moves{};
+    CMoveTree tree{};
 
     // Adiciona os movimentos à esquerda superior em relação a posição atual.
-    for (int lu = 1; pos.i + lu < 8 && pos.j - lu >= 0; ++lu)
-        diagonalLUPath.push_back({pos.i + lu, pos.j - lu});
+    for (int lu = 1; curPos.i + lu < 8 && curPos.j - lu >= 0; ++lu)
+        diagonalLUPath.append(
+            CMove{CAtomicMove{curPos, {curPos.i + lu, curPos.j - lu}}});
 
     // Adiciona os movimentos à direita superior em relação a posição atual.
-    for (int ru = 1; pos.i + ru < 8 && pos.j + ru < 8; ++ru)
-        diagonalRUPath.push_back({pos.i + ru, pos.j + ru});
+    for (int ru = 1; curPos.i + ru < 8 && curPos.j + ru < 8; ++ru)
+        diagonalRUPath.append(
+            CMove{CAtomicMove{curPos, {curPos.i + ru, curPos.j + ru}}});
 
     // Adiciona os movimentos à esquerda inferior em relação a posição atual.
-    for (int ld = 1; pos.i - ld >= 0 && pos.j - ld >= 0; ++ld)
-        diagonalLDPath.push_back({pos.i - ld, pos.j - ld});
+    for (int ld = 1; curPos.i - ld >= 0 && curPos.j - ld >= 0; ++ld)
+        diagonalLDPath.append(
+            CMove{CAtomicMove{curPos, {curPos.i - ld, curPos.j - ld}}});
 
     // Adiciona os movimentos à direita inferior em relação a posição atual.
-    for (int rd = 1; pos.i - rd >= 0 && pos.j + rd < 8; ++rd)
-        diagonalRDPath.push_back({pos.i - rd, pos.j + rd});
+    for (int rd = 1; curPos.i - rd >= 0 && curPos.j + rd < 8; ++rd)
+        diagonalRDPath.append(
+            CMove{CAtomicMove{curPos, {curPos.i - rd, curPos.j + rd}}});
 
 
     // Adiciona as direções em que há movimentos.
-    if (diagonalLUPath.size()) moves.push_back(diagonalLUPath);
-    if (diagonalRUPath.size()) moves.push_back(diagonalRUPath);
-    if (diagonalLDPath.size()) moves.push_back(diagonalLDPath);
-    if (diagonalRDPath.size()) moves.push_back(diagonalRDPath);
+    tree.append(diagonalLUPath);
+    tree.append(diagonalRUPath);
+    tree.append(diagonalLDPath);
+    tree.append(diagonalRDPath);
 
-    return moves;
+    return tree;
 }
 
-std::vector<CPath> CPiece::getRangeBasedMoves(int range) const
+CMoveTree CPiece::getRangeBasedMoves(int range) const
 {
-    std::vector<CPath> moves{};
+    auto& curPos = _position;
+    CMoveTree tree{};
 
     // Certamente deve haver algum algoritmo melhor do que este...
-    for (int i = 1; i < 8; ++i)
-        for (int j = 1; j < 8; ++j)
+    for (unsigned int i = 0; i < 8; ++i)
+        for (unsigned int j = 0; j < 8; ++j)
             if (getMoveRange(CCoordinate{i, j}) == range) {
-                    CPath path{};
-                    path.push_back({i, j});
-                    moves.push_back(path);
+                    tree.append(
+                        CMoveBranch{CMove{CAtomicMove{curPos, {i, j}}}});
             }
 
-    return moves;
+    return tree;
 }
 
 }

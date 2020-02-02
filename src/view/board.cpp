@@ -318,11 +318,12 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
     if (selectedPiece.isEmpty()) return;
 
     // Lista os possiveis movimentos da peça selecionada.
-    auto moves = _gameController.possibleMoves(_selectedPiece.second);
+    auto tree = _gameController.possibleMoves(_selectedPiece.second);
 
     // Exibe todos esses movimentos.
-    for (auto move: moves) {
-        for (auto pos: move) {
+    for (auto branch: tree.getBranchs()) {
+        for (unsigned int i = 0; i < branch.numberOfMoves(); ++i) {
+            auto pos = branch.get(i).getMove().getTo();
             auto isOccupied = !_gameController.getPieceAt(pos).isEmpty();
             highlightPossibleMoves({pos.i, pos.j}, isOccupied, target);
         }
