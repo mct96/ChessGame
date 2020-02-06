@@ -60,7 +60,6 @@ void CGame::move(CCoordinate from, CCoordinate to)
 
     auto moves = piece->getPossibleMoves(_boardLocations, _history);
 
-    // Verifica se a posição de destino é válida.
     CMove move{};
     if (inPath(moves, to, &move)) {
         auto& destination = _boardLocations[to.i][to.j];

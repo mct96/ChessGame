@@ -5,6 +5,7 @@
 
 #include "coordinate.hpp"
 #include "location.hpp"
+#include "iterator.hpp"
 
 using namespace std;
 
@@ -66,9 +67,17 @@ private:
 class CMoveBranch
 {
 public:
+    template <typename T>using CContainer = std::vector<T>;
+    using CIteratorType = CIterator<CMove, CContainer>;
+
     CMoveBranch(std::initializer_list<CMove> moves);
     CMoveBranch();
     ~CMoveBranch();
+
+    CIteratorType begin();
+    CIteratorType end();
+
+    void pruning(unsigned int from);
 
     // Retorna a quantidade de movimentos dessa branch.
     unsigned int numberOfMoves() const;
@@ -96,6 +105,9 @@ private:
 class CMoveTree
 {
 public:
+    template <typename T>using CContainer = std::vector<T>;
+    using CIteratorType = CIterator<CMoveBranch, CContainer>;
+
     CMoveTree(std::initializer_list<CMoveBranch> branchs);
     CMoveTree();// = default;
     ~CMoveTree();
@@ -104,7 +116,11 @@ public:
     void remove(unsigned int at);
 
     unsigned int numberOfBranchs() const;
-    std::vector<CMoveBranch> getBranchs() const;
+
+    CMoveBranch& getBranch(std::size_t i);
+
+    CIteratorType begin() { return {_branchs}; }
+    CIteratorType end() { return {_branchs, _branchs.size()}; }
 
     void pruningBranchFrom(unsigned int branch, unsigned int from);
 

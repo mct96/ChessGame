@@ -105,6 +105,21 @@ CMoveBranch::~CMoveBranch()
 
 }
 
+CMoveBranch::CIteratorType CMoveBranch::begin()
+{
+    return CIteratorType{_moves};
+}
+
+CMoveBranch::CIteratorType CMoveBranch::end()
+{
+    return CIteratorType{_moves, _moves.size()};
+}
+
+void CMoveBranch::pruning(unsigned int from)
+{
+    removeFrom(from);
+}
+
 unsigned int CMoveBranch::numberOfMoves() const
 {
     return _moves.size();
@@ -179,9 +194,9 @@ unsigned int CMoveTree::numberOfBranchs() const
     return _branchs.size();
 }
 
-std::vector<CMoveBranch> CMoveTree::getBranchs() const
+CMoveBranch& CMoveTree::getBranch(std::size_t i)
 {
-    return _branchs;
+    return _branchs[i];
 }
 
 void CMoveTree::pruningBranchFrom(unsigned int branch, unsigned int from)

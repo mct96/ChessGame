@@ -85,17 +85,16 @@ void CPiece::movesPruning(
 {
     cout << "CPiece::movesPruning" << endl;
 
-    auto branchs = tree.getBranchs();
-    for (unsigned int i = 0; i < tree.numberOfBranchs(); ++i) {
-        for (unsigned int k = 0; k < branchs[i].numberOfMoves(); ++k) {
-            auto curPos = branchs[i].get(k).getMove().getTo();
+    for (auto& branch: tree) {
+        for (unsigned int k = 0; k < branch.numberOfMoves(); ++k) {
+            auto curPos = branch.get(k).getMove().getTo();
             CLocation location = gameState[curPos.i][curPos.j];
 
             if (!location.isEmpty()) {
                 if (location.getColor() == _color)
-                    tree.pruningBranchFrom(i, k);
+                    branch.pruning(k);
                 else
-                    tree.pruningBranchFrom(i, k + 1);
+                    branch.pruning(k + 1);
                 break;
             }
         }

@@ -28,6 +28,12 @@ My goal in this project is to apply what I learned/studied about OOP, SFML, MVC 
 
 <div style= "text-align: center">
 
+Before Iterators and Refactoring:
+![Before](/sample/before_it.png)
+
+After Iterators and Refactoring:
+![After](/sample/after_it.png)
+
 En passant implemented.
 ![En passant](/sample/en_passant.gif)
 

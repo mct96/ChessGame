@@ -321,9 +321,9 @@ void CBoardView::showPossibleMoves(sf::RenderTarget& target) const
     auto tree = _gameController.possibleMoves(_selectedPiece.second);
 
     // Exibe todos esses movimentos.
-    for (auto branch: tree.getBranchs()) {
-        for (unsigned int i = 0; i < branch.numberOfMoves(); ++i) {
-            auto pos = branch.get(i).getMove().getTo();
+    for (auto& branch: tree) {
+        for (auto& move: branch) {
+            auto pos = move.getMove().getTo();
             auto isOccupied = !_gameController.getPieceAt(pos).isEmpty();
             highlightPossibleMoves({pos.i, pos.j}, isOccupied, target);
         }

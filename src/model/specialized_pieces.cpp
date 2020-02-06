@@ -123,13 +123,13 @@ void CPawn::pawnPruningVerticalAttack(
 {
     cout << "CPawn::pawnPruningVerticalAttack" << endl;
 
-    auto branch = moves.getBranchs()[0];
+    auto& branch = moves.getBranch(0);
     for (unsigned int k = 0; k < branch.numberOfMoves(); ++k) {
-        auto curBranch = branch[k].getMove().getTo();
-        auto curPosition = gameState[curBranch.i][curBranch.j];
+        auto target = branch[k].getMove().getTo();
+        auto targetState = gameState[target.i][target.j];
 
-        if (!curPosition.isEmpty() && curPosition.getColor() != getColor()) {
-            branch.removeFrom(k);
+        if (!targetState.isEmpty() && targetState.getColor() != getColor()) {
+            branch.pruning(k);
             break;
         }
    }
@@ -160,8 +160,8 @@ CMoveTree CRook::getAllMoves(
 
     // Extende os resultados dos movimentos verticais e horizontais.
     auto& result = verticalMove;
-    for (auto element: horizontalMove.getBranchs())
-        result.append(element);
+    for (auto& branch: horizontalMove)
+        result.append(branch);
 
     return result;
 
@@ -195,7 +195,7 @@ CMoveTree CKnight::getAllMoves(
 
     // Adiciona os movimentos com distância igual a 3 e que não são
     // nem verticais e nem horizontais.
-    for (auto& branch: rangeMoves.getBranchs()) {
+    for (auto& branch: rangeMoves) {
         auto destination = branch[0].getMove().getTo();
         if (!isVerticalMove(destination) && !isHorizontalMove(destination))
             result.append(branch);
@@ -249,8 +249,8 @@ CMoveTree CQueen::getAllMoves(
 
     // Concatena todos os movimentos.
     auto& result = verticalMoves;
-    for (auto branch: horizontalMoves.getBranchs()) result.append(branch);
-    for (auto branch: diagonalMoves.getBranchs()) result.append(branch);
+    for (auto& branch: horizontalMoves) result.append(branch);
+    for (auto& branch: diagonalMoves) result.append(branch);
 
     return result;
 }
@@ -278,17 +278,12 @@ CMoveTree CKing::getAllMoves(
     auto diagonalMove = getDiagonalMoves();
 
     auto& tree = verticalMove;
-    for (auto branch: horizontalMove.getBranchs()) tree.append(branch);
-    for (auto branch: diagonalMove.getBranchs()) tree.append(branch);
+    for (auto& branch: horizontalMove) tree.append(branch);
+    for (auto& branch: diagonalMove) tree.append(branch);
 
-    // Apenas 1 movimento em cada caminho.
-    auto branchs = tree.getBranchs();
-    for (unsigned int branchNum = 0;
-            branchNum < tree.numberOfBranchs(); ++branchNum) {
-        auto branch = branchs[branchNum];
-
+    for (auto& branch: tree) {
         if (branch.numberOfMoves() > 1)
-            tree.pruningBranchFrom(branchNum, 1);
+            branch.pruning(1);
     }
     return tree;
 }
