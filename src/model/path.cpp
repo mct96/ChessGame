@@ -169,10 +169,21 @@ void CMoveCastling::undoCastling(CLocation(*board)[8])
 }
 
 CMoveBranch::CMoveBranch(std::initializer_list<CMove> moves)
-    :
-    _moves{moves}
 {
+    for (auto&& move: moves)
+        append(move);
+}
 
+CMoveBranch::CMoveBranch(std::initializer_list<CMoveEnPassant> moves)
+{
+    for (auto&& move: moves)
+        append(move);
+}
+
+CMoveBranch::CMoveBranch(std::initializer_list<CMoveCastling> moves)
+{
+    for (auto&& move: moves)
+        append(move);
 }
 
 CMoveBranch::CMoveBranch()
@@ -182,7 +193,7 @@ CMoveBranch::CMoveBranch()
 
 CMoveBranch::~CMoveBranch()
 {
-
+    _moves.clear();
 }
 
 CMoveBranch::CIteratorType CMoveBranch::begin()
@@ -207,27 +218,27 @@ unsigned int CMoveBranch::numberOfMoves() const
 
 void CMoveBranch::append(CMove move)
 {
-    _moves.push_back(CMove{move});
+    _moves.push_back(new CMove{move});
 }
 
 void CMoveBranch::append(CMoveEnPassant move)
 {
-    _moves.push_back(CMoveEnPassant{move});
+    _moves.push_back(new CMoveEnPassant{move});
 }
 
 void CMoveBranch::append(CMoveCastling move)
 {
-    _moves.push_back(CMoveCastling{move});
+    _moves.push_back(new CMoveCastling{move});
 }
 
-CMove CMoveBranch::operator[](unsigned int i) const
+CMove& CMoveBranch::operator[](unsigned int i) const
 {
     return get(i);
 }
 
-CMove CMoveBranch::get(unsigned int i) const
+CMove& CMoveBranch::get(unsigned int i) const
 {
-    return _moves[i];
+    return *_moves[i];
 }
 
 void CMoveBranch::append(std::initializer_list<CMove> moves)

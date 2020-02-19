@@ -63,6 +63,7 @@ class CMoveEnPassant: public CMove
 {
 public:
     CMoveEnPassant(CAtomicMove move, CCoordinate pawn);
+    virtual ~CMoveEnPassant() = default;
 
     virtual void doMove(CLocation(*)[8]) override;
     virtual void undoMove(CLocation(*)[8]) override;
@@ -79,6 +80,7 @@ class CMoveCastling: public CMove
 {
 public:
     CMoveCastling(CAtomicMove move, CAtomicMove rookCasting);
+    virtual ~CMoveCastling() = default;
 
     virtual void doMove(CLocation(*)[8]) override;
     virtual void undoMove(CLocation(*)[8]) override;
@@ -99,9 +101,11 @@ class CMoveBranch
 {
 public:
     template <typename T>using CContainer = std::vector<T>;
-    using CIteratorType = CIterator<CMove, CContainer>;
+    using CIteratorType = CIterator<CMove*, CContainer>;
 
     CMoveBranch(std::initializer_list<CMove> moves);
+    CMoveBranch(std::initializer_list<CMoveEnPassant> moves);
+    CMoveBranch(std::initializer_list<CMoveCastling> moves);
     CMoveBranch();
     ~CMoveBranch();
 
@@ -118,8 +122,8 @@ public:
     void append(CMoveEnPassant move);
     void append(CMoveCastling move);
 
-    CMove operator[](unsigned int i) const;
-    CMove get(unsigned int i) const;
+    CMove& operator[](unsigned int i) const;
+    CMove& get(unsigned int i) const;
 
     // Adiciona uma sequência de movimentos.
     void append(std::initializer_list<CMove> moves);
@@ -132,7 +136,7 @@ public:
     void removeFrom(unsigned int at);
 
 private:
-    std::vector<CMove> _moves;
+    std::vector<CMove*> _moves;
 };
 
 class CMoveTree
