@@ -4,7 +4,6 @@ namespace ch {
 
 CHistory::CHistory(CLocation (*const gameState)[8])
     :
-    _turns{},
     _cursor{0},
     _gameState{gameState}
 {
@@ -15,73 +14,34 @@ CHistory::~CHistory()
 
 }
 
-void CHistory::append(
-    const CPlayer *player,
-    CCoordinate from,
-    CCoordinate to,
-    CLocation stateBefore,
-    CLocation stateAfter)
-{
-    append(CTurn{player, from, to, stateBefore, stateAfter});
-}
-
-void CHistory::append(CTurn turn)
+void CHistory::addMove(CMove lastMove)
 {
     while (_cursor) {
-        _turns.pop_back();
+        _moves.pop_back();
         --_cursor;
     }
 
-    _turns.push_back(turn);
+    _moves.push_back(lastMove);
 }
 
-unsigned int CHistory::getTurnNumber() const
+void CHistory::undoLastMove()
 {
-    return _turns.size();
+    _moves[_cursor++].undoMove(_gameState);
 }
 
-CTurn CHistory::getLastTurn() const
+void CHistory::redoLastMove()
 {
-    return getTurn(0);
+    _moves[--_cursor].doMove(_gameState);
 }
 
-CTurn CHistory::getTurn(unsigned int i) const
+CMove CHistory::getLastMove() const
 {
-    auto lastIndex = _turns.size() - 1;
-    return _turns[lastIndex - i];
+    return _moves.back();
 }
 
-void CHistory::undoLastTurn() {
-    if (_cursor + 1 >= _turns.size()) return;
-
-    auto lastTurn = getLastTurn();
-
-    _gameState[lastTurn._to.i][lastTurn._to.j].setPiece(
-        lastTurn._stateBefore.getType(),
-        lastTurn._stateBefore.getColor()
-    );
-
-    _gameState[lastTurn._from.i][lastTurn._from.j].setPiece(
-        lastTurn._stateAfter.getType(),
-        lastTurn._stateAfter.getColor()
-    );
-
-    _cursor++;
-}
-
-void CHistory::redoLastTurn() {
-    if (_cursor <= 0) return;
-
-    _cursor--;
-
-    auto turn = getTurn(_cursor);
-
-    _gameState[turn._from.i][turn._from.j].removePiece();
-
-    _gameState[turn._to.i][turn._to.j].setPiece(
-        turn._stateAfter.getType(),
-        turn._stateAfter.getColor()
-    );
+std::size_t CHistory::numberOfMoves() const
+{
+    return _moves.size() - _cursor;
 }
 
 }

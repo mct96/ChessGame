@@ -25,6 +25,11 @@ CLocation::~CLocation()
 
 }
 
+CLocation CLocation::emptyLocation()
+{
+    return CLocation{};
+}
+
 void CLocation::setPiece(EType type, EColor color) {
     _type = type;
     _color = color;

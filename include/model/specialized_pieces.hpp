@@ -16,10 +16,12 @@ public:
         const CLocation (*const gameState)[8],
         const CHistory& history) const override;
 
+private:
     // Semelhante a "pawnMove". Extende as possiblidades da peça do tipo "Pawn"
     // para permitir o en Passant.
     void enPassant(
         const CHistory& history,
+        const CLocation (*const gameState)[8],
         CMoveTree& moves) const;
 
     // O peão possui um comportamento anômalo, pois a movimentação dessa peça
@@ -35,6 +37,10 @@ public:
     void pawnPruningVerticalAttack(
         const CLocation (*const gameState)[8],
         CMoveTree& moves) const;
+
+    bool isPawn(CCoordinate pos, const CLocation (*const gameState)[8]) const;
+
+    bool checkEnPassantCoditions(CMove lastMove) const;
 
 };
 

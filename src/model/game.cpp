@@ -20,7 +20,6 @@ CGame::~CGame()
 
 CLocation CGame::getPieceAt(CCoordinate pos) const
 {
-    cout << "CGame::getPieceAt" << endl;
     return _boardLocations[pos.i][pos.j];
 }
 
@@ -60,28 +59,15 @@ void CGame::move(CCoordinate from, CCoordinate to)
 
     auto moves = piece->getPossibleMoves(_boardLocations, _history);
 
-    CMove move{};
-    if (inPath(moves, to, &move)) {
-        auto& destination = _boardLocations[to.i][to.j];
-
-        auto oldLocation = CLocation{
-            destination.getType(), destination.getColor()};
-        auto newLocation = CLocation{piece->getType(), piece->getColor()};
-
-        _history.append(nullptr, from, to, oldLocation, newLocation);
-
-        _boardLocations[from.i][from.j].removePiece();
-
-        destination.setPiece(newLocation.getType(), newLocation.getColor());
-
-        if (move.hasSideEffect()) {
-            auto sideEffect = move.getSideEffect();
-            if (sideEffect.getFrom() == sideEffect.getTo()) {
-                auto pos = sideEffect.getFrom();
-                _boardLocations[pos.i][pos.j].removePiece();
-            }
-        }
+    using PtrCMove = CMove*;
+    unique_ptr<PtrCMove> move = std::make_unique<PtrCMove>(new CMove{});
+    if (inPath(moves, to, move)) {
+        cout << *move << endl;
+        // exit(1);
+        (*move)->doMove(_boardLocations);
+        _history.addMove(**move);
     } else {
+
         throw new std::logic_error{
             "Invalid move. The destination is unreachable."};
     }

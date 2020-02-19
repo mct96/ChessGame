@@ -50,9 +50,7 @@ CCoordinate CAtomicMove::getTo() const
 
 CMove::CMove(CAtomicMove move)
     :
-    _move{move},
-    _sideEffect{},
-    _hasSideEffect{false}
+    _move{move}
 {
 
 }
@@ -67,25 +65,107 @@ void CMove::setMove(CAtomicMove move)
     _move = move;
 }
 
-void CMove::setSideEffect(CAtomicMove sideEffectMove)
-{
-    _hasSideEffect = true;
-    _sideEffect = sideEffectMove;
-}
-
 CAtomicMove CMove::getMove() const
 {
     return _move;
 }
 
-CAtomicMove CMove::getSideEffect() const
+void CMove::doMove(CLocation(*board)[8])
 {
-    return _sideEffect;
+    auto [targetI, targetJ] = _move.getTo();
+    auto [sourceI, sourceJ] = _move.getFrom();
+
+    // Salva o estado.
+    _oldDestinyState = board[targetI][targetJ];
+
+    // Faz o movimento.
+    board[targetI][targetJ] = board[sourceI][sourceJ];
+    board[sourceI][sourceJ] = CLocation::emptyLocation();
+
 }
 
-bool CMove::hasSideEffect() const
+void CMove::undoMove(CLocation(*board)[8])
 {
-    return _hasSideEffect;
+    auto [targetI, targetJ] = _move.getTo();
+    auto [sourceI, sourceJ] = _move.getFrom();
+
+    board[sourceI][sourceJ] = board[targetI][targetJ];
+    board[targetI][targetJ] = _oldDestinyState;
+}
+
+
+CMoveEnPassant::CMoveEnPassant(CAtomicMove move, CCoordinate pawn)
+    :
+    CMove{move},
+    _pawnAttackedCoord{pawn}
+{
+
+}
+
+void CMoveEnPassant::doMove(CLocation(*board)[8])
+{
+    CMove::doMove(board);
+    pawnToRemove(board);
+}
+
+void CMoveEnPassant::undoMove(CLocation(*board)[8])
+{
+    CMove::undoMove(board);
+    restorePawn(board);
+}
+
+void CMoveEnPassant::pawnToRemove(CLocation(*board)[8])
+{
+    auto [posI, posJ] = _pawnAttackedCoord;
+
+    _stateBefore = board[posI][posJ];
+
+    board[posI][posJ] = CLocation::emptyLocation();
+}
+
+void CMoveEnPassant::restorePawn(CLocation(*board)[8])
+{
+    auto [posI, posJ] = _pawnAttackedCoord;
+
+    board[posI][posJ] = _stateBefore;
+}
+
+CMoveCastling::CMoveCastling(CAtomicMove move, CAtomicMove rookCastling)
+    :
+    CMove{move},
+    _rookCasting{rookCastling}
+{
+
+}
+
+void CMoveCastling::doMove(CLocation(*board)[8])
+{
+    CMove::doMove(board);
+    castling(board);
+}
+
+void CMoveCastling::undoMove(CLocation(*board)[8])
+{
+    CMove::undoMove(board);
+    undoCastling(board);
+}
+
+void CMoveCastling::castling(CLocation(*board)[8])
+{
+    auto [targetI, targetJ] = _rookCasting.getTo();
+    auto [sourceI, sourceJ] = _rookCasting.getFrom();
+
+    board[targetI][targetJ] = board[sourceI][sourceJ];
+    board[sourceI][sourceJ] = CLocation::emptyLocation();
+}
+
+void CMoveCastling::undoCastling(CLocation(*board)[8])
+{
+    auto [targetI, targetJ] = _rookCasting.getTo();
+    auto [sourceI, sourceJ] = _rookCasting.getFrom();
+
+    board[sourceI][sourceJ] = board[targetI][targetJ];
+    board[targetI][targetJ] = CLocation::emptyLocation();
 }
 
 CMoveBranch::CMoveBranch(std::initializer_list<CMove> moves)
@@ -127,7 +207,17 @@ unsigned int CMoveBranch::numberOfMoves() const
 
 void CMoveBranch::append(CMove move)
 {
-    _moves.push_back(move);
+    _moves.push_back(CMove{move});
+}
+
+void CMoveBranch::append(CMoveEnPassant move)
+{
+    _moves.push_back(CMoveEnPassant{move});
+}
+
+void CMoveBranch::append(CMoveCastling move)
+{
+    _moves.push_back(CMoveCastling{move});
 }
 
 CMove CMoveBranch::operator[](unsigned int i) const

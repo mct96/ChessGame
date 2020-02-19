@@ -2,7 +2,7 @@
 
 namespace ch {
 
-bool inPath(CMoveTree tree, CCoordinate pos, CMove *selectedMove)
+bool inPath(CMoveTree& tree, CCoordinate pos, unique_ptr<CMove*>& selectedMove)
 {
     cout << "::inPath" << endl;
 
@@ -10,7 +10,7 @@ bool inPath(CMoveTree tree, CCoordinate pos, CMove *selectedMove)
         for (auto& move: branch) {
             auto position = move.getMove().getTo();
             if (pos == position) {
-                if (selectedMove) *selectedMove = move;
+                *selectedMove = &move;
                 return true;
             }
         }

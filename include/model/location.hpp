@@ -11,6 +11,8 @@ public:
     CLocation();
     ~CLocation();
 
+    static CLocation emptyLocation();
+
     void setPiece(EType type, EColor color);
 
     EType getType() const;

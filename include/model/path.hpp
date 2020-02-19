@@ -46,18 +46,49 @@ public:
     ~CMove();
 
     void setMove(CAtomicMove move);
-    void setSideEffect(CAtomicMove sideEffectMove);
 
     CAtomicMove getMove() const;
-    CAtomicMove getSideEffect() const;
 
-    bool hasSideEffect() const;
+    virtual void doMove(CLocation(*)[8]);
+    virtual void undoMove(CLocation(*)[8]);
 
 private:
     CAtomicMove _move;
-    CAtomicMove _sideEffect;
 
-    bool _hasSideEffect;
+    // O estado da posição de destina antes do movimento.
+    CLocation _oldDestinyState;
+};
+
+class CMoveEnPassant: public CMove
+{
+public:
+    CMoveEnPassant(CAtomicMove move, CCoordinate pawn);
+
+    virtual void doMove(CLocation(*)[8]) override;
+    virtual void undoMove(CLocation(*)[8]) override;
+
+private:
+    void pawnToRemove(CLocation(*)[8]);
+    void restorePawn(CLocation(*)[8]);
+
+    CCoordinate _pawnAttackedCoord;
+    CLocation _stateBefore;
+};
+
+class CMoveCastling: public CMove
+{
+public:
+    CMoveCastling(CAtomicMove move, CAtomicMove rookCasting);
+
+    virtual void doMove(CLocation(*)[8]) override;
+    virtual void undoMove(CLocation(*)[8]) override;
+
+private:
+    void castling(CLocation(*)[8]);
+    void undoCastling(CLocation(*)[8]);
+
+    // Movimento para desfazer o movimento do castling.
+    CAtomicMove _rookCasting;
 };
 
 /**
@@ -84,6 +115,8 @@ public:
 
     // Adiciona um movimento.
     void append(CMove move);
+    void append(CMoveEnPassant move);
+    void append(CMoveCastling move);
 
     CMove operator[](unsigned int i) const;
     CMove get(unsigned int i) const;

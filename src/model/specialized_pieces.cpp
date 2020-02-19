@@ -41,54 +41,55 @@ CMoveTree CPawn::getAllMoves(
     forwardMove.append(branch);
 
     pawnPruningVerticalAttack(gameState, forwardMove);
-    enPassant(history, forwardMove);
+    enPassant(history, gameState, forwardMove);
     pawnMove(gameState, forwardMove);
 
     return forwardMove;
 }
 
 void CPawn::enPassant(
-    const CHistory& history, CMoveTree& moves) const
+    const CHistory& history,
+    const CLocation (*const gameState)[8],
+    CMoveTree& moves) const
 {
     cout << "CPawn::enPassant" << endl;
+    if (!history.numberOfMoves()) return;
 
-    auto curPos = getPosition();
+    // TODO Refatorar a classe history para ocultar a Deletagation.
+    auto lastMoveTargetPos = history.getLastMove().getMove();
+    if (!isPawn(lastMoveTargetPos.getTo(), gameState) ||
+        !checkEnPassantCoditions(lastMoveTargetPos)) return;
 
-    if (history.getTurnNumber() == 0) return;
+    auto [lastMoveTargetI, lastMoveTargetJ] = lastMoveTargetPos.getTo();
+    auto [lastMoveSourceI, lastMoveSourceJ] = lastMoveTargetPos.getFrom();
+    auto [i, j] = getPosition();
 
-    auto lastMove = history.getLastTurn();
-    auto wasPawn = lastMove._stateAfter.getType() == EType::PAWN;
-    auto distance = lastMove._from.i - lastMove._to.i;
+    CCoordinate newTarget{
+        static_cast<int>((lastMoveSourceI + lastMoveTargetI)/2),
+        lastMoveTargetJ};
 
-    if (wasPawn && abs(distance) == 2 && lastMove._to.i == curPos.i) {
-        auto branch = CMoveBranch{};
-        int mid = static_cast<int>(lastMove._from.i + lastMove._to.i)/2;
-        CAtomicMove atomicMove{curPos, {mid, lastMove._to.j}};
-        CAtomicMove sideEffect{lastMove._to, lastMove._to};
-
-        CMove move{atomicMove};
-        move.setSideEffect(sideEffect);
-
-        branch.append(move);
-
-        moves.append(branch);
-    }
+    moves.append(
+        CMoveBranch{
+            CMoveEnPassant{
+                CAtomicMove{getPosition(), newTarget},
+                lastMoveTargetPos.getTo()
+            }
+        }
+    );
 }
+
 
 void CPawn::pawnMove(
     const CLocation (*const gameState)[8], CMoveTree& moves) const
 {
 
-    // O peão curPossui comportamento anomalo. Ele não ataca as curPosições em que ele
-    // move. Ele ataca nas diagonais em direção ao inimigo, move em direção ao
-    // inimigo uma casa, pode salta um ou duas curPosição na partida. Esta função
-    // trata esses três casos.
+    // O peão curPossui comportamento anomalo. Ele não ataca as curPosições em
+    // que ele move. Ele ataca nas diagonais em direção ao inimigo, move em
+    // direção ao inimigo uma casa, pode salta um ou duas curPosição na partida.
+    // Esta função trata esses três casos.
     cout << "CPawn::pawnMove" << endl;
 
     auto curPos = getPosition();
-
-    cout << curPos.i << ", "  << curPos.j << endl;
-
     auto branch = CMoveBranch{};
 
     if (getColor() == EColor::WHITE) {
@@ -135,6 +136,30 @@ void CPawn::pawnPruningVerticalAttack(
    }
 
 
+}
+
+bool CPawn::isPawn(
+    CCoordinate position,
+    const CLocation (*const gameState)[8]) const
+{
+    cout << "CPawn::isPawn" << endl;
+    auto [i, j] = position;
+    cout << i << " " << j << endl;
+    return (gameState[i][j].getType() == EType::PAWN);
+}
+
+bool CPawn::checkEnPassantCoditions(CMove move) const
+{
+    cout << "CPawn::checkEnPassntConditions" << endl;
+    auto [lastMoveTargetI, lastMoveTargetJ] = move.getMove().getTo();
+    auto [lastMoveSourceI, lastMoveSourceJ] = move.getMove().getFrom();
+    auto [i, j] = getPosition();
+
+    auto oneColumnDistanceFromTarget = abs(j-lastMoveTargetJ) == 1;
+    auto sameLine = i == lastMoveTargetI;
+    auto longJump = abs(lastMoveSourceI - lastMoveTargetI) == 2;
+
+    return (oneColumnDistanceFromTarget && sameLine && longJump);
 }
 
 /* -------------------------------------------------------------------------- */

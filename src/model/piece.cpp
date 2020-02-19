@@ -235,7 +235,7 @@ CMoveTree CPiece::getRangeBasedMoves(int range) const
     auto& curPos = _position;
     CMoveTree tree{};
 
-    // Certamente deve haver algum algoritmo melhor do que este...
+    // Certamente deve haver algum algoritmo melhor do que este.
     for (unsigned int i = 0; i < 8; ++i)
         for (unsigned int j = 0; j < 8; ++j)
             if (getMoveRange(CCoordinate{i, j}) == range) {

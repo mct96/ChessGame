@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "location.hpp"
 #include "coordinate.hpp"
+#include "path.hpp"
 
 namespace ch {
 
@@ -24,26 +25,18 @@ public:
     CHistory(CLocation (*const gameState)[8]);
     ~CHistory();
 
-    void append(
-        const CPlayer *player,
-        CCoordinate from,
-        CCoordinate to,
-        CLocation stateBefore,
-        CLocation stateAfter);
+    void addMove(CMove move);
+    void undoLastMove();
+    void redoLastMove();
 
-    void append(CTurn turn);
+    CMove getLastMove() const;
 
-    unsigned int getTurnNumber() const;
-    CTurn getLastTurn() const;
-    CTurn getTurn(unsigned int i) const;
-
-    void undoLastTurn();
-    void redoLastTurn();
+    std::size_t numberOfMoves() const;
 
 protected:
 
 private:
-    std::vector<CTurn> _turns;
+    std::vector<CMove> _moves;
     unsigned int _cursor;
 
     CLocation (*const _gameState)[8];
