@@ -1,4 +1,6 @@
-bin/
-!bin/assets/
+bin/CMakeFiles
+bin/*.txt
+bin/*.cmake
+bin/Makefile
 lib/
 game

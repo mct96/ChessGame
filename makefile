@@ -1,6 +1,6 @@
-CC=g++-9
+CC=g++-10
 ARGS=-std=c++2a
-ARGSV=-std=c++2a -lsfml-graphics -lsfml-window -lsfml-system
+ARGSV=-std=c++2a -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 game: main.cpp lib/path.o lib/piece.o lib/game.o lib/specialized_pieces.o \
 	  lib/move_path.o lib/color.o lib/type.o lib/board.o lib/boardController.o \
