@@ -1,100 +1,147 @@
 #pragma once
 
 #include <vector>
-#include <memory>
-#include <unordered_map>
-#include <iostream>
-#include <iomanip>
 
-#include "color.hpp"
-#include "type.hpp"
-#include "location.hpp"
-#include "coordinate.hpp"
-#include "specialized_pieces.hpp"
-#include "move_path.hpp"
-
-using namespace std;
-
-extern int main();
+#include <cstdint>
+#include <algorithm>
+#include <exception>
+#include <initializer_list>
+#include <list>
 
 namespace ch {
 
-class CGame {
+class game_t;
+
+struct pos_t {
+    uint8_t _i, _j;
+
+    bool operator==(const pos_t& p) const;
+    // distance.
+    uint8_t radial_distance(const pos_t& p) const;
+    uint8_t retg_distance(const pos_t& p) const;
+
+    bool check_bounds(
+        uint8_t li = 0, uint8_t ui = 0, uint8_t lj = 0, uint8_t uj = 0) const;
+
+    pos_t u(uint8_t offset = 1) const;
+    pos_t d(uint8_t offset = 1) const;
+    pos_t l(uint8_t offset = 1) const;
+    pos_t r(uint8_t offset = 1) const;
+    pos_t lu(uint8_t offset = 1) const;
+    pos_t ld(uint8_t offset = 1) const;
+    pos_t ru(uint8_t offset = 1) const;
+    pos_t rd(uint8_t offset = 1) const;
+    inline pos_t inc(uint8_t v_offset = 1, uint8_t h_offset = 1) const;
+};
+
+enum class color_t: uint8_t {b, w};
+enum class piece_t: uint8_t {
+    empt = 0,
+    bp = 100, br, bh, bb, bk, bq,
+    wp = 200, wr, wh, wb, wk, wq
+};
+
+color_t get_piece_color(piece_t piece) {
+    auto upiece = static_cast<uint8_t>(piece);
+    if (upiece >= 200) return color_t::w;
+    if (upiece >= 100) return color_t::b;
+    throw std::exception{};
+}
+
+class history_entry_t {
+    friend class game_t;
+
 public:
-    // Apenas para propósito de teste.
-    friend int ::main();
+    // ordinary move.
+    static history_entry_t make_simple_move(
+        pos_t from, pos_t to, piece_t piece);
 
-    CGame();
-    ~CGame();
+    // ordinary attack move.
+    static history_entry_t make_attack_move(
+        pos_t from, pos_t to, piece_t piece_before, piece_t piece_after);
 
-    CLocation getPieceAt(CCoordinate pos) const;
+    // en-passant move.
+    // the color, position are implicit.
+    static history_entry_t make_en_passant_move(pos_t from, pos_t to);
 
-    // Indica se o jogo está em check.
-    bool isCheck() const;
+    // castling move.
+    // the envolved pieces are implicit.
+    static history_entry_t make_castling_move(pos_t from, pos_t to);
 
-    // Indica se foi check mate.
-    bool isCheckMate() const;
+    // promotion.
+    // piece before, piece after: selected promotion piece.
+    static history_entry_t make_promotion_move(
+        pos_t from, pos_t to, piece_t piece_before, piece_t piece_after);
 
-    // Indica qual jogador deve se mover.
-    EColor getPlayerTurn() const;
+    ~history_entry_t();
+private:
+    enum class type_t: uint8_t {
+        simple, attack, en_passant, castling, promotion };
 
-    CMoveTree possibleMoves(
-        CCoordinate pos) const;
+    explicit history_entry_t(
+        type_t type, pos_t from, pos_t to, piece_t state_before = piece_t::empt,
+        piece_t state_after = piece_t::empt);
 
-    // Move uma peça da posição "from" para a posição "to".
-    // Note que a peça em "from" deve estar na lista de peça do jogador que
-    // possue a vez de jogar.
-    void move(CCoordinate from, CCoordinate to);
+    type_t _type;
+    piece_t _state[2];
+    pos_t _from, _to;
+};
+
+class game_t {
+public:
+    explicit game_t();
+    ~game_t();
+
+    bool test_check_mate(color_t color); // TODO should be constant.
+    bool test_check(color_t color); // TODO should be constant.
+    void reset();
+
+    void undo();
+    void redo();
+
+    template <typename Callable>
+    // must return a ch::piece_t an take 0 (any) parameter.
+    void promotion_handler(Callable callabe);
+
+    bool move(pos_t from, pos_t to, bool commit = true);
+
 protected:
-    CPiece * const factoryPiece(
-        EType type,
-        EColor color
-    ) const;
+    bool move_pawn(pos_t from, pos_t to, bool commit = true);
+    bool move_king(pos_t from, pos_t to, bool commit = true);
+    bool move_queen(pos_t from, pos_t to, bool commit = true);
+    bool move_knight(pos_t from, pos_t to, bool commit = true);
+    bool move_bishop(pos_t from, pos_t to, bool commit = true);
+    bool move_rook(pos_t from, pos_t to, bool commit = true);
 
-    // Trata o caso de Promotions no jogo.
-    void promotion(
-        std::shared_ptr<CPiece> piece, CMoveTree& moves);
+    void commit_move(pos_t from, pos_t to);
 
-    // Inicializa todos as peças do jogo instanciando e inicializando cada uma
-    // na sua respectiva posição.
-    void initializeGame();
+    bool empty_diagonal(pos_t from, pos_t to) const;
+    bool empty_parallel(pos_t from, pos_t to) const;
 
-    // Inicializa apenas as peças brancas.
-    void initializeWhitePieces();
+    bool can_en_passant(pos_t from, pos_t to) const;
+    bool can_castling(pos_t from, pos_t to); // should be const.
 
-    // Inicializa apenas as peças pretas.
-    void initializeBlackPieces();
+    void push_history(history_entry_t history_entry);
+    history_entry_t pop_history();
+    history_entry_t top_history() const;
 
-    // Alterna entre os jogadores.
-    void swapPlayerTurn();
+    bool same_col(pos_t p1, pos_t p2) const;
+    inline bool same_j(pos_t p1, pos_t p2) const;
+    inline bool same_i(pos_t p1, pos_t p2) const;
+    inline bool is_empty(pos_t p) const;
 
-    // Indica se a peça "piece" específicada nos parâmetros pode mover para a
-    // posição especificada pelo parâmetro "to".
-    bool canMoveTo(std::shared_ptr<CPiece> piece, CCoordinate to) const;
+    void reset_iterators();
 
-    // Retorna o rei que possui a cor específicada no parâmetro.
-    std::shared_ptr<CPiece> getKing(EColor kingColor) const;
-
-
+    pos_t find_king(color_t color) const;
 
 private:
+    std::vector<history_entry_t> _history;
+    uint16_t _history_head;
+    piece_t _board[8][8];
 
-    // Todas as posições do jogo.
-    CLocation _boardLocations[8][8];
-    // Indica qual jogador deve jogar.
-
-    EColor _playerTurn;
-
-    // Guarda o histórico de jogadas do jogo. Utilizado para validar jogadas
-    // como o en passant e castling.
-    CHistory _history;
-
-    static CPawn   _pawn;
-    static CRook   _rook;
-    static CKnight _knight;
-    static CBishop _bishop;
-    static CQueen  _queen;
-    static CKing   _king;
+    // just iterators to enhance algorithms performance.
+    std::list<pos_t> _b_pieces;
+    std::list<pos_t> _w_pieces;
 };
 
 }
