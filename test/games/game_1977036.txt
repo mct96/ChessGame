@@ -1,0 +1,21 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "1-0"]
+[White "Ivan Yeletsky"]
+[Black "Alexander Kozak"]
+[ECO "B12"]
+[WhiteElo "2417"]
+[BlackElo "2303"]
+[PlyCount "79"]
+
+1. e4 c6 2. d4 d5 3. Nd2 g6 4. Ngf3 Bg7 5. c3 Nh6 6. Bd3 O-O
+7. O-O f6 8. Re1 Nf7 9. h4 e6 10. Qc2 f5 11. exf5 exf5 12. Nf1
+Nd7 13. h5 Nf6 14. hxg6 hxg6 15. Nh4 Kh7 16. Re3 Bh6 17. Rh3
+Ne4 18. f3 Neg5 19. Rh1 Qf6 20. Ng3 Rh8 21. Bf4 Bd7 22. Rf1
+Kg8 23. Nxg6 Qxg6 24. Bxf5 Bxf5 25. Nxf5 Qf6 26. Be5 Nxe5
+27. dxe5 Qe6 28. Rh5 Nf7 29. f4 c5 30. Qf2 Rc8 31. Qg3+ Kf8
+32. Nxh6 Rxh6 33. f5 Qb6 34. f6 c4+ 35. Rf2 Rxh5 36. Qg7+ Ke8
+37. Qg8+ Kd7 38. Qxf7+ Kc6 39. Qxh5 Qe3 40. Qh3 1-0

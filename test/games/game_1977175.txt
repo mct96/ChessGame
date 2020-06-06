@@ -1,0 +1,22 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.67"]
+[Result "0-1"]
+[White "Gupta Prithu"]
+[Black "Ariel Erenberg"]
+[ECO "A28"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "88"]
+
+1. c4 Nf6 2. Nc3 e5 3. Nf3 Nc6 4. e4 Bb4 5. d3 d6 6. a3 Bc5
+7. b4 Bb6 8. Na4 Bd4 9. Nxd4 Nxd4 10. Nc3 a5 11. b5 c6 12. a4
+O-O 13. Ne2 Nxe2 14. Bxe2 d5 15. exd5 cxd5 16. O-O Be6 17. c5
+Rc8 18. d4 Ne4 19. Bb2 exd4 20. Qxd4 Qf6 21. Qxf6 gxf6 22. b6
+f5 23. Rfe1 Rfd8 24. Bd4 Nxc5 25. Ra3 Ne4 26. Bb5 f4 27. Rf3
+Rc2 28. Rxf4 Rdc8 29. f3 Rc1 30. Kf1 Nd2+ 31. Kf2 Rxe1
+32. Kxe1 Nb3 33. Be5 Rc2 34. Kf1 Nd2+ 35. Ke1 Nb3 36. Bd6 d4
+37. Re4 h5 38. Re5 Kg7 39. Rxh5 Rxg2 40. f4 f6 41. Bd3 Nc1
+42. Kf1 Ra2 43. Be4 Bc4+ 44. Kg1 d3 0-1

@@ -1,0 +1,20 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "0-1"]
+[White "Ilya Duzhakov"]
+[Black "Mikhail Antipov"]
+[ECO "E11"]
+[WhiteElo "2421"]
+[BlackElo "2580"]
+[PlyCount "66"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 Bb4+ 4. Nbd2 O-O 5. a3 Be7 6. e4 d6
+7. Be2 a5 8. Qc2 Nc6 9. b3 Nh5 10. Bb2 Nf4 11. Bf1 e5 12. d5
+Nb8 13. g3 Nh3 14. Bg2 c6 15. Nf1 cxd5 16. cxd5 Na6 17. Ne3 g6
+18. a4 Bd7 19. Ba3 Rc8 20. Qe2 Qb6 21. Nf5 Bxf5 22. exf5 Qxb3
+23. Qb2 Qd3 24. Bxh3 Rc2 25. Qxc2 Qxc2 26. O-O Nb4 27. Ne1
+Qxa4 28. fxg6 hxg6 29. Bg4 Qb5 30. Rd1 Nxd5 31. Bf3 Nc3
+32. Rd3 Rc8 33. Bxd6 e4 0-1

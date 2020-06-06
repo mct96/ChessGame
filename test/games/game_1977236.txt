@@ -1,0 +1,21 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.46"]
+[Result "1-0"]
+[White "Robert Lee Hess"]
+[Black "Aleksandr Lenderman"]
+[ECO "B13"]
+[WhiteElo "2581"]
+[BlackElo "2648"]
+[PlyCount "79"]
+
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Nc6 5. c3 Nf6 6. h3 e5
+7. dxe5 Nxe5 8. Qe2 Qe7 9. Bc2 Bd7 10. Na3 a6 11. Be3 Qe6
+12. Nf3 Bxa3 13. bxa3 Bb5 14. Nd4 Bxe2 15. Nxe6 fxe6 16. Kxe2
+Rc8 17. Rab1 b5 18. a4 Nc4 19. axb5 Na3 20. b6 Nxc2 21. b7 Rb8
+22. Ba7 Kd7 23. Rb3 Ne4 24. Rc1 Nxc3+ 25. Rxc3 Rxb7 26. Bc5
+Nb4 27. Rb1 Rc8 28. a3 d4 29. Bxd4 e5 30. Rxb4 Rxb4 31. axb4
+exd4 32. Rxc8 Kxc8 33. Kd3 Kb7 34. Kxd4 Kc6 35. f4 Kb5 36. Kc3
+h5 37. g4 hxg4 38. hxg4 Kb6 39. f5 Kc6 40. Kd4 1-0

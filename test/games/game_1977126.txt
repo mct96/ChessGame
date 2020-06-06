@@ -1,0 +1,26 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.18"]
+[Result "0-1"]
+[White "Vladislav Artemiev"]
+[Black "Ngoc Truongson Nguyen"]
+[ECO "A13"]
+[WhiteElo "2746"]
+[BlackElo "2638"]
+[PlyCount "124"]
+
+1. c4 e6 2. g3 d5 3. Bg2 Nf6 4. Nf3 dxc4 5. Qa4+ Bd7 6. Qxc4
+c5 7. Ne5 Qc8 8. O-O Nc6 9. Nf3 Be7 10. Nc3 O-O 11. d3 Rd8
+12. Bg5 b6 13. a3 h6 14. Bf4 Na5 15. Qa2 Bc6 16. Rab1 Nd5
+17. Bd2 Qa6 18. b3 Rac8 19. Ne4 Nf6 20. Nc3 Nd5 21. Qb2 Bf6
+22. Rfc1 Nb7 23. b4 Nd6 24. e4 cxb4 25. axb4 Nxc3 26. Bxc3
+Bxc3 27. Rxc3 Nb5 28. Rcc1 Qb7 29. Bf1 Qe7 30. Rc4 Qf6
+31. Qxf6 gxf6 32. Ra1 Bb7 33. Nd2 Rxc4 34. Nxc4 Ra8 35. f3 Kf8
+36. Kf2 Nd4 37. Ra2 e5 38. Ke3 b5 39. Nd6 Bc8 40. f4 Be6
+41. Ra6 Nc2+ 42. Kd2 Nxb4 43. Ra5 Nc6 44. Rxb5 Nd4 45. Rb2 a5
+46. Kc3 a4 47. Nc4 a3 48. Ra2 Rb8 49. f5 Rb3+ 50. Kd2 Bxc4
+51. dxc4 Rf3 52. Ke1 Ke7 53. c5 Kd7 54. Bc4 Kc6 55. Bxf7 Kxc5
+56. Rg2 Re3+ 57. Kd2 Rxe4 58. g4 Kb4 59. h4 Nf3+ 60. Kd3 Re1
+61. Bd5 Rd1+ 62. Ke2 Nxh4 0-1

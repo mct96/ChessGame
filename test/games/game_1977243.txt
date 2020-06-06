@@ -1,0 +1,20 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.53"]
+[Result "1/2-1/2"]
+[White "Gawain Jones"]
+[Black "Sarin Nihal"]
+[ECO "C84"]
+[WhiteElo "2688"]
+[BlackElo "2610"]
+[PlyCount "63"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5
+7. Bb3 O-O 8. a4 Bb7 9. d3 d6 10. Nbd2 Nd7 11. axb5 axb5
+12. Rxa8 Qxa8 13. c3 Nc5 14. Bc2 b4 15. Nc4 bxc3 16. bxc3 Qa1
+17. Qd2 Na5 18. Nxa5 Qxa5 19. d4 Nd7 20. h3 Bf6 21. Bb3 Re8
+22. Qc2 Qa8 23. Ba4 Re7 24. Bxd7 Rxd7 25. dxe5 Bxe5 26. Nxe5
+dxe5 27. f3 h6 28. Be3 Bc6 29. Rd1 Qa4 30. Qxa4 Bxa4 31. Rxd7
+Bxd7 32. Ba7 1/2-1/2

@@ -1,0 +1,20 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.52"]
+[Result "0-1"]
+[White "Samuel Shankland"]
+[Black "Robert Lee Hess"]
+[ECO "E04"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "68"]
+
+1. d4 Nf6 2. c4 e6 3. g3 d5 4. Bg2 dxc4 5. Nf3 c5 6. O-O Nc6
+7. Qa4 Bd7 8. Qxc4 b5 9. Qc3 Rc8 10. dxc5 Nd5 11. Qc2 Ncb4
+12. Qd1 Bxc5 13. e4 Nf6 14. Nc3 Ng4 15. Qe2 Qb6 16. a3 Bxf2+
+17. Kh1 Nc6 18. e5 Bc5 19. b4 Be7 20. h3 Nd4 21. Nxd4 Qxd4
+22. Bb2 Ne3 23. Rf4 Qb6 24. Be4 Nc4 25. Raf1 Nxb2 26. Rxf7
+Rxc3 27. Qg4 Qe3 28. Rxe7+ Kxe7 29. Qxg7+ Kd8 30. Qxh8+ Kc7
+31. Bg2 Nd3 32. Qf8 Nxe5 33. Rd1 Nd3 34. Kh2 Rc2 0-1

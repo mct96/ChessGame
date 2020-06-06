@@ -1,0 +1,22 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.09"]
+[EventDate "?"]
+[Round "7"]
+[Result "1-0"]
+[White "Ivan Rozum"]
+[Black "Natalia Pogonina"]
+[ECO "A06"]
+[WhiteElo "2573"]
+[BlackElo "2469"]
+[PlyCount "85"]
+
+1. Nf3 d5 2. g3 Bg4 3. Bg2 c6 4. c4 e6 5. O-O Nf6 6. d3 dxc4
+7. dxc4 Qxd1 8. Rxd1 Nbd7 9. Nc3 Bb4 10. Na4 O-O 11. Be3 Be7
+12. a3 Rfd8 13. Rac1 h6 14. h3 Bf5 15. Nd2 e5 16. Nb3 Nb6
+17. Rxd8+ Bxd8 18. Nac5 Rb8 19. Na5 Bc8 20. Bxc6 Nxc4 21. Nxc4
+bxc6 22. Nxe5 Bxh3 23. Nxc6 Ra8 24. Nb7 Bb6 25. Bxb6 axb6
+26. Nd6 Be6 27. Nd4 Bd7 28. Rc7 Ra5 29. e4 Bh3 30. f3 h5
+31. Rb7 Rc5 32. Rxb6 Rc1+ 33. Kh2 Bd7 34. Rb8+ Kh7 35. Nxf7
+Be8 36. Nd6 Bg6 37. Ne6 Rc2+ 38. Kg1 Nd7 39. Rd8 Ne5 40. Ng5+
+Kh6 41. f4 Rc1+ 42. Kg2 Rc2+ 43. Kf1 1-0

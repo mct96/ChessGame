@@ -1,6 +1,1 @@
-bin/CMakeFiles
-bin/*.txt
-bin/*.cmake
-bin/Makefile
-lib/
-game
+bin/

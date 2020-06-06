@@ -1,0 +1,23 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.48"]
+[Result "1/2-1/2"]
+[White "Matthias Bluebaum"]
+[Black "Abhimanyu Puranik"]
+[ECO "D86"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "91"]
+
+1. d4 Nf6 2. c4 g6 3. Nc3 d5 4. cxd5 Nxd5 5. e4 Nxc3 6. bxc3
+Bg7 7. Bc4 c5 8. Ne2 Nc6 9. Be3 O-O 10. Rc1 Na5 11. Bd3 b6
+12. O-O Bb7 13. Qd2 Rc8 14. d5 e6 15. c4 Qd7 16. Bh6 Bxh6
+17. Qxh6 b5 18. Rfd1 Nxc4 19. Bxc4 bxc4 20. Nc3 exd5 21. exd5
+Qf5 22. Qh4 Rfe8 23. Qxc4 Re5 24. h3 Qd7 25. Rb1 Ba8 26. Rb2
+Qe7 27. d6 Qd7 28. Qf4 Re6 29. h4 h5 30. Kh2 Rce8 31. f3 Bc6
+32. Rbd2 Re5 33. Rd3 Rf5 34. Qh6 Rfe5 35. R1d2 R5e6 36. Qf4
+Re5 37. Nd1 Rf5 38. Qh6 Rfe5 39. Nc3 R5e6 40. Qf4 Re5 41. Nd5
+Bxd5 42. Rxd5 Rxd5 43. Rxd5 Re6 44. Qd2 c4 45. Qd4 c3 46. Qxc3
+1/2-1/2

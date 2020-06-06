@@ -1,0 +1,21 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.29"]
+[Result "1-0"]
+[White "Nijat Abasov"]
+[Black "Sanan Sjugirov"]
+[ECO "D38"]
+[WhiteElo "2632"]
+[BlackElo "2662"]
+[PlyCount "79"]
+
+1. Nf3 d5 2. d4 Nf6 3. c4 e6 4. Nc3 Bb4 5. Bg5 h6 6. Bxf6 Qxf6
+7. e3 O-O 8. Rc1 dxc4 9. Bxc4 c5 10. dxc5 Bxc5 11. Qc2 Be7
+12. O-O Nc6 13. Rfd1 Rd8 14. Rxd8+ Bxd8 15. Rd1 Qe7 16. Qd3
+Ba5 17. Bb5 Qb4 18. Ne4 Bc7 19. a3 Qe7 20. Nd6 Rb8 21. Bxc6
+bxc6 22. Ne5 Qxd6 23. Qxd6 Bxd6 24. Rxd6 Rxb2 25. h4 Bb7
+26. Rd8+ Kh7 27. Nxf7 Kg6 28. Ne5+ Kf6 29. f4 Kf5 30. Nd3 Rb5
+31. Nf2 e5 32. g4+ Ke6 33. f5+ Ke7 34. Rg8 Kf7 35. Rb8 c5
+36. Nd3 Kf6 37. Re8 Bd5 38. Nxe5 Rb7 39. e4 Bf7 40. Nd7+ 1-0

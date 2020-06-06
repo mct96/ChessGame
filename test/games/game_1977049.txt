@@ -1,0 +1,18 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1/2-1/2"]
+[White "Ivan Rozum"]
+[Black "Grigoriy Oparin"]
+[ECO "A90"]
+[WhiteElo "2573"]
+[BlackElo "2605"]
+[PlyCount "42"]
+
+1. d4 e6 2. c4 f5 3. g3 Nf6 4. Bg2 d5 5. Nf3 Bd6 6. O-O c6
+7. b3 Qe7 8. Bb2 O-O 9. Qc1 b6 10. Ba3 Bb7 11. Bxd6 Qxd6
+12. Nc3 Nbd7 13. Rd1 Ne4 14. e3 a5 15. Qb2 Ba6 16. Rac1 Rfc8
+17. a3 Qe7 18. Bf1 Bb7 19. Bg2 Ba6 20. Bf1 Bb7 21. Bg2 Ba6
+1/2-1/2

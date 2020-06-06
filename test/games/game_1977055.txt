@@ -1,0 +1,23 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1/2-1/2"]
+[White "Alexander Utnasunov"]
+[Black "Alexandr Triapishko"]
+[ECO "D94"]
+[WhiteElo "2444"]
+[BlackElo "2506"]
+[PlyCount "95"]
+
+1. d4 Nf6 2. c4 g6 3. Nc3 d5 4. Nf3 Bg7 5. e3 O-O 6. Bd2 e6
+7. b4 Ne4 8. Bd3 Nxd2 9. Qxd2 c6 10. O-O dxc4 11. Bxc4 e5
+12. Rad1 exd4 13. exd4 Bg4 14. Qf4 Bxf3 15. Qxf3 Nd7 16. Rfe1
+Nb6 17. Bb3 a5 18. b5 a4 19. Bc2 Qd6 20. bxc6 bxc6 21. h4 Ra5
+22. Ne4 Qd5 23. Qc3 Raa8 24. h5 Qc4 25. hxg6 hxg6 26. Re3 Rfd8
+27. Qxc4 Nxc4 28. Rc3 Nb2 29. Rb1 Rab8 30. Rxc6 Bxd4 31. g4
+Rbc8 32. Rxc8 Rxc8 33. Bd1 Kg7 34. Kf1 Rd8 35. Bc2 Rc8
+36. Bxa4 Nxa4 37. Rb4 Nc3 38. Rxd4 Nxa2 39. Rd7 Rf8 40. g5 Nb4
+41. Kg2 Nc6 42. f4 Rd8 43. Rc7 Nd4 44. Nc5 Rd6 45. Ne4 Ne6
+46. Rxf7+ Kxf7 47. Nxd6+ Ke7 48. f5 1/2-1/2

@@ -1,0 +1,20 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.24"]
+[Result "1/2-1/2"]
+[White "Ivan Cheparinov"]
+[Black "Bogdan-Daniel Deac"]
+[ECO "E06"]
+[WhiteElo "2670"]
+[BlackElo "2613"]
+[PlyCount "63"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 d5 4. g3 Be7 5. Bg2 O-O 6. O-O dxc4
+7. Qc2 b5 8. a4 b4 9. Nfd2 Nd5 10. Nxc4 c5 11. dxc5 Ba6
+12. Ne3 Nd7 13. Nxd5 exd5 14. c6 Rc8 15. Bf4 Nc5 16. c7 Qd7
+17. Nd2 g5 18. Be5 f6 19. Bd4 Rxc7 20. Nb3 Nxb3 21. Qxb3 Bxe2
+22. Bxd5+ Kg7 23. Rfe1 Rd8 24. Be6 Qxd4 25. Rxe2 Qd3 26. Rae1
+Bc5 27. Kg2 Qxb3 28. Bxb3 Rdd7 29. Be6 Re7 30. Re4 Bd6
+31. R1e2 a5 32. b3 1/2-1/2

@@ -1,0 +1,18 @@
+[Event "Casual"]
+[Site "Nuremberg GER"]
+[Date "1909.??.??"]
+[EventDate "?"]
+[Round "?"]
+[Result "1-0"]
+[White "Siegbert Tarrasch"]
+[Black "Vogel"]
+[ECO "D32"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "45"]
+
+1. d4 d5 2. Nf3 c5 3. c4 e6 4. e3 Nf6 5. Nc3 Nc6 6. Bd3 a6
+7. O-O dxc4 8. Bxc4 b5 9. Bb3 Bb7 10. Qe2 cxd4 11. Rd1 d3
+12. Rxd3 Qc7 13. e4 Bc5 14. Bg5 Ng4 15. Bh4 Nd4 16. Rxd4 Bxd4
+17. Bg3 Be5 18. Nxe5 Nxe5 19. Qh5 O-O 20. Bxe5 Qe7 21. Qg4 g6
+22. Qf4 f5 23. Qh6 1-0

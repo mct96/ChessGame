@@ -1,0 +1,18 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.21"]
+[Result "1/2-1/2"]
+[White "Nils Grandelius"]
+[Black "Rauf Mamedov"]
+[ECO "C78"]
+[WhiteElo "2691"]
+[BlackElo "2645"]
+[PlyCount "48"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Bc5 6. c3 b5
+7. Bc2 d5 8. d4 dxe4 9. Nxe5 Nxe5 10. dxc5 Qe7 11. Bg5 Bb7
+12. Re1 h6 13. Bxf6 Qxf6 14. Bxe4 Bxe4 15. Rxe4 O-O 16. Qe2
+Nd7 17. Nd2 Nxc5 18. Re3 Rad8 19. Ne4 Nxe4 20. Rxe4 Rd7
+21. Re8 Rd8 22. Re4 Rd7 23. Re8 Rd8 24. Re4 Rd7 1/2-1/2

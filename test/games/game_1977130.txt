@@ -1,0 +1,29 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.22"]
+[Result "1/2-1/2"]
+[White "Zhong Zhang"]
+[Black "Gabriel Sargissian"]
+[ECO "C78"]
+[WhiteElo "2636"]
+[BlackElo "2690"]
+[PlyCount "150"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. d3 b5
+7. Bb3 d6 8. Bd2 O-O 9. h3 a5 10. a4 b4 11. Be3 d5 12. Nbd2 d4
+13. Bg5 Nd7 14. Bxe7 Qxe7 15. Bd5 Ra6 16. Nb3 Nd8 17. Bc4 Ra7
+18. Nfd2 g5 19. Qh5 Kh8 20. c3 dxc3 21. bxc3 bxc3 22. Nb1 c2
+23. Na3 Nb6 24. Qe2 c6 25. Qxc2 Nxa4 26. Qd2 Rg8 27. Nc2 Nb6
+28. Nxa5 g4 29. Qe3 gxh3 30. g3 c5 31. Kh2 Nd7 32. Qd2 Nf6
+33. Ne3 Ng4+ 34. Nxg4 Bxg4 35. Qc3 Re8 36. f3 Bc8 37. Bd5 f6
+38. Nb3 Rc7 39. f4 Be6 40. Bxe6 Qxe6 41. fxe5 fxe5 42. Ra8 Nf7
+43. Qc4 Kg7 44. Rxe8 Qxe8 45. Nxc5 Rc6 46. Qd5 Nh6 47. Qd7+
+Qxd7 48. Nxd7 Ng4+ 49. Kxh3 Rd6 50. Kxg4 Rxd7 51. Rf3 Kg6
+52. Kh3 Rd8 53. Kg2 Kg5 54. Kf2 Kg4 55. Ke2 h5 56. Rf5 Re8
+57. Kf2 Rd8 58. Ke3 Re8 59. Kd2 Re7 60. Ke2 Re8 61. Rf3 Re7
+62. Kf2 Rd7 63. Rf8 Rxd3 64. Rg8+ Kh3 65. Rg5 h4 66. gxh4 Kxh4
+67. Rxe5 Kg4 68. Rf5 Ra3 69. Rf8 Ra2+ 70. Ke3 Ra3+ 71. Kd4
+Ra4+ 72. Kd5 Ra5+ 73. Kd6 Ra6+ 74. Ke7 Ra7+ 75. Kf6 Ra6+
+1/2-1/2

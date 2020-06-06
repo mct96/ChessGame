@@ -1,12 +1,19 @@
 #pragma once
 
 #include <vector>
-
 #include <cstdint>
 #include <algorithm>
 #include <exception>
 #include <initializer_list>
+#include <string>
 #include <list>
+
+#ifndef NDEBUB
+#include <iostream>
+
+using namespace std;
+
+#endif
 
 namespace ch {
 
@@ -21,7 +28,7 @@ struct pos_t {
     uint8_t retg_distance(const pos_t& p) const;
 
     bool check_bounds(
-        uint8_t li = 0, uint8_t ui = 0, uint8_t lj = 0, uint8_t uj = 0) const;
+        uint8_t li = 0, uint8_t ui = 7, uint8_t lj = 0, uint8_t uj = 7) const;
 
     pos_t u(uint8_t offset = 1) const;
     pos_t d(uint8_t offset = 1) const;
@@ -41,17 +48,13 @@ enum class piece_t: uint8_t {
     wp = 200, wr, wh, wb, wk, wq
 };
 
-color_t get_piece_color(piece_t piece) {
-    auto upiece = static_cast<uint8_t>(piece);
-    if (upiece >= 200) return color_t::w;
-    if (upiece >= 100) return color_t::b;
-    throw std::exception{};
-}
+color_t get_piece_color(piece_t piece);
 
 class history_entry_t {
     friend class game_t;
 
 public:
+
     // ordinary move.
     static history_entry_t make_simple_move(
         pos_t from, pos_t to, piece_t piece);
@@ -73,6 +76,9 @@ public:
     static history_entry_t make_promotion_move(
         pos_t from, pos_t to, piece_t piece_before, piece_t piece_after);
 
+
+    history_entry_t() = default;
+    history_entry_t(const history_entry_t&) = default;
     ~history_entry_t();
 private:
     enum class type_t: uint8_t {
@@ -89,11 +95,17 @@ private:
 
 class game_t {
 public:
+    using positions_list_t = std::list<pos_t>;
+
     explicit game_t();
     ~game_t();
 
+#ifndef NDEBUG
+    char piece_to_char(piece_t) const;
+    void print_board() const;
+#endif
     bool test_check_mate(color_t color); // TODO should be constant.
-    bool test_check(color_t color); // TODO should be constant.
+    bool test_check(color_t color) const;
     void reset();
 
     void undo();
@@ -104,6 +116,9 @@ public:
     void promotion_handler(Callable callabe);
 
     bool move(pos_t from, pos_t to, bool commit = true);
+    bool can_move(pos_t from, pos_t to) const;
+
+    positions_list_t list_moves(pos_t pos) const;
 
 protected:
     bool move_pawn(pos_t from, pos_t to, bool commit = true);
@@ -119,7 +134,7 @@ protected:
     bool empty_parallel(pos_t from, pos_t to) const;
 
     bool can_en_passant(pos_t from, pos_t to) const;
-    bool can_castling(pos_t from, pos_t to); // should be const.
+    bool can_castling(pos_t from, pos_t to) const;
 
     void push_history(history_entry_t history_entry);
     history_entry_t pop_history();
@@ -130,6 +145,9 @@ protected:
     inline bool same_i(pos_t p1, pos_t p2) const;
     inline bool is_empty(pos_t p) const;
 
+    void add_to_iterator(color_t col, pos_t pos);
+    void update_iterator(pos_t old_pos, pos_t new_pos);
+    void remove_from_iterator(pos_t pos);
     void reset_iterators();
 
     pos_t find_king(color_t color) const;

@@ -1,0 +1,25 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.58"]
+[Result "0-1"]
+[White "Kacper Piorun"]
+[Black "Alina Kashlinskaya"]
+[ECO "A21"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "116"]
+
+1. c4 e5 2. Nc3 Bb4 3. Nd5 Be7 4. Nf3 d6 5. d4 Nf6 6. Nxe7
+Qxe7 7. e3 O-O 8. Be2 exd4 9. Nxd4 Rd8 10. O-O c5 11. Nf3 Bf5
+12. Bd2 Ne4 13. Qb3 Nxd2 14. Nxd2 Nc6 15. Rfe1 Be6 16. e4 a6
+17. Qc3 Nd4 18. Bf1 b5 19. Rac1 Rab8 20. b3 b4 21. Qa1 Rb6
+22. Re3 Rdb8 23. Bd3 a5 24. f4 a4 25. Rf1 Bd7 26. Qb1 axb3
+27. axb3 Ra8 28. e5 f5 29. Nf3 Nxf3+ 30. Rfxf3 Rba6 31. Rf1 g6
+32. e6 Bc6 33. Qe1 Ra2 34. Be2 Qf6 35. Bf3 Bxf3 36. Rexf3 Kf8
+37. Rd3 Rc2 38. Kh1 Raa2 39. Rg1 Re2 40. Qd1 Rxe6 41. h3 Ke7
+42. Re1 Kd7 43. Rxe6 Qxe6 44. Kh2 Kc7 45. Rd2 Rxd2 46. Qxd2
+Qe4 47. g3 d5 48. Qa2 dxc4 49. Qa7+ Kc6 50. Qa8+ Kd7 51. Qa7+
+Ke6 52. Qb6+ Kf7 53. Qxc5 Qc2+ 54. Kg1 cxb3 55. Qd5+ Ke7
+56. Qe5+ Kd7 57. Qd5+ Kc7 58. Qa5+ Kc6 0-1

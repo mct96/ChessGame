@@ -1,0 +1,23 @@
+[Event "casual"]
+[Site "Nuremberg GER"]
+[Date "1907.??.??"]
+[EventDate "?"]
+[Round "?"]
+[Result "0-1"]
+[White "Kohnlein"]
+[Black "Siegbert Tarrasch"]
+[ECO "C68"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "94"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. Nc3 Bc5 6. d3
+Qd6 7. Be3 Bxe3 8. fxe3 Ne7 9. Qe2 f6 10. Nh4 Be6 11. g4 Qb4
+12. Nf5 Qxb2 13. Kd2 Bxf5 14. gxf5 O-O-O 15. a4 Qb4 16. a5 Kb8
+17. Rhb1 Qc5 18. Na4 Qa7 19. c4 c5 20. Nc3 Nc8 21. Nd5 Nd6
+22. Kc3 c6 23. Nb6 Kc7 24. Rg1 Rdg8 25. Qb2 Qb8 26. Na4 g6
+27. Nxc5 Qa7 28. Qa3 gxf5 29. Rab1 fxe4 30. Nxb7 Nxb7 31. Qe7+
+Kb8 32. Qxf6 Ka8 33. Rxg8+ Rxg8 34. Qxc6 exd3 35. Rb6 d2
+36. Kxd2 Rd8+ 37. Kc3 Rd6 38. Qc7 Rxb6 39. axb6 Qb8 40. Qxh7
+Nc5 41. h4 Qxb6 42. Qg8+ Kb7 43. Qd5+ Ka7 44. h5 Na4+ 45. Kd2
+Qb4+ 46. Kc2 Qb2+ 47. Kd3 e4+ 0-1

@@ -1,0 +1,23 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "1-0"]
+[White "Alexandr Triapishko"]
+[Black "Konstantin Sek"]
+[ECO "A45"]
+[WhiteElo "2506"]
+[BlackElo "2465"]
+[PlyCount "93"]
+
+1. d4 Nf6 2. Nc3 d5 3. Bf4 e6 4. Nb5 Na6 5. e3 c6 6. Nc3 Qb6
+7. a3 c5 8. Nf3 Bd7 9. Rb1 Be7 10. g4 Nxg4 11. Rg1 h5 12. h3
+Nh6 13. Bxh6 Rxh6 14. Rxg7 Kf8 15. Rg3 f6 16. Qd2 Rh8 17. e4
+h4 18. Rg1 cxd4 19. Nxd4 dxe4 20. Nf5 exf5 21. Qxd7 Rd8
+22. Qxf5 e3 23. Rg2 exf2+ 24. Rxf2 Qe3+ 25. Re2 Qg3+ 26. Qf2
+Nc5 27. Qxg3 hxg3 28. Bg2 Rh5 29. b4 Nd7 30. Rb3 f5 31. Nd5
+Bd6 32. c4 b6 33. Rbe3 f4 34. Re6 Be5 35. Kf1 Re8 36. Rxe8+
+Kxe8 37. c5 bxc5 38. bxc5 Kd8 39. Nb4 Kc8 40. Bf3 Rxh3 41. c6
+Rh2 42. Bg4 f3 43. cxd7+ Kc7 44. Rxh2 gxh2 45. Bxf3 Kxd7
+46. Nd3 Bd6 47. a4 1-0

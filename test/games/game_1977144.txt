@@ -1,0 +1,30 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.36"]
+[Result "1-0"]
+[White "Andrey Esipenko"]
+[Black "Gawain Jones"]
+[ECO "D85"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "159"]
+
+1. d4 Nf6 2. c4 g6 3. Nc3 d5 4. cxd5 Nxd5 5. e4 Nxc3 6. bxc3
+Bg7 7. Nf3 c5 8. Be3 Qa5 9. Qd2 O-O 10. Rc1 Bg4 11. d5 b5
+12. Bxc5 Rc8 13. Bb4 Qc7 14. Nd4 a5 15. Ba3 b4 16. Bb2 Qb6
+17. c4 a4 18. Be2 a3 19. Ba1 Bxe2 20. Kxe2 e6 21. Rhd1 Na6
+22. Nc6 Bxa1 23. Ne7+ Kg7 24. Nxc8 Rxc8 25. Rxa1 Rxc4 26. Kf1
+Nc5 27. d6 e5 28. Qg5 Nxe4 29. Qe3 Qxe3 30. fxe3 Rc8 31. Rd5
+Nc3 32. Rxe5 Rd8 33. Re7 Nd5 34. Rb7 Nxe3+ 35. Ke2 Nd5 36. d7
+Kf6 37. Kd3 Ke6 38. Re1+ Kd6 39. Kc4 Kc6 40. Rb5 Nb6+ 41. Kxb4
+Nd5+ 42. Kc4 Nb6+ 43. Rxb6+ Kxb6 44. Re7 Kc6 45. Rxf7 h5
+46. Kb4 h4 47. h3 g5 48. Kxa3 Kc7 49. Rg7 Ra8+ 50. Kb3 Ra5
+51. a4 Re5 52. Kc4 Rf5 53. Kd4 Kd8 54. Ke4 Rc5 55. Kf3 Rc3+
+56. Kg4 Rg3+ 57. Kh5 Rxg2 58. Rxg5 Ra2 59. Rg4 Kxd7 60. Kxh4
+Ra3 61. Rf4 Ke6 62. Kg4 Ra1 63. Kg5 Rg1+ 64. Rg4 Rh1 65. h4
+Kf7 66. Rf4+ Kg7 67. Rf5 Rg1+ 68. Kh5 Rd1 69. a5 Ra1 70. Kg5
+Rh1 71. h5 Rg1+ 72. Kf4 Re1 73. Rb5 Kh6 74. a6 Ra1 75. Rb6+
+Kxh5 76. Ke5 Rd1 77. a7 Ra1 78. Rb7 Ra6 79. Kd5 Kg6 80. Kc5
+1-0

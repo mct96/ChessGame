@@ -1,0 +1,21 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1-0"]
+[White "Konstantin Sek"]
+[Black "Ivan Yeletsky"]
+[ECO "C24"]
+[WhiteElo "2465"]
+[BlackElo "2417"]
+[PlyCount "73"]
+
+1. e4 e5 2. Bc4 Nf6 3. d3 c6 4. Qe2 Bc5 5. Nf3 O-O 6. Bg5 d6
+7. Bb3 a5 8. c3 Re8 9. Nbd2 Nbd7 10. O-O a4 11. Bc2 b5 12. d4
+Bb6 13. Rfe1 h6 14. Bh4 Nf8 15. Rad1 Qe7 16. d5 Bd7 17. dxc6
+Bxc6 18. Nf1 g5 19. Bg3 Qe6 20. h4 g4 21. N3h2 Kg7 22. Ne3
+Bxe4 23. Nhxg4 Nxg4 24. Bxe4 Nxe3 25. fxe3 Rab8 26. Rf1 Re7
+27. Rf3 Ng6 28. Kh2 Rg8 29. h5 Nh8 30. Bh4 Kf8 31. Bf5 Qc4
+32. Qxc4 bxc4 33. Rxd6 e4 34. Bxe7+ Kxe7 35. Rd7+ Ke8 36. Rf4
+Rg5 37. Rxe4+ 1-0

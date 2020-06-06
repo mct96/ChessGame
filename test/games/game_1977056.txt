@@ -1,0 +1,23 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1-0"]
+[White "Maksim Vavulin"]
+[Black "Alexander Zabotin"]
+[ECO "A07"]
+[WhiteElo "2595"]
+[BlackElo "2466"]
+[PlyCount "95"]
+
+1. e4 c5 2. d3 Nc6 3. g3 g6 4. Bg2 Bg7 5. f4 d6 6. Nf3 e6
+7. O-O Nge7 8. c3 O-O 9. Be3 b6 10. Bf2 h6 11. Re1 Ba6 12. Na3
+b5 13. Nc2 b4 14. cxb4 cxb4 15. d4 d5 16. e5 Qb6 17. g4 Rfc8
+18. Ne3 b3 19. axb3 Nb4 20. Bh4 Nec6 21. Bf1 Bxf1 22. Rxf1 Qb5
+23. Bg3 Qd3 24. Qxd3 Nxd3 25. Rfd1 Ncb4 26. Rab1 f6 27. exf6
+Bxf6 28. Kf1 g5 29. fxg5 Bxg5 30. Ke2 Nf4+ 31. Kd2 Nh3
+32. Rbc1 a5 33. Rf1 Nc6 34. Bd6 Bf4 35. Bxf4 Nxf4 36. g5 Nd8
+37. Rxc8 Rxc8 38. gxh6 Nf7 39. Nh4 Nh5 40. Ng6 Rc7 41. h7+
+Kxh7 42. Nf8+ Kg8 43. Nxe6 Rc6 44. Rxf7 Rxe6 45. Rf5 Nf6
+46. Nxd5 Ne4+ 47. Kd3 Nd6 48. Rf6 1-0

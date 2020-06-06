@@ -1,0 +1,18 @@
+[Event "Budapest-ch09"]
+[Site "Budapest HUN"]
+[Date "1968.02.??"]
+[EventDate "1968.02.??"]
+[Round "?"]
+[Result "0-1"]
+[White "Pal Petran"]
+[Black "Eduard Stein"]
+[ECO "E20"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Chessbase"]
+[PlyCount "44"]
+
+1.d4 Nf6 2.c4 e6 3.Nc3 Bb4 4.f3 O-O 5.a3 Bxc3+ 6.bxc3 d6 7.e4
+e5 8.Bd3 c5 9.d5 Nh5 10.Ne2 f5 11.exf5 Bxf5 12.O-O Bxd3
+13.Qxd3 Qh4 14.g3 Qh3 15.f4 Nd7 16.Bd2 Rae8 17.Ra2 e4 18.Qb1
+Ndf6 19.Be1 Ng4 20.Nc1 Ne3 21.Rff2 Nxf4 22.Bd2 Qf1+ 0-1

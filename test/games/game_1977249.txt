@@ -1,0 +1,25 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.59"]
+[Result "1-0"]
+[White "Vasif Durarbayli"]
+[Black "Soumya Swaminathan"]
+[ECO "B56"]
+[WhiteElo "2617"]
+[BlackElo "2365"]
+[PlyCount "119"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. f3 e5
+7. Nb3 Be7 8. Be3 O-O 9. Qd2 a5 10. Bb5 Na7 11. Bxa7 Rxa7
+12. O-O-O Qb6 13. Qe2 Be6 14. Kb1 Raa8 15. Na4 Qa7 16. Rhe1
+Ne8 17. Nc3 Nc7 18. a4 Nxb5 19. Qxb5 g6 20. Nd5 Bd8 21. Nd2
+Rc8 22. Qd3 Qc5 23. Nb3 Qc4 24. Nc3 Rc6 25. Qxc4 Bxc4 26. Nb5
+b6 27. Nxd6 Be6 28. Nc1 Be7 29. Nb5 Bb4 30. Re3 f6 31. Red3
+Be7 32. Rc3 Rfc8 33. Rxc6 Rxc6 34. Ne2 Kf7 35. Nec3 f5 36. b3
+h5 37. Nd5 Bc5 38. h3 h4 39. Ndc7 fxe4 40. fxe4 Ke7 41. Nxe6
+Kxe6 42. Nc3 Rc8 43. Rf1 Rf8 44. Rxf8 Bxf8 45. Nd5 Bc5 46. Kb2
+Kd6 47. Kc3 g5 48. Kc4 Kc6 49. Nf6 Bf2 50. Ng4 Bg3 51. Nh6 Bh2
+52. Nf7 Bf4 53. c3 Bh2 54. Nxg5 Bf4 55. Nf3 Bg3 56. b4 axb4
+57. cxb4 Kd6 58. Kb5 Kc7 59. Ka6 Kc6 60. b5+ 1-0

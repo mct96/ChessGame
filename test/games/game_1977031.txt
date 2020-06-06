@@ -1,0 +1,26 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "0-1"]
+[White "Natalia Pogonina"]
+[Black "Alexander Utnasunov"]
+[ECO "D10"]
+[WhiteElo "2469"]
+[BlackElo "2444"]
+[PlyCount "124"]
+
+1. d4 d5 2. c4 c6 3. e3 Bf5 4. cxd5 cxd5 5. Qb3 Qc8 6. Bb5+
+Bd7 7. Nc3 e6 8. Bd3 a6 9. Nf3 Nc6 10. O-O Nf6 11. Bd2 Na5
+12. Qc2 Nc4 13. e4 Nxd2 14. Qxd2 dxe4 15. Nxe4 Be7 16. Rfc1
+Qd8 17. Nxf6+ Bxf6 18. Be4 Rb8 19. Qc2 Rc8 20. Qb3 Rb8 21. Rc2
+O-O 22. Rac1 a5 23. h3 Be7 24. Ne5 Bd6 25. Qf3 b5 26. Bd3 a4
+27. Qe4 g6 28. h4 b4 29. h5 Kg7 30. b3 axb3 31. axb3 Bb5
+32. Nc6 Bxc6 33. Rxc6 Qe7 34. g3 Rfd8 35. Qg4 Rd7 36. Kg2 Ra8
+37. Rh1 Ra5 38. hxg6 hxg6 39. Qf3 Bb8 40. Rc8 Rd8 41. Rc5 Ra2
+42. Rb5 Ba7 43. Rb7 Rd7 44. Rxa7 Raxa7 45. Qf4 Kg8 46. Qe5 f6
+47. Qe3 Qd6 48. Rh6 Qd5+ 49. Be4 Qxd4 50. Rxg6+ Kf7 51. Qf3
+Ra2 52. Rg4 Qe5 53. Bg6+ Ke7 54. Bb1 Rad2 55. Rg7+ Kf8 56. Rg4
+f5 57. Rxb4 Ke7 58. g4 Qb2 59. Bxf5 exf5 60. Qxf5 Qf6 61. Re4+
+Kf7 62. Qh5+ Kg7 0-1

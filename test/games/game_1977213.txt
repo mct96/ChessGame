@@ -1,0 +1,26 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.22"]
+[Result "1/2-1/2"]
+[White "Markus Ragger"]
+[Black "Zhong Zhang"]
+[ECO "D26"]
+[WhiteElo "2684"]
+[BlackElo "2636"]
+[PlyCount "124"]
+
+1. d4 d5 2. c4 dxc4 3. e3 Nf6 4. Bxc4 e6 5. Nf3 c5 6. O-O Nc6
+7. Nc3 a6 8. d5 exd5 9. Nxd5 Be7 10. e4 b5 11. Nxf6+ Bxf6
+12. Bd5 Bb7 13. Ng5 Bxg5 14. Qh5 O-O 15. Bxg5 Qc7 16. Be3 c4
+17. b3 Na5 18. Rac1 Bxd5 19. exd5 Rac8 20. Bd2 Nb7 21. bxc4
+bxc4 22. Bc3 f6 23. Rfe1 Nc5 24. Bb4 Nd3 25. Bxf8 Rxf8 26. d6
+Qxd6 27. Rcd1 Qd4 28. Qf5 g6 29. Re4 Qa7 30. Qd5+ Kg7 31. Qxc4
+Qxf2+ 32. Kh1 Ne5 33. Qxa6 Rf7 34. a4 Ra7 35. Qb5 Qc2 36. Qb1
+Qc6 37. Qb4 Rb7 38. Qe1 Rb2 39. Re2 Rxe2 40. Qxe2 Qxa4 41. Rc1
+Qd7 42. h3 h5 43. Rb1 Qd5 44. Rd1 Qb3 45. Rc1 Qb6 46. Qe4 Qd6
+47. Rb1 Nf7 48. Qc4 Qd7 49. Qc5 h4 50. Rb8 Qd1+ 51. Kh2 Qd6+
+52. Qxd6 Nxd6 53. Kg1 g5 54. Kf2 Nf5 55. Kf3 Kg6 56. Ra8 Ng3
+57. Ra2 Kf5 58. Ke3 Nh5 59. Ra5+ Kg6 60. Ke4 Ng3+ 61. Kf3 Nh5
+62. Ke4 Ng3+ 1/2-1/2

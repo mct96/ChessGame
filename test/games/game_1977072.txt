@@ -1,0 +1,24 @@
+[Event "USSR"]
+[Site "?"]
+[Date "1979.??.??"]
+[EventDate "1979.??.??"]
+[Round "?"]
+[Result "1-0"]
+[White "Alvis Vitolinsh"]
+[Black "Iossif Davidovich Dorfman"]
+[ECO "C92"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Chess Informant 28/294"]
+[PlyCount "103"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3
+d6 8.c3 O-O 9.h3 Bb7 10.d4 Re8 11.a4 Bf8 12.d5 Nb8 13.axb5
+axb5 14.Rxa8 Bxa8 15.Na3 c6 16.dxc6 Bxc6 17.Bg5 Nbd7 18.Nc2 h6
+19.Bxf6 Nxf6 20.Nb4 Bb7 21.Nd5 Nxd5 22.Bxd5 Qa8 23.Bxb7 Qxb7
+24.Qd3 Ra8 25.Nd2 Ra2 26.Rb1 Ra4 27.b4 Ra3 28.Nf1 Qc6 29.Rc1
+Be7 30.Ne3 g6 31.Nd5 Bd8 32.g3 h5 33.h4 Kg7 34.Kg2 Ra2 35.c4
+Bb6 36.c5 dxc5 37.Nxb6 Qxb6 38.Rxc5 Qf6 39.Qf3 Qxf3+ 40.Kxf3
+Ra3+ 41.Kg2 Rb3 42.Rxb5 Kf6 43.f3 Rb2+ 44.Kf1 Rb1+ 45.Ke2 Rb2+
+46.Kd3 Rg2 47.Rd5 Rxg3 48.b5 Rxf3+ 49.Kc4 Re3 50.b6 Rxe4+
+51.Kc5 Re1 52.b7 1-0

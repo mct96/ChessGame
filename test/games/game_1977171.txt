@@ -1,0 +1,26 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.63"]
+[Result "1-0"]
+[White "Daniil Dubov"]
+[Black "Karen Emilyevich Movsziszian"]
+[ECO "B08"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "129"]
+
+1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be3 Nc6 6. d5 Nb8
+7. Bc4 c6 8. a4 O-O 9. h3 a5 10. O-O Qc7 11. Qe2 Re8 12. Rad1
+e6 13. dxe6 Bxe6 14. Bf4 Bf8 15. Rd2 Nbd7 16. Rfd1 Ne5
+17. Nxe5 dxe5 18. Bg5 Bg7 19. Rd6 Bxc4 20. Qxc4 Rad8 21. R6d3
+Rxd3 22. Rxd3 Qe7 23. Nb1 h6 24. Bd2 Qc7 25. Bc3 Nd7 26. Na3
+Nb6 27. Qb3 Nd7 28. Rf3 Re6 29. Nc4 b6 30. Bd2 Bf8 31. Be3 Nc5
+32. Qxb6 Qxb6 33. Nxb6 Nxe4 34. Nc4 c5 35. Bc1 Re8 36. Re3 f5
+37. f3 Ng3 38. Kf2 Nh1+ 39. Kg1 Ng3 40. Re1 e4 41. Kf2 Nh5
+42. fxe4 fxe4 43. Bd2 Bg7 44. g4 Nf6 45. Bxa5 Nd5 46. Bd2 Bd4+
+47. Kg2 e3 48. Bc1 Re4 49. a5 Bc3 50. Nd6 Re6 51. bxc3 Rxd6
+52. c4 Nb4 53. Bxe3 Nxc2 54. Re2 Nxe3+ 55. Rxe3 Rd2+ 56. Kf3
+Ra2 57. Ke4 Rxa5 58. Kd5 g5 59. Kc6 Kf7 60. Kb6 Ra8 61. Kxc5
+Rc8+ 62. Kb5 Rb8+ 63. Ka6 Rc8 64. Rc3 Ke6 65. Kb7 1-0

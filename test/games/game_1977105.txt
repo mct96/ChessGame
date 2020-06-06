@@ -1,0 +1,19 @@
+[Event "Tournament"]
+[Site "Nuremberg GER"]
+[Date "1910.??.??"]
+[EventDate "?"]
+[Round "?"]
+[Result "0-1"]
+[White "Rudolf Spielmann"]
+[Black "Siegbert Tarrasch"]
+[ECO "C77"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "52"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Qe2 b5 6. Bb3 Bc5
+7. a4 Rb8 8. axb5 axb5 9. Nc3 O-O 10. O-O d6 11. h3 Nh5
+12. Nxe5 Nf4 13. Nxc6 Nxe2+ 14. Nxe2 Qe8 15. Nxb8 Bb7 16. d4
+Qxe4 17. Nf4 Rxb8 18. dxc5 g5 19. cxd6 gxf4 20. f3 Qd4+
+21. Rf2 c5 22. c4 Re8 23. Bd2 Qxb2 24. Re1 Rxe1+ 25. Bxe1 Qxb3
+26. d7 Qd1 0-1

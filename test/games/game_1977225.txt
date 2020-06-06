@@ -1,0 +1,25 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.34"]
+[Result "0-1"]
+[White "Sunilduth Lyna Narayanan"]
+[Black "Hrant Melkumyan"]
+[ECO "C65"]
+[WhiteElo "2611"]
+[BlackElo "2650"]
+[PlyCount "114"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. d3 Bc5 5. Bxc6 dxc6 6. Nbd2
+Be6 7. O-O Nd7 8. Nb3 Be7 9. d4 f6 10. Na5 Rb8 11. dxe5 Nxe5
+12. Nxe5 Qxd1 13. Rxd1 fxe5 14. Be3 g5 15. a3 g4 16. Rd3 a6
+17. Ba7 Ra8 18. Be3 Rb8 19. Rc3 Bd6 20. Ba7 Ra8 21. Bc5 Rb8
+22. Rd1 Ke7 23. Ba7 Ra8 24. Be3 Rab8 25. b4 h5 26. Rcd3 Rhf8
+27. Ba7 Ra8 28. Be3 Rab8 29. Ba7 Ra8 30. Bc5 Bxc5 31. bxc5 Rf4
+32. Nxb7 Rxe4 33. Na5 Kf6 34. f3 Re2 35. R3d2 gxf3 36. gxf3
+Rg8+ 37. Kf1 Re3 38. Rd3 Rxd3 39. cxd3 Bd5 40. Kf2 Rb8 41. Rc1
+Kf5 42. Nc4 Kf4 43. Ne3 Rb3 44. Ng2+ Kg5 45. h4+ Kf6 46. Ne3
+Rxa3 47. Rb1 Bb3 48. Nc4 Bxc4 49. dxc4 Ra4 50. Kg3 a5 51. Rb7
+Rxc4 52. Rxc7 Rxc5 53. Ra7 Ke6 54. Rh7 a4 55. Rxh5 a3 56. Rh6+
+Kd5 57. Rh8 Ra5 0-1

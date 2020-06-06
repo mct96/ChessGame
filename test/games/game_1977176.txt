@@ -1,0 +1,20 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.68"]
+[Result "0-1"]
+[White "Brandon G I Clarke"]
+[Black "Jovanka Houska"]
+[ECO "B12"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "66"]
+
+1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Be2 Ne7 6. O-O Bg6
+7. Nbd2 Nf5 8. c4 Be7 9. a4 O-O 10. a5 dxc4 11. Nxc4 Bh5
+12. Be3 Na6 13. Qb3 Rb8 14. Rfd1 Nc7 15. h3 Nxe3 16. fxe3 Nd5
+17. e4 Nf4 18. Bf1 f5 19. exf5 Bxf3 20. Qxf3 Rxf5 21. Ne3 Rf7
+22. Qe4 Bh4 23. Nc4 Qg5 24. Ra3 Nd5 25. a6 Bf2+ 26. Kh1 Rf4
+27. Qc2 b5 28. Nd6 Bxd4 29. Qxc6 Rbf8 30. Qxb5 Bxe5 31. Nb7
+Rf2 32. Qc4 Ne3 33. Rxe3 Qxe3 0-1

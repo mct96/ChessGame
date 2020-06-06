@@ -1,0 +1,18 @@
+[Event "Juniors"]
+[Site "Tallinn EST"]
+[Date "1976.??.??"]
+[EventDate "1976.??.??"]
+[Round "?"]
+[Result "1-0"]
+[White "Anatoly Davidovich Machulsky"]
+[Black "Gennadi Lvovich Zaichik"]
+[ECO "B56"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Rusbase"]
+[PlyCount "41"]
+
+1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 d6 6.Be3 e6 7.Be2
+Be7 8.f4 Bd7 9.g4 Nxd4 10.Qxd4 O-O 11.g5 Ne8 12.O-O-O Bc6
+13.Kb1 Qb8 14.f5 b5 15.f6 gxf6 16.Rhg1 Kh8 17.Rdf1 Qd8 18.Nd5
+e5 19.gxf6 Nxf6 20.Nxe7 Qxe7 21.Qc3 1-0

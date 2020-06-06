@@ -1,0 +1,23 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.17"]
+[Result "0-1"]
+[White "Baskaran Adhiban"]
+[Black "Pentala Harikrishna"]
+[ECO "A62"]
+[WhiteElo "2639"]
+[BlackElo "2748"]
+[PlyCount "92"]
+
+1. d4 Nf6 2. c4 e6 3. g3 c5 4. d5 exd5 5. cxd5 d6 6. Nc3 g6
+7. Bg2 Bg7 8. Nf3 O-O 9. O-O Re8 10. Bf4 Bf5 11. Nh4 Bg4
+12. Qd2 b5 13. Nxb5 Rxe2 14. Qc1 Ne4 15. Bxe4 Rxe4 16. Nxd6
+Rd4 17. Re1 Nd7 18. Bg5 Qb8 19. Be7 Rxd5 20. Qf4 Nf6 21. Bxf6
+Qxd6 22. Qxd6 Rxd6 23. Bxg7 Kxg7 24. f3 Be6 25. Re2 Rad8
+26. a3 Rd2 27. Rae1 R8d3 28. Rxd2 Rxd2 29. Rc1 c4 30. Ng2 g5
+31. Ne3 Rxb2 32. Nxc4 Ra2 33. Rc3 Bxc4 34. Rxc4 Rxa3 35. Kf2
+Ra2+ 36. Ke3 Rxh2 37. Ra4 h5 38. Ra5 Kg6 39. f4 g4 40. f5+ Kg5
+41. Rxa7 f6 42. Ra5 Rg2 43. Ke4 Re2+ 44. Kd4 Re1 45. Rb5 h4
+46. gxh4+ Kxh4 0-1

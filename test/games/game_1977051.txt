@@ -1,0 +1,27 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1/2-1/2"]
+[White "Aleksey Sorokin"]
+[Black "Alexey Goganov"]
+[ECO "E94"]
+[WhiteElo "2469"]
+[BlackElo "2592"]
+[PlyCount "134"]
+
+1. d4 Nf6 2. c4 g6 3. Nf3 Bg7 4. Nc3 O-O 5. e4 d6 6. Be2 Na6
+7. O-O e5 8. Be3 Ng4 9. Bg5 Qe8 10. h3 Nf6 11. Re1 exd4
+12. Qxd4 Qe6 13. Qe3 Re8 14. Bf1 b6 15. Qf4 Bb7 16. Bh6 Nc5
+17. Nd5 Nxd5 18. exd5 Qf6 19. Qxf6 Bxf6 20. Rab1 Na4 21. Bc1
+b5 22. b3 Nc3 23. Rb2 b4 24. Rd2 a5 25. a4 bxa3 26. Rxe8+ Rxe8
+27. Bxa3 Nb1 28. Ra2 Nxa3 29. Rxa3 Bc3 30. Ra2 Ra8 31. Rc2 Bg7
+32. Rd2 a4 33. bxa4 Rxa4 34. Nd4 Bxd5 35. cxd5 Bxd4 36. h4 Rb4
+37. g3 Kg7 38. Kg2 Bb6 39. Be2 f5 40. f4 h6 41. Bf3 g5
+42. hxg5 hxg5 43. fxg5 Kg6 44. Re2 Kxg5 45. Rc2 Rb3 46. Re2
+Rc3 47. Re1 Be3 48. Re2 f4 49. Ra2 Bd4 50. Re2 Be3 51. Ra2 Rc4
+52. Be2 Rb4 53. Rc2 Bb6 54. Rc4 Rb2 55. gxf4+ Kf5 56. Kf3 Rb3+
+57. Kg2 Rb2 58. Kf3 Rd2 59. Rb4 Rxd5 60. Rb5 Bc5 61. Rb8 Rd2
+62. Rc8 Bb6 63. Rf8+ Ke6 64. Rh8 d5 65. Ba6 Bd4 66. Bc8+ Kf7
+67. Rd8 c6 1/2-1/2

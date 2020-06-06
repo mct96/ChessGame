@@ -1,0 +1,19 @@
+[Event "Bognor Regis"]
+[Site "Bognor Regis ENG"]
+[Date "1958.??.??"]
+[EventDate "1958.??.??"]
+[Round "?"]
+[Result "0-1"]
+[White "Peter Hugh Clarke"]
+[Black "Nikola Karaklajic"]
+[ECO "B01"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Chesstempo"]
+[PlyCount "52"]
+
+1.e4 d5 2.exd5 Nf6 3.Nc3 Nxd5 4.Bc4 Be6 5.Nxd5 Bxd5 6.Bxd5
+Qxd5 7.Nf3 Nc6 8.O-O O-O-O 9.d3 e5 10.Be3 f5 11.Qe2 Be7 12.h3
+g5 13.Nxg5 Rhg8 14.c4 Qxd3 15.Qxd3 Rxd3 16.Nf3 f4 17.Ne1 Rd7
+18.Bc1 Nd4 19.b3 e4 20.Kh1 Ne2 21.Nc2 Bf6 22.Rb1 Rdg7 23.Ne1
+f3 24.g3 Rxg3 25.Kh2 Rg2+ 26.Kh1 Be5 0-1

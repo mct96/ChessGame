@@ -1,0 +1,21 @@
+[Event "Yugoslavia"]
+[Site "?"]
+[Date "1965.??.??"]
+[EventDate "1965.??.??"]
+[Round "?"]
+[Result "1-0"]
+[White "Slobodan Bojkovic"]
+[Black "Petar Trifunovic"]
+[ECO "B17"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Chesstempo"]
+[PlyCount "71"]
+
+1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Nf3 Ngf6 6.Ng3 e6
+7.Bd3 c5 8.Qe2 Be7 9.Bg5 O-O 10.O-O-O Qa5 11.Kb1 cxd4 12.h4
+Re8 13.Nxd4 Nc5 14.Nb3 Nxb3 15.cxb3 a6 16.Bxf6 Bxf6 17.Ne4 Be7
+18.f4 Rd8 19.Ng5 g6 20.a3 Bd7 21.h5 Bb5 22.hxg6 hxg6 23.Nxf7
+Bxd3+ 24.Rxd3 Kxf7 25.Rh7+ Kg8 26.Qxe6+ Kxh7 27.Qf7+ Kh6
+28.Rh3+ Qh5 29.Rxh5+ gxh5 30.Qe6+ Kh7 31.Qxe7+ Kh8 32.Qg5 Rd1+
+33.Ka2 Rad8 34.f5 R8d7 35.Qxh5+ Kg8 36.f6 1-0

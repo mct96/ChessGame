@@ -1,0 +1,20 @@
+[Event "Lugano"]
+[Site "Lugano SUI"]
+[Date "1979.??.??"]
+[EventDate "1979.??.??"]
+[Round "?"]
+[Result "1-0"]
+[White "Lothar Schmid"]
+[Black "Hass"]
+[ECO "B11"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Steinkohl: 99 Schönheitspreise"]
+[PlyCount "55"]
+
+1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. h3 Bh5 5. exd5 cxd5 6. Bb5+
+Nc6 7. g4 Bg6 8. Ne5 Rc8 9. d4 e6 10. h4 f6 11. Nxg6 hxg6
+12. Kf1 Bd6 13. Ne2 Ne7 14. c3 g5 15. h5 g6 16. Ng3 Bxg3
+17. fxg3 Qd6 18. Kg2 gxh5 19. Rxh5 Rxh5 20. gxh5 Nf5 21. Qd3
+Rc7 22. Bd2 Kd8 23. Rf1 Qe7 24. Qf3 Qg7 25. Bd3 Nce7 26. Kh3
+Ng8 27. Bxf5 exf5 28. Qxf5 1-0

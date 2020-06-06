@@ -1,0 +1,26 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "1-0"]
+[White "Alexey Goganov"]
+[Black "Zhamsaran Tsydypov"]
+[ECO "E11"]
+[WhiteElo "2592"]
+[BlackElo "2528"]
+[PlyCount "129"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 Bb4+ 4. Nbd2 d5 5. Qa4+ Nc6 6. a3
+Bxd2+ 7. Bxd2 Ne4 8. Rd1 Qf6 9. e3 Bd7 10. Qc2 g5 11. Bc1 g4
+12. Ng1 O-O-O 13. Bd3 Nb4 14. axb4 Ba4 15. Bxe4 Bxc2 16. Bxc2
+dxc4 17. Ne2 h5 18. O-O h4 19. f4 g3 20. h3 Rh5 21. Nc3 Qe7
+22. b5 Rd6 23. Be4 Rb6 24. f5 a6 25. fxe6 fxe6 26. Bf3 Rf5
+27. e4 Rf8 28. bxa6 Rxa6 29. Be3 Kb8 30. e5 Rf5 31. Be2 Rxf1+
+32. Rxf1 Qb4 33. d5 Ra5 34. Bxc4 b5 35. Bd3 exd5 36. Nxd5 Qb3
+37. Be4 Ra4 38. Bf3 c6 39. Nc3 Ra6 40. Bf4 Ka7 41. Nd1 Ra4
+42. Bg5 Qe6 43. Re1 Kb6 44. Bg4 Qg6 45. Be3+ Kb7 46. Nc3 Rb4
+47. e6 Rxb2 48. e7 Qc2 49. Bf3 Qxc3 50. Bd2 Qd4+ 51. Kh1 Qd7
+52. e8=Q Qxe8 53. Rxe8 Rxd2 54. Kg1 b4 55. Re4 Rb2 56. Kf1 Kb6
+57. Ke1 b3 58. Rxh4 c5 59. Kd1 Rf2 60. Kc1 Rc2+ 61. Kb1 c4
+62. Re4 Kc5 63. Re2 Rc3 64. Be4 Kd4 65. h4 1-0

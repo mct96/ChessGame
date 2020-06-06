@@ -1,0 +1,18 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.10"]
+[EventDate "?"]
+[Round "8"]
+[Result "1/2-1/2"]
+[White "Evgeny A Levin"]
+[Black "Ivan Rozum"]
+[ECO "E34"]
+[WhiteElo "2524"]
+[BlackElo "2573"]
+[PlyCount "42"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 d5 5. cxd5 exd5 6. Bg5 h6
+7. Bh4 c5 8. dxc5 g5 9. Bg3 Ne4 10. e3 Qa5 11. Rc1 Qxa2
+12. Bb5+ Bd7 13. Bxd7+ Nxd7 14. Ne2 Nxc3 15. Nxc3 Qc4 16. Qf5
+Nxc5 17. Qe5+ Kd7 18. Qc7+ Ke8 19. Qe5+ Kd7 20. Qc7+ Ke8
+21. Qe5+ Kd7 1/2-1/2

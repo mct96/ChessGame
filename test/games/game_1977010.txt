@@ -1,0 +1,24 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.09"]
+[EventDate "?"]
+[Round "7"]
+[Result "1-0"]
+[White "Denis Sin"]
+[Black "Valeri Yandemirov"]
+[ECO "D70"]
+[WhiteElo "2258"]
+[BlackElo "2385"]
+[PlyCount "99"]
+
+1. d4 Nf6 2. c4 g6 3. f3 d5 4. cxd5 Nxd5 5. e4 Nb6 6. Nc3 Bg7
+7. Be3 O-O 8. Qd2 Nc6 9. O-O-O f5 10. e5 Nb4 11. Nh3 a5 12. a3
+N4d5 13. Nf4 Nxf4 14. Bxf4 Nd5 15. Bc4 Be6 16. Bg5 Qd7
+17. Nxd5 Bxd5 18. Bxd5+ Qxd5 19. Kb1 e6 20. h4 h5 21. Rc1 Qd7
+22. Rhg1 Rf7 23. g4 fxg4 24. fxg4 hxg4 25. Rxg4 Raf8 26. Be3
+Rf1 27. Qd3 Rxc1+ 28. Bxc1 Rf5 29. Rxg6 Kf7 30. Qg3 Bf8
+31. Rg4 c5 32. Rf4 cxd4 33. h5 Ke8 34. Rxf5 exf5 35. h6 d3
+36. Qg6+ Qf7 37. Qb6 Qc4 38. Qg6+ Qf7 39. Qb6 Qc4 40. Bg5 Qd5
+41. Qg6+ Qf7 42. Qxf7+ Kxf7 43. h7 Bg7 44. Bf6 f4 45. Bxg7
+Kxg7 46. e6 f3 47. e7 f2 48. h8=Q+ Kxh8 49. e8=Q+ Kg7 50. Qe5+
+1-0

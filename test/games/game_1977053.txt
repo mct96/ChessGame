@@ -1,0 +1,20 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.11"]
+[EventDate "?"]
+[Round "9"]
+[Result "1-0"]
+[White "Denis Khismatullin"]
+[Black "Ilya Duzhakov"]
+[ECO "A04"]
+[WhiteElo "2639"]
+[BlackElo "2421"]
+[PlyCount "63"]
+
+1. Nf3 Nf6 2. g3 d5 3. Bg2 g6 4. b3 Bg7 5. Bb2 c5 6. c4 d4
+7. b4 Nc6 8. b5 Na5 9. d3 O-O 10. Nbd2 Re8 11. O-O e5 12. Qc2
+h6 13. Rfe1 Bf5 14. Nh4 Bg4 15. e3 Qc7 16. h3 g5 17. hxg4 gxh4
+18. Nf1 Nxg4 19. Qe2 Nf6 20. gxh4 a6 21. a4 Kh8 22. Ng3 Rad8
+23. Nf5 Re6 24. Kh1 Rg8 25. Rg1 Qd8 26. Bh3 Ne8 27. Rg3 Rg6
+28. exd4 exd4 29. Rxg6 fxg6 30. Ne7 Bf8 31. Qe5+ Kh7 32. Nxg8
+1-0

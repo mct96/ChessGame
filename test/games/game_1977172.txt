@@ -1,0 +1,22 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.64"]
+[Result "1/2-1/2"]
+[White "Elina Danielian"]
+[Black "Eduardo Patricio Iturrizaga Bonelli"]
+[ECO "E53"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "80"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. e3 O-O 5. Bd3 d5 6. Nf3 c5
+7. O-O b6 8. cxd5 exd5 9. Ne5 Bxc3 10. bxc3 Ba6 11. dxc5 Qc7
+12. Nf3 Qxc5 13. Bxa6 Nxa6 14. Qd3 Qc4 15. Qxc4 dxc4 16. Ba3
+Rfd8 17. Nd4 Ne4 18. Rfc1 Rd7 19. Rc2 Re8 20. Rb1 g6 21. f3
+Nec5 22. Bxc5 Nxc5 23. e4 Kg7 24. h4 Ne6 25. Rb4 Nxd4 26. cxd4
+Rxd4 27. Rbxc4 Red8 28. Rc7 R8d7 29. Rxd7 Rxd7 30. Kf2 Rd4
+31. Ke3 Ra4 32. Kf4 Ra5 33. Ke3 Kf6 34. g4 h6 35. f4 Kg7
+36. Kd4 Ra3 37. g5 Rh3 38. gxh6+ Kxh6 39. Rc7 Kg7 40. Rxa7
+Rxh4 1/2-1/2

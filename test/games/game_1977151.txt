@@ -1,0 +1,20 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.43"]
+[Result "1/2-1/2"]
+[White "Viktor Erdos"]
+[Black "Alexey Sarana"]
+[ECO "B51"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "66"]
+
+1. e4 c5 2. Nf3 d6 3. Bb5+ Nd7 4. d4 Nf6 5. O-O cxd4 6. Qxd4
+e5 7. Qd3 Be7 8. c4 O-O 9. Bxd7 Bxd7 10. Nc3 Be6 11. Ng5 Qc7
+12. Nxe6 fxe6 13. b3 Qc6 14. Qh3 d5 15. exd5 exd5 16. cxd5
+Nxd5 17. Nxd5 Qxd5 18. Be3 Bc5 19. Bxc5 Qxc5 20. Qe6+ Kh8
+21. Rac1 Qa5 22. Rc2 Rae8 23. Qd6 e4 24. Qc5 Qxc5 25. Rxc5 Rd8
+26. Rc2 Rd4 27. Rfc1 h6 28. Kf1 Kh7 29. Ke2 Rfd8 30. Ke3 Rd3+
+31. Kxe4 R8d4+ 32. Ke5 Rd5+ 33. Ke4 R5d4+ 1/2-1/2

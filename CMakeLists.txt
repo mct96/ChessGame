@@ -3,30 +3,27 @@ cmake_minimum_required(VERSION 3.12)
 project(Chess)
 
 set(MODEL_SRC
-    ./src/model/color.cpp
     ./src/model/game.cpp
-    ./src/model/history.cpp
-    ./src/model/location.cpp
-    ./src/model/move_path.cpp
-    ./src/model/path.cpp
-    ./src/model/piece.cpp
-    ./src/model/type.cpp
-    ./src/model/specialized_pieces.cpp
 )
 
-set(
-    CONTROLLER_SRC
-    ./src/controller/boardController.cpp
+set(MODEL_INC
+    ./include/model/game.hpp
 )
 
-set(
-    VIEW_SRC
-    ./src/view/board.cpp
+set(TEST_SRC
+    ./test/test_logic.cpp
 )
 
-add_executable(chess main.cpp ${MODEL_SRC} ${CONTROLLER_SRC} ${VIEW_SRC})
-set_target_properties(chess PROPERTIES CMAKE_CXX_STANDARD 20)
-set_target_properties(chess PROPERTIES CMAKE_CXX_STANDARD_REQUIRED YES)
-set_target_properties(chess PROPERTIES CMAKE_CXX_EXTENSIONS NO)
+enable_testing()
 
-target_link_libraries(chess PRIVATE sfml-graphics sfml-window sfml-system)
+add_executable(game_chess ${MODEL_SRC} ${TEST_SRC})
+target_compile_definitions(game_chess
+    PRIVATE $<$<CONFIG:release>:NDEBUB>
+)
+target_include_directories(game_chess
+    PUBLIC ${MODEL_INC}
+)
+
+set_target_properties(game_chess PROPERTIES CXX_STANDARD 20)
+set_target_properties(game_chess PROPERTIES CXX_STANDARD_REQUIRED YES)
+set_target_properties(game_chess PROPERTIES CXX_EXTENSIONS NO)

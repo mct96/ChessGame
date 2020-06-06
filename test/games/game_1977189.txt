@@ -1,0 +1,22 @@
+[Event "BCF Major Open"]
+[Site "Yarmouth ENG"]
+[Date "1935.07.16"]
+[EventDate "1935.07.??"]
+[Round "8"]
+[Result "0-1"]
+[White "Ernst Ludwig Klein"]
+[Black "Samuel Reshevsky"]
+[ECO "D02"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "98"]
+
+1.d4 d5 2.Nf3 c6 3.Bf4 Qb6 4.Qc1 Bf5 5.e3 h6 6.c4 dxc4 7.Bxc4
+e6 8.O-O Nf6 9.Nc3 Nbd7 10.Re1 Bb4 11.a3 Bxc3 12.bxc3 c5
+13.Qd1 O-O 14.Bd3 Bxd3 15.Qxd3 Nh5 16.Be5 Rfd8 17.Reb1 Nxe5
+18.Nxe5 Qc7 19.Qb5 b6 20.a4 Nf6 21.Qc6 Rac8 22.Qxc7 Rxc7 23.a5
+bxa5 24.Rxa5 Ne4 25.Rba1 cxd4 26.cxd4 Rdc8 27.g3 Rc1+ 28.Rxc1
+Rxc1+ 29.Kg2 Rc2 30.Rxa7 Rxf2+ 31.Kg1 h5 32.Nd3 Rd2 33.Nf4 g6
+34.Ra1 Nc3 35.Re1 Kg7 36.Nh3 Ne4 37.Nf4 Kh6 38.Re2 Rd1+ 39.Kg2
+g5 40.Nh3 Nc3 41.Rc2 Rd3 42.Kf2 Kg6 43.Ng1 Kf5 44.Nf3 Nd1+
+45.Ke2 Rxe3+ 46.Kxd1 Rxf3 47.Ke2 Ke4 48.Rc4 Rf5 49.h3 Rf3 0-1

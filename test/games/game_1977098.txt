@@ -1,0 +1,18 @@
+[Event "Casual"]
+[Site "GER"]
+[Date "1926.??.??"]
+[EventDate "?"]
+[Round "?"]
+[Result "0-1"]
+[White "Gebhardt"]
+[Black "Siegbert Tarrasch"]
+[ECO "C53"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "44"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d3 Bc5 5. c3 d6 6. Nbd2 O-O
+7. Nf1 Be6 8. Bxe6 fxe6 9. Qb3 Qd7 10. Qxb7 d5 11. Ng3 Rfb8
+12. Qa6 Nb4 13. cxb4 Bxb4+ 14. Bd2 Rb6 15. Nxe5 Qe8 16. Qxb6
+Bxd2+ 17. Kxd2 axb6 18. Rhc1 Qb5 19. Rc2 dxe4 20. f4 exd3
+21. Rcc1 Qxb2+ 22. Kxd3 Ra3+ 0-1

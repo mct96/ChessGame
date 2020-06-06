@@ -1,0 +1,23 @@
+[Event "North Sydney Simul"]
+[Site "Sydney AUS"]
+[Date "2015.03.22"]
+[EventDate "?"]
+[Round "?"]
+[Result "1/2-1/2"]
+[White "Nigel Short"]
+[Black "Clive Ng"]
+[ECO "E77"]
+[WhiteElo "2664"]
+[BlackElo "2007"]
+[Source "http://www.northsydneychess.org/hosted-events/nigel-short-lectur"]
+[PlyCount "87"]
+
+1. c4 Nf6 2. Nc3 g6 3. e4 d6 4. d4 Bg7 5. Bd3 O-O 6. Nge2 Nfd7
+7. Be3 c5 8. Rc1 Nc6 9. Bb1 cxd4 10. Nxd4 Nde5 11. Nxc6 bxc6
+12. b3 f5 13. exf5 Bxf5 14. Bxf5 Rxf5 15. O-O Qa5 16. Na4 Raf8
+17. Qe2 c5 18. Bd2 Qd8 19. Qe4 Qc8 20. Nc3 Nc6 21. f4 e6
+22. Ne2 Nd4 23. g3 Nxe2+ 24. Qxe2 Bd4+ 25. Kg2 Qb7+ 26. Qf3
+Qxf3+ 27. Rxf3 e5 28. Re1 exf4 29. Rxf4 Be5 30. Rxf5 Rxf5
+31. g4 Rf7 32. h3 h5 33. Be3 hxg4 34. hxg4 Bf4 35. Bg1 Rb7
+36. Re4 g5 37. Re1 Kf7 38. Bf2 a5 39. Kf3 a4 40. Rb1 axb3
+41. axb3 Ke6 42. Ke4 Rb4 43. Kd3 Rb8 44. Ke4 1/2-1/2

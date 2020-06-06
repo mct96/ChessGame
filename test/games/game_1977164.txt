@@ -1,0 +1,21 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.56"]
+[Result "0-1"]
+[White "Anton Demchenko"]
+[Black "Erwin L'Ami"]
+[ECO "C50"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "76"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. O-O h6 6. c3 d6
+7. Nbd2 O-O 8. h3 a6 9. a4 Ba7 10. Re1 Re8 11. b4 Be6 12. Bxe6
+Rxe6 13. Bb2 Ne7 14. Nf1 Nh5 15. Ne3 Nf4 16. g3 Nxh3+ 17. Kg2
+Ng5 18. Nxg5 hxg5 19. Qh5 Bxe3 20. Rxe3 Rg6 21. Rh1 f6 22. Qd1
+Rh6 23. Ree1 Qe8 24. d4 Qf7 25. dxe5 dxe5 26. Rxh6 gxh6
+27. Rh1 Kg7 28. Qd7 Nc8 29. Qh3 h5 30. f4 Nd6 31. fxe5 Nxe4
+32. Qf5 Rd8 33. Re1 Rd2+ 34. Kg1 Nxg3 35. Qf3 Rxb2 36. Qxg3
+Qd5 37. e6 h4 38. Qg4 Qd2 0-1

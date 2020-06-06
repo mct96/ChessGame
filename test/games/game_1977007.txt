@@ -1,0 +1,28 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.09"]
+[EventDate "?"]
+[Round "7"]
+[Result "0-1"]
+[White "Alexei Saveliev"]
+[Black "Maxim Lugovskoy"]
+[ECO "C18"]
+[WhiteElo "2403"]
+[BlackElo "2453"]
+[PlyCount "142"]
+
+1. e4 e6 2. d4 d5 3. Nc3 Bb4 4. e5 c5 5. a3 Bxc3+ 6. bxc3 Ne7
+7. Qg4 Qc7 8. Bd3 cxd4 9. Ne2 dxc3 10. Qxg7 Rg8 11. Qxh7 Nbc6
+12. Bf4 Bd7 13. O-O O-O-O 14. Bg3 Nxe5 15. Rab1 Rg4 16. Rb3 d4
+17. h3 Rxg3 18. fxg3 Nxd3 19. Qxd3 e5 20. g4 Be6 21. Rb4 a5
+22. Rbb1 Bc4 23. Qf3 Qc6 24. Qf2 Qa4 25. Rfc1 Qxa3 26. Ra1 Qd6
+27. Rxa5 Ba6 28. Ng3 Nc6 29. Raa1 Qd5 30. Re1 Kb8 31. Ne4 Bc4
+32. Kh2 Qe6 33. Reb1 Qe7 34. Rb6 Bd5 35. Qe2 f5 36. gxf5 Rg8
+37. g4 Rh8 38. Rab1 Nd8 39. g5 Rh4 40. Nf6 Bc6 41. Re1 e4
+42. Rxc6 Qe5+ 43. Kg2 Qxf5 44. Ng4 Nxc6 45. Qxe4 Qxg5 46. Qe8+
+Qd8 47. Qxd8+ Nxd8 48. Kg3 Rh8 49. h4 Nc6 50. Nf6 b5 51. Rb1
+Na7 52. Kg4 Kb7 53. h5 Kb6 54. Kg5 Nc6 55. Nd7+ Kc7 56. Nf6
+Kb6 57. Nd7+ Ka5 58. Nc5 Rg8+ 59. Kf6 Rg2 60. Rc1 Rh2 61. Kg5
+b4 62. h6 Kb5 63. Ne4 Kc4 64. Nd6+ Kd5 65. Nf5 Ne5 66. Ne7+
+Ke6 67. Re1 d3 68. Nc6 d2 69. Rxe5+ Kd6 70. Re8 Kxc6 71. Rd8
+Rh1 0-1

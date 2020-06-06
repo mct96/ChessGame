@@ -1,0 +1,27 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "?"]
+[Round "9.34"]
+[Result "1-0"]
+[White "Pentala Harikrishna"]
+[Black "Vasif Durarbayli"]
+[ECO "A62"]
+[WhiteElo "2748"]
+[BlackElo "2617"]
+[PlyCount "137"]
+
+1. d4 Nf6 2. c4 e6 3. g3 c5 4. d5 exd5 5. cxd5 d6 6. Nc3 g6
+7. Bg2 Bg7 8. Nf3 O-O 9. O-O Re8 10. Re1 a6 11. a4 Nbd7
+12. Bf4 Ng4 13. a5 Qe7 14. Na4 Rb8 15. Rb1 Nge5 16. b4 cxb4
+17. Bd2 b5 18. Nb2 Nc5 19. Bxb4 Bf5 20. Nxe5 Qxe5 21. e4 Nxe4
+22. g4 Nxf2 23. Rxe5 Nxd1 24. Rxe8+ Rxe8 25. Rxd1 Bxg4 26. Rd2
+Re1+ 27. Kf2 Rb1 28. Nd3 Bd4+ 29. Kg3 Bf5 30. Bxd6 Rb3 31. Bf1
+Be4 32. Kf4 Bxd5 33. Be5 Bg1 34. Bf6 h6 35. Ke5 Bc4 36. h4 Kh7
+37. Ke4 Be6 38. Ke5 Rb1 39. Bg2 Bh2+ 40. Nf4 Rc1 41. Rd8 Rc8
+42. Rxc8 Bxc8 43. Bd5 Kg8 44. Ke4 Kf8 45. Kf3 Bg1 46. Nd3 g5
+47. h5 g4+ 48. Kg3 Be3 49. Ne5 Bd2 50. Nxf7 Bxa5 51. Nxh6 Be1+
+52. Kg2 b4 53. Nf7 Bc3 54. Ne5 Bf5 55. h6 a5 56. Bb3 Ke8
+57. Kg3 Bd2 58. Nc4 Kf7 59. Bg7 Be1+ 60. Kf4 Bh7 61. Nxa5+ Ke7
+62. Kxg4 Kd6 63. Nb7+ Ke7 64. Nc5 Bc3 65. Na4 Be1 66. Nb6 Bd3
+67. Nd5+ Kd6 68. Bf8+ Ke5 69. Bxb4 1-0

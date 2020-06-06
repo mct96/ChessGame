@@ -1,0 +1,22 @@
+[Event "USSR"]
+[Site "?"]
+[Date "1977.??.??"]
+[EventDate "1977.??.??"]
+[Round "?"]
+[Result "1-0"]
+[White "Alexander Beliavsky"]
+[Black "Janis Yanovich Klovans"]
+[ECO "C92"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Source "Chess Informant 24/292"]
+[PlyCount "83"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3
+d6 8.c3 O-O 9.h3 Bb7 10.d4 Na5 11.Bc2 Nc4 12.b3 Nb6 13.Nbd2
+Re8 14.Nf1 c5 15.Ng3 Bf8 16.a4 c4 17.a5 exd4 18.cxd4 cxb3
+19.Bxb3 Nc4 20.Bxc4 bxc4 21.d5 Rc8 22.Be3 Nd7 23.Qb1 Ba8
+24.Rc1 g6 25.Ra4 Nc5 26.Bxc5 Rxc5 27.Rcxc4 Rxc4 28.Rxc4 Qxa5
+29.Qc1 Bb7 30.Kh2 Qb6 31.Qf4 Qd8 32.Nd4 Qb6 33.Nc6 a5 34.Rc3
+a4 35.Nh5 Rc8 36.Nf6+ Kg7 37.Nd7 Qb2 38.Qf6+ Kg8 39.Ne7+ Bxe7
+40.Rxc8+ Bxc8 41.Qxb2 Bxd7 42.Qb7 1-0

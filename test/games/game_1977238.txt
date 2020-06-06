@@ -1,0 +1,22 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.20"]
+[EventDate "2019.10.10"]
+[Round "10.48"]
+[Result "1/2-1/2"]
+[White "Dronavalli Harika"]
+[Black "Alexander Riazantsev"]
+[ECO "D02"]
+[WhiteElo "2495"]
+[BlackElo "2645"]
+[PlyCount "86"]
+
+1. Nf3 d5 2. d4 Nf6 3. c4 e6 4. g3 Bb4+ 5. Bd2 a5 6. Bg2 O-O
+7. Qc2 c5 8. O-O cxd4 9. Nxd4 e5 10. Nb5 d4 11. Bxb4 axb4
+12. Nd2 Na6 13. a3 Qe7 14. h3 g6 15. axb4 Nxb4 16. Qb3 Bf5
+17. Rxa8 Rxa8 18. e4 Bd7 19. f4 Na6 20. Qa3 Qxa3 21. Nxa3 Nh5
+22. Kh2 f6 23. Nc2 Re8 24. fxe5 fxe5 25. Ra1 Bc6 26. Ne1 Nb4
+27. Ra3 Rf8 28. Bf3 Nf6 29. Rb3 Na6 30. Nd3 Nd7 31. Ra3 Nac5
+32. Nxc5 Nxc5 33. b4 Ne6 34. h4 Kf7 35. Ra7 Ke7 36. Kg1 Kd6
+37. Bg4 Nd8 38. Be2 Kc7 39. c5 Bd7 40. Ra8 Ne6 41. Rxf8 Nxf8
+42. Nf3 Bc6 43. Nxe5 Bxe4 1/2-1/2

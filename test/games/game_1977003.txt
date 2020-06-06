@@ -1,0 +1,19 @@
+[Event "Russian Championship Higher League"]
+[Site "Sochi RUS"]
+[Date "2017.07.09"]
+[EventDate "?"]
+[Round "7"]
+[Result "1-0"]
+[White "Denis Khismatullin"]
+[Black "Sergey Savitskiy"]
+[ECO "E97"]
+[WhiteElo "2639"]
+[BlackElo "2428"]
+[PlyCount "55"]
+
+1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. Be2 O-O 6. Nf3 e5
+7. O-O Nc6 8. d5 Ne7 9. b4 Nd7 10. a4 f5 11. a5 Nf6 12. Bg5 h6
+13. Bxf6 Rxf6 14. c5 fxe4 15. Nxe4 Rf4 16. Qc2 dxc5 17. bxc5
+Nxd5 18. Rfd1 c6 19. a6 bxa6 20. g3 Rf8 21. Nh4 g5 22. Ng6 Rf7
+23. Nd6 Rf6 24. Bc4 Be6 25. Nxe5 Qc7 26. Rxa6 Raf8 27. Rxc6
+Qa5 28. Ne4 1-0

@@ -1,0 +1,25 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.71"]
+[Result "1-0"]
+[White "Ekaterina Polovnikova-Atalik"]
+[Black "Kenneth T Solomon"]
+[ECO "A45"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "113"]
+
+1. d4 Nf6 2. g3 c5 3. Nf3 cxd4 4. Nxd4 d5 5. Bg2 e5 6. Nb3
+Bb4+ 7. c3 Be7 8. c4 Be6 9. Nc3 d4 10. Bxb7 Nbd7 11. Nd5 Rb8
+12. Bc6 Qc8 13. Nxe7 Kxe7 14. Bg2 Bxc4 15. f4 Re8 16. O-O Kf8
+17. fxe5 Nxe5 18. Bf4 Qa6 19. Qxd4 Rbd8 20. Qc5+ Kg8 21. Bxe5
+Nd7 22. Qa5 Nxe5 23. Qxa6 Bxa6 24. Rfe1 Nc4 25. Nc5 Bc8 26. b3
+Ne3 27. Bc6 Re5 28. Rac1 Kf8 29. Nd3 Re7 30. Bf3 g5 31. Rc5
+Bf5 32. Nb4 Rd2 33. Nd5 Re5 34. Nxe3 Rxc5 35. b4 Rb5 36. a4
+Rxb4 37. Nxf5 g4 38. Bc6 Rc2 39. Bb5 Rc5 40. Ne3 a6 41. Bxa6
+Rxa4 42. Bd3 h5 43. Rb1 Raa5 44. Rb7 Re5 45. Nc4 Ra1+ 46. Kg2
+Re6 47. Rb5 Rh6 48. Ne3 Ra8 49. Nd5 Kg7 50. Nf4 Rah8 51. h3
+gxh3+ 52. Kxh3 Rd6 53. Nxh5+ Kh6 54. Kh4 Rd4+ 55. g4 Re8
+56. Rb6+ Re6 57. Rb8 1-0

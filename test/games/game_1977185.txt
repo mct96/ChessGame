@@ -1,0 +1,19 @@
+[Event "Havana ol (Men) fin-A"]
+[Site "Havana CUB"]
+[Date "1966.11.08"]
+[EventDate "1966.10.23"]
+[Round "5"]
+[Result "1-0"]
+[White "Hugo Santa Cruz"]
+[Black "Freysteinn Thorbergsson"]
+[ECO "C00"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "55"]
+
+1.e4 e6 2.b3 d5 3.Bb2 dxe4 4.Nc3 Nf6 5.Qe2 Bb4 6.O-O-O Bxc3
+7.Bxc3 Nbd7 8.g4 h6 9.Bg2 b6 10.Bxe4 Ba6 11.Qf3 Nxe4 12.Qxe4
+Rb8 13.f3 Bb7 14.Qe2 Nf6 15.Nh3 a5 16.Rhe1 Qd5 17.Nf4 Qxf3
+18.Qe5 Qc6 19.g5 hxg5 20.Qxg5 Ne4 21.Qxg7 Rf8 22.Bb2 Qd6
+23.Nd3 Kd7 24.Ne5+ Kc8 25.Nxf7 Qe7 26.Rf1 Kd7 27.Ne5+ Kd6
+28.Qxe7+ 1-0

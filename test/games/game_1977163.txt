@@ -1,0 +1,23 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.55"]
+[Result "1-0"]
+[White "Alexander Riazantsev"]
+[Black "Yuri Gonzalez Vidal"]
+[ECO "C45"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "93"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Bc5 5. Nb3 Bb6 6. Qe2
+d6 7. Nc3 Nf6 8. Be3 O-O 9. O-O-O Be6 10. Kb1 Re8 11. f3 d5
+12. Bg5 d4 13. Na4 Qe7 14. Qe1 h6 15. Bh4 Bxb3 16. cxb3 Ba5
+17. Qf2 a6 18. Qc2 Bb4 19. a3 Bd6 20. b4 Rab8 21. Be2 Red8
+22. Rhe1 Bf4 23. Nc5 Be3 24. Nxa6 bxa6 25. Qxc6 a5 26. Qc5 Qe8
+27. Bxf6 gxf6 28. Qxa5 c5 29. Qxc5 Rdc8 30. Qd5 Qa4 31. Bc4
+Rc7 32. Bb3 Qa6 33. f4 Bxf4 34. Rxd4 Be5 35. Rc4 Rxc4 36. Qxc4
+Qa7 37. Rd1 Qf2 38. Qc2 Qa7 39. g3 Qb7 40. Bd5 Qe7 41. Rc1 Kg7
+42. Qc5 Qd7 43. Rc2 Qg4 44. Ka2 Qd1 45. Bb3 Rd8 46. b5 Qd7
+47. Bd5 1-0

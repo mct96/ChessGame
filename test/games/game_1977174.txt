@@ -1,0 +1,24 @@
+[Event "Isle of Man Grand Swiss"]
+[Site "Douglas IMN"]
+[Date "2019.10.19"]
+[EventDate "2019.10.10"]
+[Round "9.66"]
+[Result "1-0"]
+[White "Lance Henderson de La Fuente"]
+[Black "David Gavrilescu"]
+[ECO "C07"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "101"]
+
+1. e4 e6 2. d4 d5 3. Nd2 c5 4. Ngf3 cxd4 5. Nxd4 Nc6 6. Bb5
+Bd7 7. Nxc6 bxc6 8. Bd3 Qc7 9. Qe2 Ne7 10. O-O Ng6 11. Nf3 Be7
+12. e5 c5 13. c3 h6 14. h4 Nxh4 15. Nxh4 Bxh4 16. Qg4 c4
+17. Bc2 Bg5 18. f4 Be7 19. Qxg7 Bc5+ 20. Kh2 O-O-O 21. Qxf7 h5
+22. b4 Rdf8 23. Qg7 Rhg8 24. Qh7 Bb6 25. Qe7 Re8 26. Qf6 Bc6
+27. Bg6 Ref8 28. Qxe6+ Bd7 29. Qe7 Qc6 30. f5 Bd8 31. b5 Qb6
+32. Qa3 Bc7 33. Qe7 Bd8 34. Qa3 Bc7 35. Bg5 Bxe5+ 36. Kh1 Bd6
+37. Qc1 h4 38. Qd2 Qb7 39. Rad1 Kc7 40. Bh6 Rf6 41. Qd4 Rfxg6
+42. fxg6 Rxg6 43. Bf4 h3 44. Bxd6+ Kxd6 45. Rf6+ Rxf6
+46. Qxf6+ Kc5 47. Qe7+ Kb6 48. Qd6+ Ka5 49. Rxd5 hxg2+ 50. Kg1
+Bxb5 51. a4 1-0
