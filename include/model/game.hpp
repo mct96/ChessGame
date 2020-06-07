@@ -1,12 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <cstdint>
 #include <algorithm>
+#include <cstdint>
 #include <exception>
 #include <initializer_list>
-#include <string>
 #include <list>
+#include <string>
+#include <vector>
 
 #ifndef NDEBUB
 #include <iostream>
@@ -17,18 +17,32 @@ using namespace std;
 
 namespace ch {
 
+enum class piece_t: uint8_t;
+enum class color_t: uint8_t;
+
+color_t get_piece_color(piece_t piece);
+
+struct pos_t;
+
 class game_t;
+class history_entry_t;
+
+
+
+
+
 
 struct pos_t {
     uint8_t _i, _j;
 
     bool operator==(const pos_t& p) const;
+
     // distance.
     uint8_t radial_distance(const pos_t& p) const;
     uint8_t retg_distance(const pos_t& p) const;
 
     bool check_bounds(
-        uint8_t li = 0, uint8_t ui = 7, uint8_t lj = 0, uint8_t uj = 7) const;
+        uint8_t li, uint8_t ui, uint8_t lj, uint8_t uj) const;
 
     pos_t u(uint8_t offset = 1) const;
     pos_t d(uint8_t offset = 1) const;
@@ -41,14 +55,19 @@ struct pos_t {
     inline pos_t inc(uint8_t v_offset = 1, uint8_t h_offset = 1) const;
 };
 
-enum class color_t: uint8_t {b, w};
+
+enum class color_t: uint8_t {
+    b, w
+};
+
+
 enum class piece_t: uint8_t {
     empt = 0,
     bp = 100, br, bh, bb, bk, bq,
     wp = 200, wr, wh, wb, wk, wq
 };
 
-color_t get_piece_color(piece_t piece);
+
 
 class history_entry_t {
     friend class game_t;
@@ -79,7 +98,9 @@ public:
 
     history_entry_t() = default;
     history_entry_t(const history_entry_t&) = default;
+
     ~history_entry_t();
+
 private:
     enum class type_t: uint8_t {
         simple, attack, en_passant, castling, promotion };
@@ -104,15 +125,17 @@ public:
     char piece_to_char(piece_t) const;
     void print_board() const;
 #endif
-    bool test_check_mate(color_t color); // TODO should be constant.
+
+    std::size_t hash() const;
+    bool test_check_mate(color_t color) const;
     bool test_check(color_t color) const;
     void reset();
 
     void undo();
     void redo();
 
-    template <typename Callable>
     // must return a ch::piece_t an take 0 (any) parameter.
+    template <typename Callable>
     void promotion_handler(Callable callabe);
 
     bool move(pos_t from, pos_t to, bool commit = true);
@@ -121,6 +144,22 @@ public:
     positions_list_t list_moves(pos_t pos) const;
 
 protected:
+    // TODO create a method set_piece(pos_t, piece_t);
+    void set_piece(pos_t pos, piece_t piece);
+    piece_t get_piece(pos_t pos) const;
+
+    void undo_simple_move(history_entry_t past_move);
+    void undo_attack_move(history_entry_t past_move);
+    void undo_castling_move(history_entry_t past_move);
+    void undo_promotion_move(history_entry_t past_move);
+    void undo_en_passant_move(history_entry_t past_move);
+
+    void redo_simple_move(history_entry_t new_move);
+    void redo_attack_move(history_entry_t new_move);
+    void redo_castling_move(history_entry_t new_move);
+    void redo_promotion_move(history_entry_t new_move);
+    void redo_en_passant_move(history_entry_t new_move);
+
     bool move_pawn(pos_t from, pos_t to, bool commit = true);
     bool move_king(pos_t from, pos_t to, bool commit = true);
     bool move_queen(pos_t from, pos_t to, bool commit = true);
@@ -160,6 +199,22 @@ private:
     // just iterators to enhance algorithms performance.
     std::list<pos_t> _b_pieces;
     std::list<pos_t> _w_pieces;
+};
+
+}
+
+namespace std {
+
+template <>
+class hash<ch::game_t>
+{
+public:
+    size_t operator()(const ch::game_t& game) const
+    {
+        size_t result = 0x12345678;
+        result |= (~game.hash() << 32);
+        return result;
+    }
 };
 
 }

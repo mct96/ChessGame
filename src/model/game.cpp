@@ -26,30 +26,37 @@ pos_t pos_t::u(uint8_t offset) const
 {
     return pos_t{_i + offset, _j};
 }
+
 pos_t pos_t::d(uint8_t offset) const
 {
     return pos_t{_i - offset, _j};
 }
+
 pos_t pos_t::l(uint8_t offset) const
 {
     return pos_t{_i, _j - offset};
 }
+
 pos_t pos_t::r(uint8_t offset) const
 {
     return pos_t{_i, _j + offset};
 }
+
 pos_t pos_t::lu(uint8_t offset) const
 {
     return inc(offset, -offset);
 }
+
 pos_t pos_t::ld(uint8_t offset) const
 {
     return inc(-offset, -offset);
 }
+
 pos_t pos_t::ru(uint8_t offset) const
 {
     return inc(offset, offset);
 }
+
 pos_t pos_t::rd(uint8_t offset) const
 {
     return inc(-offset, offset);
@@ -64,7 +71,7 @@ color_t get_piece_color(piece_t piece) {
     auto upiece = static_cast<uint8_t>(piece);
     if (upiece >= 200) return color_t::w;
     if (upiece >= 100) return color_t::b;
-    throw std::string{"color exception"};
+    throw std::string{"there isn't any piece here, so there isn't any color."};
 }
 
 history_entry_t history_entry_t::
@@ -115,10 +122,10 @@ history_entry_t::history_entry_t(
 game_t::game_t()
     :
     _history(10),
+    _history_head{0},
     _board{},
     _w_pieces{},
-    _b_pieces{},
-    _history_head{0}
+    _b_pieces{}
 {
     reset();
 }
@@ -174,17 +181,46 @@ void game_t::print_board() const
 }
 #endif
 
-bool game_t::test_check_mate(color_t color)
+std::size_t game_t::hash() const
 {
+    std::size_t result = 0;
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            result += static_cast<int>(_board[i][j]) ^ result;
+        }
+    }
+
+    return result;
+}
+
+bool game_t::test_check_mate(color_t color) const
+{
+    struct temporary_move_t {
+        temporary_move_t(const game_t* game_context, pos_t from, pos_t to)
+            : _this{const_cast<game_t*>(game_context)}, _from{ from }, _to{ to }
+        {
+            _done = _this->move(_to, _from);
+        }
+
+        ~temporary_move_t() {
+            if (_done) _this->move(_to, _from);
+        }
+
+    private:
+        game_t * _this;
+        pos_t _from, _to;
+        bool _done = false;
+    };
+
     if (!test_check(color)) return false;
     auto pieces_position = color == color_t::w ? _w_pieces : _b_pieces;
 
     for (auto piece_pos: pieces_position) {
         auto moves = list_moves(piece_pos);
         for (auto move_pos: moves) {
-            move(piece_pos, move_pos);
+            temporary_move_t tmove{this, piece_pos, move_pos};
             auto out_of_check = !test_check(color);
-            move(move_pos, piece_pos);
 
             if (out_of_check)
                 return false;
@@ -233,126 +269,50 @@ void game_t::undo()
     if (_history_head == 0) return;
 
     history_entry_t past_move = pop_history();
-    auto from = past_move._from;
-    auto to = past_move._to;
-    auto is_white = get_piece_color(_board[to._i][to._j]) == color_t::w;
 
     switch (past_move._type) {
     case history_entry_t::type_t::simple:
-    case history_entry_t::type_t::attack: {
-        update_iterator(to, from);
-
-        _board[from._i][from._j] = past_move._state[1];
-        _board[to._i][to._j] = past_move._state[0];
-
-        if (past_move._state[0] != piece_t::empt)
-            add_to_iterator(get_piece_color(_board[to._i][to._j]), to);
-    }
+        undo_simple_move(past_move);
         break;
-
-    case history_entry_t::type_t::en_passant: {
-
-        _board[from._i][from._j] = is_white ? piece_t::wp : piece_t::bp;
-        _board[from._i][to._j] = is_white ? piece_t::bp : piece_t::wp;
-        _board[to._i][to._j] = piece_t::empt;
-    }
+    case history_entry_t::type_t::attack:
+        undo_attack_move(past_move);
         break;
-
-    case history_entry_t::type_t::castling: {
-        bool king_side = from._j > to._j;
-
-        auto rook_from = from, king_from = to;
-        auto rook_to = pos_t{rook_from._i, king_side ? 5 : 3};
-        auto king_to = pos_t{king_from._i, king_side ? 6 : 2};
-
-        update_iterator(rook_to, rook_from);
-        update_iterator(king_to, king_from);
-
-        _board[rook_from._i][rook_from._j] = is_white ?
-                                             piece_t::wr : piece_t::br;
-        _board[king_from._i][king_from._j] = is_white ?
-                                             piece_t::wk : piece_t::bk;
-
-        _board[rook_to._i][rook_to._j] = piece_t::empt;
-        _board[king_to._i][king_to._j] = piece_t::empt;
-    }
+    case history_entry_t::type_t::en_passant:
+        undo_en_passant_move(past_move);
         break;
-
-    case history_entry_t::type_t::promotion: {
-        update_iterator(to, from);
-
-        auto previous_piece = past_move._state[0];
-        _board[from._i][from._j] = (to._i == 7) ? piece_t::wp : piece_t::bp;
-        _board[to._i][to._j] = previous_piece;
-
-        if (previous_piece != piece_t::empt)
-            add_to_iterator(get_piece_color(previous_piece), to);
-    }
+    case history_entry_t::type_t::castling:
+        undo_castling_move(past_move);
+        break;
+    case history_entry_t::type_t::promotion:
+        undo_promotion_move(past_move);
         break;
     }
+
 }
 
 void game_t::redo()
 {
+    // CRITICAL iterators need are broken!!!
     if (_history_head >= _history.size()) return;
 
     history_entry_t new_move = _history[_history_head];
-    auto to = new_move._to, from = new_move._from;
-    auto piece = _board[from._i][from._j];
-    auto piece_color = get_piece_color(piece);
 
     switch (new_move._type) {
     case history_entry_t::type_t::simple:
-    case history_entry_t::type_t::attack: {
-        remove_from_iterator(to);
-        update_iterator(from, to);
-
-        _board[to._i][to._j] = new_move._state[1];
-        _board[from._i][from._j] = piece_t::empt;
-    }
+        redo_simple_move(new_move);
         break;
-
-    case history_entry_t::type_t::en_passant: {
-        remove_from_iterator({from._i, to._j});
-        update_iterator(from, to);
-
-        _board[to._i][to._j] = _board[from._i][from._j];
-        _board[from._i][to._j] = piece_t::empt;
-        _board[from._i][from._j] = piece_t::empt;
-    }
+    case history_entry_t::type_t::attack:
+        redo_attack_move(new_move);
         break;
-
-    case history_entry_t::type_t::castling: {
-        bool king_side = from._j > to._j;
-        auto is_white = get_piece_color(_board[to._i][to._j]) == color_t::w;
-
-        auto rook_from = from, king_from = to;
-        auto rook_to = pos_t{rook_from._i, king_side ? 6 : 2};
-        auto king_to = pos_t{king_from._i, king_side ? 5 : 3};
-
-        update_iterator(rook_from, rook_to);
-        update_iterator(king_from, king_to);
-
-        _board[rook_to._i][rook_to._j] = is_white ? piece_t::wr : piece_t::br;
-        _board[king_to._i][king_to._j] = is_white ? piece_t::wk : piece_t::bk;
-        _board[rook_from._i][rook_from._j] = piece_t::empt;
-        _board[king_from._i][king_from._j] = piece_t::empt;
-    }
+    case history_entry_t::type_t::en_passant:
+        redo_en_passant_move(new_move);
         break;
-
-    case history_entry_t::type_t::promotion:  {
-        remove_from_iterator(to);
-        update_iterator(from, to);
-
-        _board[to._i][to._j] = new_move._state[1];
-        _board[from._j][from._i] = piece_t::empt;
-    }
+    case history_entry_t::type_t::castling:
+        redo_castling_move(new_move);
         break;
-
-    default :
-
+    case history_entry_t::type_t::promotion:
+        redo_promotion_move(new_move);
         break;
-
     }
 
     ++_history_head;
@@ -360,11 +320,15 @@ void game_t::redo()
 
 bool game_t::move(pos_t from, pos_t to, bool commit)
 {
-    if (from == to || same_col(from, to) || _board[from._i][from._j] == piece_t::empt
-        || !from.check_bounds() || !to.check_bounds())
+    if (from == to
+        || is_empty(from)
+        || (!is_empty(to) && same_col(from, to))
+        || !from.check_bounds(0, 7, 0, 7)
+        || !to.check_bounds(0, 7, 0, 7))
         return false;
 
-    auto piece = _board[from._i][from._j];
+    auto piece = get_piece(from);
+    // auto piece = _board[from._i][from._j];
 
     switch (piece) {
     case piece_t::bp: case piece_t::wp:
@@ -405,12 +369,146 @@ game_t::positions_list_t game_t::list_moves(pos_t pos) const
     // TODO implement an algorithm.
 }
 
+void game_t::set_piece(pos_t pos, piece_t piece)
+{
+    _board[pos._i][pos._j] = piece;
+}
+
+piece_t game_t::get_piece(pos_t pos) const
+{
+    return _board[pos._i][pos._j];
+}
+
+void game_t::undo_simple_move(history_entry_t past_move)
+{
+    auto from = past_move._from, to = past_move._to;
+
+    update_iterator(to, from);
+
+    set_piece(from, past_move._state[1]);
+    set_piece(to, past_move._state[0]);
+}
+
+void game_t::undo_attack_move(history_entry_t past_move)
+{
+    auto from = past_move._from, to = past_move._to;
+
+    undo_simple_move(past_move);
+
+    add_to_iterator(get_piece_color(get_piece(to)), to);
+}
+
+void game_t::undo_castling_move(history_entry_t past_move)
+{
+    auto from = past_move._from, to = past_move._to;
+    auto is_white = get_piece_color(get_piece(to)) == color_t::w;
+    bool king_side = from._j > to._j;
+
+    auto rook_from = from, king_from = to;
+    auto rook_to = pos_t{rook_from._i, king_side ? 5 : 3};
+    auto king_to = pos_t{king_from._i, king_side ? 6 : 2};
+
+    update_iterator(rook_to, rook_from);
+    update_iterator(king_to, king_from);
+
+    set_piece(rook_from, is_white ? piece_t::wr : piece_t::br);
+    set_piece(king_from, is_white ? piece_t::wk : piece_t::bk);
+
+    set_piece(rook_to, piece_t::empt);
+    set_piece(king_to, piece_t::empt);
+}
+
+void game_t::undo_promotion_move(history_entry_t past_move)
+{
+    auto from = past_move._from, to = past_move._to;
+    auto is_white = get_piece_color(get_piece(to)) == color_t::w;
+
+    update_iterator(to, from);
+
+    auto previous_piece = past_move._state[0];
+    set_piece(from, is_white ? piece_t::wp : piece_t::bp);
+    set_piece(to, previous_piece);
+
+    if (previous_piece != piece_t::empt)
+        add_to_iterator(get_piece_color(previous_piece), to);
+}
+
+void game_t::undo_en_passant_move(history_entry_t past_move)
+{
+    auto from = past_move._from, to = past_move._to;
+    auto is_white = get_piece_color(get_piece(to)) == color_t::w;
+
+    set_piece(from, is_white ? piece_t::wp : piece_t::bp);
+    set_piece(pos_t{from._i, to._j}, is_white ? piece_t::bp : piece_t::wp);
+    set_piece(to, piece_t::empt);
+}
+
+void game_t::redo_simple_move(history_entry_t new_move)
+{
+    redo_attack_move(new_move);
+}
+
+void game_t::redo_attack_move(history_entry_t new_move)
+{
+    auto to = new_move._to, from = new_move._from;
+    remove_from_iterator(to);
+    update_iterator(from, to);
+
+    set_piece(to, new_move._state[1]);
+    set_piece(from, piece_t::empt);
+}
+
+void game_t::redo_en_passant_move(history_entry_t new_move)
+{
+    auto from = new_move._from, to = new_move._to;
+
+    remove_from_iterator({from._i, to._j});
+    update_iterator(from, to);
+
+    set_piece(to, get_piece(from));
+    set_piece(pos_t{from._i, to._j}, piece_t::empt);
+    set_piece(pos_t{from._i, from._j}, piece_t::empt);
+}
+
+void game_t::redo_castling_move(history_entry_t new_move)
+{
+    auto from = new_move._from, to = new_move._to;
+
+    bool king_side = from._j > to._j;
+    auto is_white = get_piece_color(get_piece(to)) == color_t::w;
+
+    auto rook_from = from, king_from = to;
+    auto rook_to = pos_t{rook_from._i, king_side ? 6 : 2};
+    auto king_to = pos_t{king_from._i, king_side ? 5 : 3};
+
+    update_iterator(rook_from, rook_to);
+    update_iterator(king_from, king_to);
+
+    set_piece(rook_to, is_white ? piece_t::wr : piece_t::br);
+    set_piece(king_to, is_white ? piece_t::wk : piece_t::bk);
+    set_piece(rook_from, piece_t::empt);
+    set_piece(king_from, piece_t::empt);
+}
+
+void game_t::redo_promotion_move(history_entry_t new_move)
+{
+    auto from = new_move._from, to = new_move._to;
+
+    remove_from_iterator(to);
+    update_iterator(from, to);
+
+    set_piece(to, new_move._state[1]);
+    set_piece(from, piece_t::empt);
+}
+
 bool game_t::move_pawn(pos_t from, pos_t to, bool commit)
 {
-    auto piece = _board[from._i][from._j];
+    auto piece = get_piece(from);
+    auto is_white = get_piece_color(piece) == color_t::w;
+    auto empty_to = is_empty(to);
+    auto diff_color = empty_to ? false : !same_col(from, to);
 
-    auto diff_color = !same_col(from, to);
-    if (piece == piece_t::wp) {
+    if (is_white) {
         auto empt_u = is_empty(from.u());
         auto empt_uu = empt_u && is_empty(from.u().u());
 
@@ -481,7 +579,6 @@ bool game_t::move_queen(pos_t from, pos_t to, bool commit)
 
 bool game_t::move_knight(pos_t from, pos_t to, bool commit)
 {
-    cout << "I'm here!!!!" << endl;
     if (from._i == to._i || from._j == to._j) return false;
 
     if (from.radial_distance(to) == 3) {
@@ -651,13 +748,8 @@ history_entry_t game_t::top_history() const
 
 bool game_t::same_col(pos_t pos_p1, pos_t pos_p2) const
 {
-    if (is_empty(pos_p1) || is_empty(pos_p2))
-        return false;
-
-    auto p1 = _board[pos_p1._i][pos_p1._j];
-    auto p2 = _board[pos_p2._i][pos_p2._j];
-    auto c1 = get_piece_color(p1);
-    auto c2 = get_piece_color(p2);
+    auto c1 = get_piece_color(get_piece(pos_p1));
+    auto c2 = get_piece_color(get_piece(pos_p2));
 
     return c1 == c2;
 }
