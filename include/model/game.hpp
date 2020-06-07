@@ -122,7 +122,7 @@ public:
     ~game_t();
 
 #ifndef NDEBUG
-    char piece_to_char(piece_t) const;
+    std::string piece_to_str(piece_t) const;
     void print_board() const;
 #endif
 

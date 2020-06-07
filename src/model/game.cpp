@@ -137,36 +137,36 @@ game_t::~game_t()
 
 #ifndef NDEBUG
 
-char game_t::piece_to_char(piece_t p) const
+std::string game_t::piece_to_str(piece_t p) const
 {
     using p_t = piece_t;
     switch (p) {
     case p_t::bp:
-        return 'p';
+        return "♟";
     case p_t::br:
-        return 'r';
+        return "♜";
     case p_t::bh:
-        return 'h';
+        return "♞";
     case p_t::bb:
-        return 'b';
+        return "♝";
     case p_t::bk:
-        return 'k';
+        return "♚";
     case p_t::bq:
-        return 'q';
+        return "♛";
     case p_t::wp:
-        return 'P';
+        return "♙";
     case p_t::wr:
-        return 'R';
+        return "♖";
     case p_t::wh:
-        return 'H';
+        return "♘";
     case p_t::wb:
-        return 'B';
+        return "♗";
     case p_t::wk:
-        return 'K';
+        return "♔";
     case p_t::wq:
-        return 'Q';
+        return "♕";
     case p_t::empt:
-        return ' ';
+        return " ";
     }
 }
 
@@ -174,7 +174,7 @@ void game_t::print_board() const
 {
     for (int i = 7; i >= 0; --i) {
         for (int j = 0; j < 8; ++j) {
-            cout << piece_to_char(_board[i][j]) << " ";
+            cout << piece_to_str(_board[i][j]) << " ";
         }
         cout << endl;
     }

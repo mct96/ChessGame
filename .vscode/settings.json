@@ -47,6 +47,11 @@
         "ctime": "cpp",
         "map": "cpp",
         "iomanip": "cpp",
-        "compare": "cpp"
+        "compare": "cpp",
+        "concepts": "cpp",
+        "cstring": "cpp",
+        "list": "cpp",
+        "ranges": "cpp",
+        "cinttypes": "cpp"
     }
 }

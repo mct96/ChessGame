@@ -18,6 +18,7 @@ int main(int argc, char **argv)
         game_engine.move({6, 1}, {5, 0}); // 9
 
         auto final_hash = game_engine.hash();
+        game_engine.print_board();
 
         for (int i = 0; i < 9; ++i)
             game_engine.undo();
@@ -28,14 +29,14 @@ int main(int argc, char **argv)
             cout << "undo not working properly." << endl;
         }
 
-        for (int i = 0; i < 9; ++i)
-            game_engine.redo();
+        // for (int i = 0; i < 9; ++i)
+        //     game_engine.redo();
 
-        if (final_hash == game_engine.hash()) {
-            cout << "redo working properly." << endl;
-        } else {
-            cout << "redo not working properly." << endl;
-        }
+        // if (final_hash == game_engine.hash()) {
+        //     cout << "redo working properly." << endl;
+        // } else {
+        //     cout << "redo not working properly." << endl;
+        // }
 
         game_engine.print_board();
     } catch (std::string msg) {
