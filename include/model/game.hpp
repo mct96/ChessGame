@@ -116,7 +116,7 @@ private:
 
 class game_t {
 public:
-    using positions_list_t = std::list<pos_t>;
+    using list_pos_t = std::list<pos_t>;
 
     explicit game_t();
     ~game_t();
@@ -141,12 +141,22 @@ public:
     bool move(pos_t from, pos_t to, bool commit = true);
     bool can_move(pos_t from, pos_t to) const;
 
-    positions_list_t list_moves(pos_t pos) const;
+    list_pos_t list_moves(pos_t pos) const;
 
 protected:
-    // TODO create a method set_piece(pos_t, piece_t);
     void set_piece(pos_t pos, piece_t piece);
     piece_t get_piece(pos_t pos) const;
+
+    list_pos_t list_king_moves(pos_t origin) const;
+    list_pos_t list_queen_moves(pos_t origin) const;
+    list_pos_t list_bishop_moves(pos_t origin) const;
+    list_pos_t list_knight_moves(pos_t origin) const;
+    list_pos_t list_rook_moves(pos_t origin) const;
+    list_pos_t list_pawn_moves(pos_t origin) const;
+
+    list_pos_t list_diagonal_moves(pos_t origin, std::size_t range) const;
+    list_pos_t list_parallel_moves(pos_t origin, std::size_t range) const;
+    list_pos_t list_range_based_moves(pos_t origin, std::size_t range) const;
 
     void undo_simple_move(history_entry_t past_move);
     void undo_attack_move(history_entry_t past_move);

@@ -359,14 +359,35 @@ bool game_t::can_move(pos_t from, pos_t to) const
     return self->move(from, to, false);
 }
 
-game_t::positions_list_t game_t::list_moves(pos_t pos) const
+game_t::list_pos_t game_t::list_moves(pos_t pos) const
 {
-    positions_list_t moves{};
-    auto piece = _board[pos._i][pos._j];
+    list_pos_t moves{};
 
+    auto piece = get_piece(pos);
     if (piece == piece_t::empt) return moves;
 
-    // TODO implement an algorithm.
+    switch (piece) {
+    case piece_t::wp: case piece_t::bp:
+        return list_pawn_moves(pos);
+
+    case piece_t::wr: case piece_t::br:
+        return list_rook_moves(pos);
+
+    case piece_t::wh: case piece_t::bh:
+        return list_knight_moves(pos);
+
+    case piece_t::wb: case piece_t::bb:
+        return list_bishop_moves(pos);
+
+    case piece_t::wq: case piece_t::bq:
+        return list_queen_moves(pos);
+
+    case piece_t::wk: case piece_t::bk:
+        return list_king_moves(pos);
+
+    default:
+        throw std::string{"trying to list moves of an empty pos."};
+    }
 }
 
 void game_t::set_piece(pos_t pos, piece_t piece)
@@ -377,6 +398,108 @@ void game_t::set_piece(pos_t pos, piece_t piece)
 piece_t game_t::get_piece(pos_t pos) const
 {
     return _board[pos._i][pos._j];
+}
+
+game_t::list_pos_t game_t::list_king_moves(pos_t origin) const
+{
+    auto d_moves = list_diagonal_moves(origin, 1);
+    auto p_moves = list_parallel_moves(origin, 1);
+    d_moves.splice(d_moves.end(), p_moves);
+
+    return d_moves;
+}
+
+game_t::list_pos_t game_t::list_queen_moves(pos_t origin) const
+{
+    auto d_moves = list_diagonal_moves(origin, 8);
+    auto p_moves = list_parallel_moves(origin, 8);
+    d_moves.splice(d_moves.end(), p_moves);
+
+    return d_moves;
+}
+
+game_t::list_pos_t game_t::list_bishop_moves(pos_t origin) const
+{
+    return list_diagonal_moves(origin, 8);
+}
+
+game_t::list_pos_t game_t::list_knight_moves(pos_t origin) const
+{
+    // TODO implement this code.
+}
+
+game_t::list_pos_t game_t::list_rook_moves(pos_t origin) const
+{
+    return list_parallel_moves(origin, 8);
+}
+
+game_t::list_pos_t game_t::list_pawn_moves(pos_t origin) const
+{
+    // TODO implement this code.
+}
+
+game_t::list_pos_t game_t::
+    list_diagonal_moves(pos_t origin, std::size_t range) const
+{
+    // TODO optimize this code.
+    auto positions = list_pos_t{};
+
+    for (auto k = 1; k < range; ++k) {
+        auto to = origin.ru(k);
+        positions.push_back(to);
+
+        if (!is_empty(to) && same_col(origin, to))
+            break;
+    }
+
+    for (auto k = 1; k < range; ++k) {
+        auto to = origin.rd(k);
+        positions.push_back(to);
+
+        if (!is_empty(to) && same_col(origin, to))
+            break;
+    }
+
+    for (auto k = 1; k < range; ++k) {
+        auto to = origin.lu(k);
+        positions.push_back(to);
+
+        if (!is_empty(to) && same_col(origin, to))
+            break;
+    }
+
+    for (auto k = 1; k < range; ++k) {
+        auto to = origin.ld(k);
+        positions.push_back(to);
+
+        if (!is_empty(to) && same_col(origin, to))
+            break;
+    }
+
+    return positions;
+}
+
+game_t::list_pos_t game_t::
+    list_parallel_moves(pos_t origin, std::size_t range) const
+{
+    // TODO optimize this code.
+    auto positions = list_pos_t{};
+
+    for (auto k = 1; k < range; ++k) {
+        auto to = origin.u(k);
+        positions.push_back(to);
+
+        if (!is_empty(to) && same_col(origin, to))
+            break;
+    }
+
+    return positions;
+}
+
+game_t::list_pos_t game_t::
+    list_range_based_moves(pos_t origin, std::size_t range) const
+{
+    // TODO implement this code.
 }
 
 void game_t::undo_simple_move(history_entry_t past_move)
