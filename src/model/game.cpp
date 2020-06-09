@@ -321,14 +321,14 @@ void game_t::redo()
 bool game_t::move(pos_t from, pos_t to, bool commit)
 {
     if (from == to
-        || is_empty(from)
-        || (!is_empty(to) && same_col(from, to))
         || !from.check_bounds(0, 7, 0, 7)
-        || !to.check_bounds(0, 7, 0, 7))
+        || !to.check_bounds(0, 7, 0, 7)
+        || is_empty(from)
+        || (!is_empty(to) && same_col(from, to)))
         return false;
 
+
     auto piece = get_piece(from);
-    // auto piece = _board[from._i][from._j];
 
     switch (piece) {
     case piece_t::bp: case piece_t::wp:
@@ -402,104 +402,102 @@ piece_t game_t::get_piece(pos_t pos) const
 
 game_t::list_pos_t game_t::list_king_moves(pos_t origin) const
 {
-    auto d_moves = list_diagonal_moves(origin, 1);
-    auto p_moves = list_parallel_moves(origin, 1);
-    d_moves.splice(d_moves.end(), p_moves);
-
-    return d_moves;
+    return list_moves(origin, 1, true, true);
 }
 
 game_t::list_pos_t game_t::list_queen_moves(pos_t origin) const
 {
-    auto d_moves = list_diagonal_moves(origin, 8);
-    auto p_moves = list_parallel_moves(origin, 8);
-    d_moves.splice(d_moves.end(), p_moves);
-
-    return d_moves;
+    return list_moves(origin, 8, true, true);
 }
 
 game_t::list_pos_t game_t::list_bishop_moves(pos_t origin) const
 {
-    return list_diagonal_moves(origin, 8);
+    return list_moves(origin, 8, false, true);
 }
 
 game_t::list_pos_t game_t::list_knight_moves(pos_t origin) const
 {
-    // TODO implement this code.
+    list_pos_t positions{};
+    positions.push_back(origin.u(2).l());
+    positions.push_back(origin.u(2).r());
+    positions.push_back(origin.d(2).l());
+    positions.push_back(origin.d(2).r());
+    positions.push_back(origin.l(2).u());
+    positions.push_back(origin.l(2).d());
+    positions.push_back(origin.r(2).u());
+    positions.push_back(origin.r(2).d());
+
+    auto it = std::remove_if(
+        positions.begin(), positions.end(), [&](pos_t pos) {
+            return !can_move(origin, pos);
+        });
+
+    positions.erase(it, positions.end());
+
+    return positions;
 }
 
 game_t::list_pos_t game_t::list_rook_moves(pos_t origin) const
 {
-    return list_parallel_moves(origin, 8);
+    return list_moves(origin, 8, true, false);
 }
 
 game_t::list_pos_t game_t::list_pawn_moves(pos_t origin) const
 {
-    // TODO implement this code.
-}
+    list_pos_t positions{};
+    auto piece = get_piece(origin);
+    auto piece_color = get_piece_color(piece);
 
-game_t::list_pos_t game_t::
-    list_diagonal_moves(pos_t origin, std::size_t range) const
-{
-    // TODO optimize this code.
-    auto positions = list_pos_t{};
-
-    for (auto k = 1; k < range; ++k) {
-        auto to = origin.ru(k);
-        positions.push_back(to);
-
-        if (!is_empty(to) && same_col(origin, to))
-            break;
-    }
-
-    for (auto k = 1; k < range; ++k) {
-        auto to = origin.rd(k);
-        positions.push_back(to);
-
-        if (!is_empty(to) && same_col(origin, to))
-            break;
-    }
-
-    for (auto k = 1; k < range; ++k) {
-        auto to = origin.lu(k);
-        positions.push_back(to);
-
-        if (!is_empty(to) && same_col(origin, to))
-            break;
-    }
-
-    for (auto k = 1; k < range; ++k) {
-        auto to = origin.ld(k);
-        positions.push_back(to);
-
-        if (!is_empty(to) && same_col(origin, to))
-            break;
+    // A little ugly. en passant is treated implicitly.
+    if (piece_color == color_t::w) {
+        if (can_move(origin, origin.u())) positions.push_back(origin.u());
+        if (can_move(origin, origin.u(2))) positions.push_back(origin.u(2));
+        if (can_move(origin, origin.lu())) positions.push_back(origin.lu());
+        if (can_move(origin, origin.ru())) positions.push_back(origin.ru());
+    } else {
+        if (can_move(origin, origin.d())) positions.push_back(origin.d());
+        if (can_move(origin, origin.d(2))) positions.push_back(origin.d(2));
+        if (can_move(origin, origin.ld())) positions.push_back(origin.ld());
+        if (can_move(origin, origin.rd())) positions.push_back(origin.rd());
     }
 
     return positions;
 }
 
-game_t::list_pos_t game_t::
-    list_parallel_moves(pos_t origin, std::size_t range) const
+game_t::list_pos_t game_t::list_moves(
+    pos_t origin, std::size_t range, bool parallel, bool diagonal) const
 {
-    // TODO optimize this code.
+    // HYPOTHESIS I use pointer to member to avoid 8 diferent loops.
+    // WORKS!!!
+    using func_ptr = pos_t(pos_t::*)(uint8_t) const;
+    func_ptr d_moves[] = {
+        &pos_t::ru, &pos_t::lu, &pos_t::ld, &pos_t::rd };
+
+    func_ptr p_moves[] = {
+        &pos_t::r, &pos_t::u, &pos_t::l, &pos_t::d};
+
+    std::vector<func_ptr> directions{};
+
+    if (parallel)
+        directions.insert(directions.begin(), d_moves, d_moves + 4);
+
+    if (diagonal)
+        directions.insert(directions.begin(), p_moves, p_moves + 4);
+
     auto positions = list_pos_t{};
+    for (auto direction: directions) {
+        for (auto k = 1; k < range; ++k) {
+            auto to = (origin.*direction)(k);
 
-    for (auto k = 1; k < range; ++k) {
-        auto to = origin.u(k);
-        positions.push_back(to);
+            if (!to.check_bounds(0, 7, 0, 7) ||
+               (!is_empty(to) && same_col(origin, to)))
+                break;
 
-        if (!is_empty(to) && same_col(origin, to))
-            break;
+            positions.push_back(to);
+        }
     }
 
     return positions;
-}
-
-game_t::list_pos_t game_t::
-    list_range_based_moves(pos_t origin, std::size_t range) const
-{
-    // TODO implement this code.
 }
 
 void game_t::undo_simple_move(history_entry_t past_move)
@@ -705,10 +703,11 @@ bool game_t::move_knight(pos_t from, pos_t to, bool commit)
     if (from._i == to._i || from._j == to._j) return false;
 
     if (from.radial_distance(to) == 3) {
-        if (commit) commit_move(from, to);
+        if (commit)
+            commit_move(from, to);
+
         return true;
     }
-
     return false;
 }
 
@@ -865,7 +864,6 @@ history_entry_t game_t::top_history() const
     // TODO update exception message.s
     if (_history_head == 0) throw std::string{"top exception"};
     auto result = _history[_history_head - 1];
-    cout << "I'm here!!!" << endl;
     return result;
 }
 

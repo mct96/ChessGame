@@ -153,10 +153,8 @@ protected:
     list_pos_t list_knight_moves(pos_t origin) const;
     list_pos_t list_rook_moves(pos_t origin) const;
     list_pos_t list_pawn_moves(pos_t origin) const;
-
-    list_pos_t list_diagonal_moves(pos_t origin, std::size_t range) const;
-    list_pos_t list_parallel_moves(pos_t origin, std::size_t range) const;
-    list_pos_t list_range_based_moves(pos_t origin, std::size_t range) const;
+    list_pos_t list_moves(
+        pos_t origin, std::size_t range, bool parallel, bool diagonal) const;
 
     void undo_simple_move(history_entry_t past_move);
     void undo_attack_move(history_entry_t past_move);
