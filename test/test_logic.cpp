@@ -29,22 +29,15 @@ int main(int argc, char **argv)
             cout << "undo not working properly." << endl;
         }
 
-        game_engine.move({1, 2}, {2, 2});
-        game_engine.move({1, 4}, {2, 4});
-        game_engine.move({1, 3}, {3, 3});
-        auto moves = game_engine.list_moves({0, 3});
-        for (auto move: moves) {
-            cout << "[" << (int)move._i << ", " << (int)move._j << "]" << endl;
+        for (int i = 0; i < 9; ++i) {
+            game_engine.redo();
         }
-        // game_engine.move({0, 1}, {1, 3});
-        // for (int i = 0; i < 9; ++i)
-        //     game_engine.redo();
 
-        // if (final_hash == game_engine.hash()) {
-        //     cout << "redo working properly." << endl;
-        // } else {
-        //     cout << "redo not working properly." << endl;
-        // }
+        if (final_hash == game_engine.hash()) {
+            cout << "redo working properly." << endl;
+        } else {
+            cout << "redo not working properly." << endl;
+        }
 
         game_engine.print_board();
     } catch (std::string msg) {

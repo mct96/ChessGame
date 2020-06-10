@@ -566,7 +566,12 @@ void game_t::undo_en_passant_move(history_entry_t past_move)
 
 void game_t::redo_simple_move(history_entry_t new_move)
 {
-    redo_attack_move(new_move);
+    auto to = new_move._to, from = new_move._from;
+    // remove_from_iterator(to);
+    update_iterator(from, to);
+
+    set_piece(to, new_move._state[1]);
+    set_piece(from, piece_t::empt);
 }
 
 void game_t::redo_attack_move(history_entry_t new_move)
@@ -911,13 +916,14 @@ void game_t::update_iterator(pos_t old_pos, pos_t new_pos)
 
 void game_t::remove_from_iterator(pos_t pos)
 {
-    auto color = get_piece_color(_board[pos._i][pos._j]);
+    auto color = get_piece_color(get_piece(pos));
     auto is_white = color == color_t::w;
     auto container = is_white ? _w_pieces : _b_pieces;
     auto b = container.begin();
     auto e = container.end();
 
-    std::remove(b, e, pos);
+    auto last = std::remove(b, e, pos);
+    container.erase(last, container.end());
 }
 
 void game_t::reset_iterators()
