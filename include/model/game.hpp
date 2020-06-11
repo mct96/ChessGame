@@ -144,6 +144,14 @@ public:
     list_pos_t list_moves(pos_t pos) const;
 
 protected:
+    void print_iterators() const {
+        for (auto pos: _w_pieces)
+            cout << "[" << (int)pos._i << ", " << (int)pos._j << "], ";
+        cout << "\n";
+        for (auto pos: _b_pieces)
+            cout << "[" << (int)pos._i << ", " << (int)pos._j << "], ";
+    }
+
     void set_piece(pos_t pos, piece_t piece);
     piece_t get_piece(pos_t pos) const;
 

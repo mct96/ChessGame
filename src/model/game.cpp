@@ -196,15 +196,16 @@ std::size_t game_t::hash() const
 
 bool game_t::test_check_mate(color_t color) const
 {
+    // CRITICAL king not undo move.
     struct temporary_move_t {
         temporary_move_t(const game_t* game_context, pos_t from, pos_t to)
             : _this{const_cast<game_t*>(game_context)}, _from{ from }, _to{ to }
         {
-            _done = _this->move(_to, _from);
+            _done = _this->move(_from, _to);
         }
 
         ~temporary_move_t() {
-            if (_done) _this->move(_to, _from);
+            if (_done) _this->undo();
         }
 
     private:
@@ -218,11 +219,11 @@ bool game_t::test_check_mate(color_t color) const
 
     for (auto piece_pos: pieces_position) {
         auto moves = list_moves(piece_pos);
+
         for (auto move_pos: moves) {
             temporary_move_t tmove{this, piece_pos, move_pos};
-            auto out_of_check = !test_check(color);
-
-            if (out_of_check)
+            print_board(); cout << "\n" << endl;
+            if (!test_check(color))
                 return false;
         }
     }
@@ -292,7 +293,6 @@ void game_t::undo()
 
 void game_t::redo()
 {
-    // CRITICAL iterators need are broken!!!
     if (_history_head >= _history.size()) return;
 
     history_entry_t new_move = _history[_history_head];
@@ -407,12 +407,12 @@ game_t::list_pos_t game_t::list_king_moves(pos_t origin) const
 
 game_t::list_pos_t game_t::list_queen_moves(pos_t origin) const
 {
-    return list_moves(origin, 8, true, true);
+    return list_moves(origin, 7, true, true);
 }
 
 game_t::list_pos_t game_t::list_bishop_moves(pos_t origin) const
 {
-    return list_moves(origin, 8, false, true);
+    return list_moves(origin, 7, false, true);
 }
 
 game_t::list_pos_t game_t::list_knight_moves(pos_t origin) const
@@ -439,7 +439,7 @@ game_t::list_pos_t game_t::list_knight_moves(pos_t origin) const
 
 game_t::list_pos_t game_t::list_rook_moves(pos_t origin) const
 {
-    return list_moves(origin, 8, true, false);
+    return list_moves(origin, 7, true, false);
 }
 
 game_t::list_pos_t game_t::list_pawn_moves(pos_t origin) const
@@ -479,19 +479,27 @@ game_t::list_pos_t game_t::list_moves(
     std::vector<func_ptr> directions{};
 
     if (parallel)
-        directions.insert(directions.begin(), d_moves, d_moves + 4);
+        directions.insert(directions.begin(), p_moves, p_moves + 4);
 
     if (diagonal)
-        directions.insert(directions.begin(), p_moves, p_moves + 4);
+        directions.insert(directions.begin(), d_moves, d_moves + 4);
 
     auto positions = list_pos_t{};
     for (auto direction: directions) {
-        for (auto k = 1; k < range; ++k) {
+        for (auto k = 1; k <= range; ++k) {
             auto to = (origin.*direction)(k);
 
-            if (!to.check_bounds(0, 7, 0, 7) ||
-               (!is_empty(to) && same_col(origin, to)))
+            if (!to.check_bounds(0, 7, 0, 7))
                 break;
+
+            if (!is_empty(to))
+                if (!same_col(origin, to)){
+                    positions.push_back(to);
+                    break;
+                } else {
+                    break;
+                }
+
 
             positions.push_back(to);
         }
@@ -690,7 +698,7 @@ bool game_t::move_king(pos_t from, pos_t to, bool commit)
 
 bool game_t::move_queen(pos_t from, pos_t to, bool commit)
 {
-    bool is_diag = (to._i - from._i) == (to._j - from._j);
+    bool is_diag = abs(to._i - from._i) == abs(to._j - from._j);
     bool is_paral =  (to._i == from._i) || (to._j == from._j);
 
     if (!(is_diag || is_paral)) return false;
@@ -906,9 +914,9 @@ void game_t::add_to_iterator(color_t col, pos_t pos)
 
 void game_t::update_iterator(pos_t old_pos, pos_t new_pos)
 {
-    auto color = get_piece_color(_board[old_pos._i][old_pos._j]);
+    auto color = get_piece_color(get_piece(old_pos));
     auto is_white = color == color_t::w;
-    auto container = is_white ? _w_pieces : _b_pieces;
+    auto& container = is_white ? _w_pieces : _b_pieces;
     auto b = container.begin(), e = container.end();
 
     std::replace(b, e, old_pos, new_pos);
@@ -918,7 +926,7 @@ void game_t::remove_from_iterator(pos_t pos)
 {
     auto color = get_piece_color(get_piece(pos));
     auto is_white = color == color_t::w;
-    auto container = is_white ? _w_pieces : _b_pieces;
+    auto& container = is_white ? _w_pieces : _b_pieces;
     auto b = container.begin();
     auto e = container.end();
 
