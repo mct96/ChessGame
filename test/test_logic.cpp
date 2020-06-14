@@ -55,7 +55,7 @@ void test_check()
     game_engine.move({0, 5}, {3, 2}); // white
     game_engine.move({4, 0}, {3, 0}); // black
     game_engine.move({4, 7}, {6, 5}); // white
-    // game_engine.move({6, 3}, {5, 3}); // white
+    game_engine.move({6, 3}, {5, 3}); // white
     game_engine.print_board();
 
     if (game_engine.test_check(ch::color_t::b))
@@ -67,6 +67,7 @@ void test_check()
         cout << "check mate: true \n";
     else
         cout << "check mate: false \n";
+    game_engine.print_board();
 }
 
 int main(int argc, char **argv)

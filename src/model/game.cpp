@@ -196,7 +196,6 @@ std::size_t game_t::hash() const
 
 bool game_t::test_check_mate(color_t color) const
 {
-    // CRITICAL king not undo move.
     struct temporary_move_t {
         temporary_move_t(const game_t* game_context, pos_t from, pos_t to)
             : _this{const_cast<game_t*>(game_context)}, _from{ from }, _to{ to }
@@ -222,7 +221,7 @@ bool game_t::test_check_mate(color_t color) const
 
         for (auto move_pos: moves) {
             temporary_move_t tmove{this, piece_pos, move_pos};
-            print_board(); cout << "\n" << endl;
+            // print_board(); cout << "\n" << endl;
             if (!test_check(color))
                 return false;
         }
@@ -691,6 +690,7 @@ bool game_t::move_king(pos_t from, pos_t to, bool commit)
 {
     if (from.retg_distance(to) == 1) {
         if (commit) commit_move(from, to);
+        return true;
     }
 
     return false;
