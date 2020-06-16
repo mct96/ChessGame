@@ -60,6 +60,7 @@
         "regex": "cpp",
         "shared_mutex": "cpp",
         "stop_token": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "complex": "cpp"
     }
 }

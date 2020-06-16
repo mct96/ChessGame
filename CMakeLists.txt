@@ -2,26 +2,26 @@ cmake_minimum_required(VERSION 3.12)
 
 project(Chess)
 
-set(MODEL_SRC
-    ./src/model/game.cpp
+set(SRC
+    src/game.cpp
+    src/game_types.cpp
+    src/parser.cpp
 )
 
-set(MODEL_INC
-    ./include/model/game.hpp
-)
-
-set(TEST_SRC
-    ./test/test_logic.cpp
+set(INCLUDE
+    src/game.hpp
+    src/game_types.hpp
+    src/parser.hpp
 )
 
 enable_testing()
 
-add_executable(game_chess ${MODEL_SRC} ${TEST_SRC})
+add_executable(game_chess ${SRC})
 target_compile_definitions(game_chess
     PRIVATE $<$<CONFIG:release>:NDEBUB>
 )
 target_include_directories(game_chess
-    PUBLIC ${MODEL_INC}
+    PUBLIC ${INCLUDE}
 )
 
 set_target_properties(game_chess PROPERTIES CXX_STANDARD 20)

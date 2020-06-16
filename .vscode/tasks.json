@@ -6,12 +6,20 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "/home/matheusc/Documents/Codes/ChessGame/test/test_parser.cpp",
+                "/home/matheusc/Documents/Codes/ChessGame/src/game.cpp",
+                "/home/matheusc/Documents/Codes/ChessGame/src/game_types.cpp",
+                "/home/matheusc/Documents/Codes/ChessGame/src/parser.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "/usr/bin"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ],

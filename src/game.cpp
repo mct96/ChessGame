@@ -1,78 +1,9 @@
-#include "../../include/model/game.hpp"
+#include "game.hpp"
+
+#include <utility>
+#include <iterator>
 
 namespace ch {
-
-bool pos_t::operator==(const pos_t& p) const
-{
-    return _i == p._i && _j == p._j;
-}
-
-uint8_t pos_t::radial_distance(const pos_t& p) const
-{
-    return abs(_i - p._i) + abs(_j - p._j);
-}
-
-uint8_t pos_t::retg_distance(const pos_t& p) const
-{
-    return std::max(abs(_i - p._i), abs(_j - p._j));
-}
-
-bool pos_t::check_bounds(uint8_t li, uint8_t ui, uint8_t lj, uint8_t uj) const
-{
-    return (_i >= li && _i <= ui) && (_j >= lj && _j <= uj);
-}
-
-pos_t pos_t::u(uint8_t offset) const
-{
-    return pos_t{_i + offset, _j};
-}
-
-pos_t pos_t::d(uint8_t offset) const
-{
-    return pos_t{_i - offset, _j};
-}
-
-pos_t pos_t::l(uint8_t offset) const
-{
-    return pos_t{_i, _j - offset};
-}
-
-pos_t pos_t::r(uint8_t offset) const
-{
-    return pos_t{_i, _j + offset};
-}
-
-pos_t pos_t::lu(uint8_t offset) const
-{
-    return inc(offset, -offset);
-}
-
-pos_t pos_t::ld(uint8_t offset) const
-{
-    return inc(-offset, -offset);
-}
-
-pos_t pos_t::ru(uint8_t offset) const
-{
-    return inc(offset, offset);
-}
-
-pos_t pos_t::rd(uint8_t offset) const
-{
-    return inc(-offset, offset);
-}
-
-pos_t pos_t::inc(uint8_t v_offset, uint8_t h_offset) const
-{
-    return pos_t{_i + v_offset, _j + h_offset};
-}
-
-color_t get_piece_color(piece_t piece) {
-    auto upiece = static_cast<uint8_t>(piece);
-    if (upiece >= 200) return color_t::w;
-    if (upiece >= 100) return color_t::b;
-    throw std::string{"there isn't any piece here, so there isn't any color."};
-}
 
 history_entry_t history_entry_t::
     make_simple_move(pos_t from, pos_t to, piece_t piece)
@@ -323,33 +254,33 @@ bool game_t::move(pos_t from, pos_t to, bool commit)
         || !from.check_bounds(0, 7, 0, 7)
         || !to.check_bounds(0, 7, 0, 7)
         || is_empty(from)
-        || (!is_empty(to) && same_col(from, to)))
+        || (!is_empty(to) && same_col(from, to) && !is_castling(from, to)))
         return false;
-
 
     auto piece = get_piece(from);
 
     switch (piece) {
     case piece_t::bp: case piece_t::wp:
-        move_pawn(from, to, commit);
+        return move_pawn(from, to, commit);
         break;
     case piece_t::br: case piece_t::wr:
-        move_rook(from, to, commit);
+        return move_rook(from, to, commit);
         break;
     case piece_t::bh: case piece_t::wh:
-        move_knight(from, to, commit);
+        return move_knight(from, to, commit);
         break;
     case piece_t::bb: case piece_t::wb:
-        move_bishop(from, to, commit);
+        return move_bishop(from, to, commit);
         break;
     case piece_t::bq: case piece_t::wq:
-        move_queen(from, to, commit);
+        return move_queen(from, to, commit);
         break;
     case piece_t::bk: case piece_t::wk:
-        move_king(from, to, commit);
+        return move_king(from, to, commit);
         break;
     }
 
+    return false;
 }
 
 bool game_t::can_move(pos_t from, pos_t to) const
@@ -383,10 +314,34 @@ game_t::list_pos_t game_t::list_moves(pos_t pos) const
 
     case piece_t::wk: case piece_t::bk:
         return list_king_moves(pos);
-
-    default:
-        throw std::string{"trying to list moves of an empty pos."};
     }
+}
+
+game_t::list_pos_t game_t::can_move_to(pos_t to, color_t color) const
+{
+    const auto& container = color == color_t::w ? _w_pieces : _b_pieces;
+    auto b = container.begin(), e = container.end();
+    list_pos_t piece_positions{};
+    std::back_insert_iterator<list_pos_t> insert_it{piece_positions};
+
+    std::copy_if(b, e, insert_it,
+        [=, this](pos_t pos) {
+            auto v = this->can_move(pos, to);
+            return v;});
+
+    return piece_positions;
+}
+
+game_t::list_pos_t game_t::can_move_to(pos_t to, piece_t piece) const
+{
+    auto piece_pos = can_move_to(to, get_piece_color(piece));
+
+    auto b = piece_pos.begin(), e = piece_pos.end();
+    auto new_e = std::remove_if(b, e,
+                [&, this](pos_t pos){ return this->get_piece(pos) != piece; });
+    piece_pos.erase(new_e, piece_pos.end());
+
+    return piece_pos;
 }
 
 void game_t::set_piece(pos_t pos, piece_t piece)
@@ -667,19 +622,8 @@ bool game_t::move_pawn(pos_t from, pos_t to, bool commit)
         }
     }
 
-    // handle en passant move.
     if (can_en_passant(from, to)) {
-        if (!commit) return true;
-
-        auto bkp = history_entry_t::make_en_passant_move(from, to);
-        push_history(bkp);
-
-        remove_from_iterator({from._i, to._j});
-        update_iterator(from, to);
-
-        _board[to._i][to._j] = piece;
-        _board[from._i][from._j] = piece_t::empt;
-        _board[from._i][to._j] = piece_t::empt;
+        if (commit) do_en_passant(from, to);
         return true;
     }
 
@@ -744,11 +688,17 @@ bool game_t::move_rook(pos_t from, pos_t to, bool commit)
 
     if (!is_paral) return false;
 
+    pos_t king_pos = find_king(get_piece_color(get_piece(from)));
+    if (to == king_pos && can_castling(from, to)) {
+        if (commit)
+            do_castling(from, to);
+        return true;
+    }
+
     if (empty_parallel(from, to)) {
         if (commit) commit_move(from, to);
         return true;
     }
-
     return false;
 }
 
@@ -827,6 +777,19 @@ bool game_t::can_en_passant(pos_t from, pos_t to) const
             && will_same_column && will_mean_line;
 }
 
+void game_t::do_en_passant(pos_t from, pos_t to)
+{
+    auto bkp = history_entry_t::make_en_passant_move(from, to);
+    push_history(bkp);
+
+    remove_from_iterator({from._i, to._j});
+    update_iterator(from, to);
+
+    _board[to._i][to._j] = get_piece(from);
+    _board[from._i][from._j] = piece_t::empt;
+    _board[from._i][to._j] = piece_t::empt;
+}
+
 bool game_t::can_castling(pos_t from, pos_t to) const
 {
     for (std::size_t k = 0; k < _history_head; ++k) {
@@ -837,17 +800,34 @@ bool game_t::can_castling(pos_t from, pos_t to) const
     if (!empty_parallel(from, to)) return false;
 
     bool ooo = from._j < to._j;
-    color_t color = get_piece_color(_board[from._i][from._j]);
+    color_t color = get_piece_color(get_piece(from));
     pos_t king_pos = to;
 
-    for (int i = 0; i < ooo ? 3 : 2; ++i) {
+    for (int i = 0; i < (ooo ? 3 : 2); ++i) {
         for (auto enemy_p: (color == color_t::w) ? _b_pieces : _w_pieces) {
             if (can_move(enemy_p, king_pos))
                 return false;
-
             king_pos = ooo ? king_pos.l() : king_pos.r();
         }
     }
+}
+
+void game_t::do_castling(pos_t from, pos_t to)
+{
+    auto c = get_piece_color(get_piece(from));
+    auto ooo = from._j == 0; // king_side ?
+    auto king_i = (c == color_t::w ? 0 : 7), king_j = (ooo ? 2 : 6);
+    auto rook_i = (c == color_t::w ? 0 : 7), rook_j = (ooo ? 3 : 5);
+
+    update_iterator(from, pos_t{rook_i, rook_j});
+    update_iterator(to,   pos_t{king_i, king_j});
+
+    _board[rook_i][rook_j]   = get_piece(from);
+    _board[king_i][king_j]   = get_piece(to);
+    _board[from._i][from._j] = piece_t::empt;
+    _board[to._i][to._j]     = piece_t::empt;
+
+    push_history(history_entry_t::make_castling_move(from, to));
 }
 
 void game_t::push_history(history_entry_t history_entry)
@@ -960,6 +940,18 @@ pos_t game_t::find_king(color_t color) const
     }
 
     throw std::string{"where is my king???"};
+}
+
+bool game_t::is_castling(pos_t from, pos_t to) const
+{
+    auto piece_from = get_piece(from);
+    auto piece_to = get_piece(to);
+
+    color_t col = get_piece_color(piece_from);
+    piece_t rook = col == color_t::w ? piece_t::wr : piece_t::br;
+    piece_t king = col == color_t::w ? piece_t::wk : piece_t::bk;
+
+    return (piece_from == rook && piece_to == king);
 }
 
 }

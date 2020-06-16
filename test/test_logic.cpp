@@ -1,4 +1,4 @@
-#include "../include/model/game.hpp"
+#include "../src/game.hpp"
 
 void test_undo_redo()
 {
