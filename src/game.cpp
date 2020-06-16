@@ -421,7 +421,7 @@ game_t::list_pos_t game_t::list_pawn_moves(pos_t origin) const
 game_t::list_pos_t game_t::list_moves(
     pos_t origin, std::size_t range, bool parallel, bool diagonal) const
 {
-    // HYPOTHESIS I use pointer to member to avoid 8 diferent loops.
+    // HYPOTHESIS I used pointer to member to avoid 8 different loops.
     // WORKS!!!
     using func_ptr = pos_t(pos_t::*)(uint8_t) const;
     func_ptr d_moves[] = {
