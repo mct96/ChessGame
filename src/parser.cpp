@@ -240,8 +240,8 @@ pos_t pgn_parser_t::decode_from(pos_t to, std::string to_move_code,
     // Castling case.
     if (to_move_code == "O-O-O" || to_move_code == "O-O")
         return pos_t{
-            piece_color == color_t::w ? 0 : 7,
-            to_move_code == "O-O" ? 7 : 0
+            (uint8_t)(piece_color == color_t::w ? 0 : 7),
+            (uint8_t)(to_move_code == "O-O" ? 7 : 0)
         };
 
     auto pieces_pos = _game.can_move_to(to, selected_piece);

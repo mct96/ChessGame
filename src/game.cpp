@@ -127,6 +127,7 @@ std::size_t game_t::hash() const
 
 bool game_t::test_check_mate(color_t color) const
 {
+    // Emulates the move of every piece.
     struct temporary_move_t {
         temporary_move_t(const game_t* game_context, pos_t from, pos_t to)
             : _this{const_cast<game_t*>(game_context)}, _from{ from }, _to{ to }
@@ -488,8 +489,8 @@ void game_t::undo_castling_move(history_entry_t past_move)
     bool king_side = from._j > to._j;
 
     auto rook_from = from, king_from = to;
-    auto rook_to = pos_t{rook_from._i, king_side ? 5 : 3};
-    auto king_to = pos_t{king_from._i, king_side ? 6 : 2};
+    auto rook_to = pos_t{rook_from._i, (uint8_t)(king_side ? 5 : 3)};
+    auto king_to = pos_t{king_from._i, (uint8_t)(king_side ? 6 : 2)};
 
     update_iterator(rook_to, rook_from);
     update_iterator(king_to, king_from);
@@ -566,8 +567,8 @@ void game_t::redo_castling_move(history_entry_t new_move)
     auto is_white = get_piece_color(get_piece(to)) == color_t::w;
 
     auto rook_from = from, king_from = to;
-    auto rook_to = pos_t{rook_from._i, king_side ? 6 : 2};
-    auto king_to = pos_t{king_from._i, king_side ? 5 : 3};
+    auto rook_to = pos_t{rook_from._i, (uint8_t)(king_side ? 6 : 2)};
+    auto king_to = pos_t{king_from._i, (uint8_t)(king_side ? 5 : 3)};
 
     update_iterator(rook_from, rook_to);
     update_iterator(king_from, king_to);
@@ -819,8 +820,8 @@ void game_t::do_castling(pos_t from, pos_t to)
     auto king_i = (c == color_t::w ? 0 : 7), king_j = (ooo ? 2 : 6);
     auto rook_i = (c == color_t::w ? 0 : 7), rook_j = (ooo ? 3 : 5);
 
-    update_iterator(from, pos_t{rook_i, rook_j});
-    update_iterator(to,   pos_t{king_i, king_j});
+    update_iterator(from, pos_t{(uint8_t)rook_i, (uint8_t)rook_j});
+    update_iterator(to,   pos_t{(uint8_t)king_i, (uint8_t)king_j});
 
     _board[rook_i][rook_j]   = get_piece(from);
     _board[king_i][king_j]   = get_piece(to);
@@ -919,10 +920,10 @@ void game_t::reset_iterators()
     _w_pieces.clear();
     _b_pieces.clear();
 
-    for (auto i = 0; i < 2; ++i) {
-        for (auto j = 0; j < 8; ++j) {
+    for (uint8_t i = 0; i < 2; ++i) {
+        for (uint8_t j = 0; j < 8; ++j) {
             _w_pieces.push_back(pos_t{i, j});
-            _b_pieces.push_back(pos_t{7 - i, j});
+            _b_pieces.push_back(pos_t{(uint8_t)(7 - i), j});
         }
     }
 }
