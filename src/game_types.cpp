@@ -31,22 +31,22 @@ bool pos_t::check_bounds(uint8_t li, uint8_t ui, uint8_t lj, uint8_t uj) const
 
 pos_t pos_t::u(uint8_t offset) const
 {
-    return pos_t{_i + offset, _j};
+    return pos_t{(uint8_t)(_i + offset), _j};
 }
 
 pos_t pos_t::d(uint8_t offset) const
 {
-    return pos_t{_i - offset, _j};
+    return pos_t{(uint8_t)(_i - offset), _j};
 }
 
 pos_t pos_t::l(uint8_t offset) const
 {
-    return pos_t{_i, _j - offset};
+    return pos_t{_i, (uint8_t)(_j - offset)};
 }
 
 pos_t pos_t::r(uint8_t offset) const
 {
-    return pos_t{_i, _j + offset};
+    return pos_t{_i, (uint8_t)(_j + offset)};
 }
 
 pos_t pos_t::lu(uint8_t offset) const
@@ -71,7 +71,7 @@ pos_t pos_t::rd(uint8_t offset) const
 
 pos_t pos_t::inc(uint8_t v_offset, uint8_t h_offset) const
 {
-    return pos_t{_i + v_offset, _j + h_offset};
+    return pos_t{(uint8_t)(_i + v_offset), (uint8_t)(_j + h_offset)};
 }
 
 color_t get_piece_color(piece_t piece) {

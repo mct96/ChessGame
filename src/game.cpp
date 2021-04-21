@@ -99,6 +99,9 @@ std::string game_t::piece_to_str(piece_t p) const
     case p_t::empt:
         return " ";
     }
+
+    throw "unknow piece type at std::string game_t::piece_to_str("
+          "piece_t p) const.";
 }
 
 void game_t::print_board() const
@@ -169,7 +172,7 @@ bool game_t::test_check(color_t color) const
     auto b = pieces.begin(), e = pieces.end();
 
     return std::any_of(b, e,
-        [=, this](pos_t p) { return can_move(p, king_pos); });
+        [=](pos_t p) { return can_move(p, king_pos); });
 }
 
 void game_t::reset()
@@ -316,6 +319,9 @@ game_t::list_pos_t game_t::list_moves(pos_t pos) const
     case piece_t::wk: case piece_t::bk:
         return list_king_moves(pos);
     }
+
+    throw "unknow piece type at game_t::list_pos_t game_t::list_moves("
+          "pos_t pos) const.";
 }
 
 game_t::list_pos_t game_t::can_move_to(pos_t to, color_t color) const
@@ -326,7 +332,7 @@ game_t::list_pos_t game_t::can_move_to(pos_t to, color_t color) const
     std::back_insert_iterator<list_pos_t> insert_it{piece_positions};
 
     std::copy_if(b, e, insert_it,
-        [=, this](pos_t pos) {
+        [=](pos_t pos) {
             auto v = this->can_move(pos, to);
             return v;});
 
@@ -811,6 +817,8 @@ bool game_t::can_castling(pos_t from, pos_t to) const
             king_pos = ooo ? king_pos.l() : king_pos.r();
         }
     }
+
+    return true;
 }
 
 void game_t::do_castling(pos_t from, pos_t to)

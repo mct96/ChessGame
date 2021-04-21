@@ -36,7 +36,7 @@ struct pos_t {
     pos_t ld(uint8_t offset = 1) const;
     pos_t ru(uint8_t offset = 1) const;
     pos_t rd(uint8_t offset = 1) const;
-    inline pos_t inc(uint8_t v_offset = 1, uint8_t h_offset = 1) const;
+    pos_t inc(uint8_t v_offset = 1, uint8_t h_offset = 1) const;
 };
 
 
