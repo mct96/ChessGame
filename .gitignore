@@ -1,1 +1,7 @@
+# ignore binary files.
 bin/
+
+
+# ignore emacs files.
+*~
+
